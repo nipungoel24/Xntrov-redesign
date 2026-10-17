@@ -4,24 +4,45 @@ import { useState, useEffect, useRef } from "react";
 import { CORE_SERVICES } from "@/data/xntrova-data";
 
 /**
- * Geometric Blueprint configurations for each of the 6 Core Capabilities.
- * Inspired by Tresmares Private Equity minimalist editorial compositions:
- * - Dynamic shifting geometric planes (angled polygons, solid color blocks, architectural grid frames)
- * - Restrained Xntrova brand palette (#001720, #0075A2, #FAAE39, #C82318 on light surface #F4F8FA/white)
- * - Responsive to natural vertical scroll progression
+ * Geometric configurations for the 6 Core Capabilities.
+ * Inspired by Tresmares Capital Private Equity full-stage geometric compositions:
+ * - Large, monumental geometric planes spanning across the visual stage
+ * - Asymmetrical overlapping planes with real geometry transformations (clip-path, scale, position, rotation)
+ * - Restrained, authoritative Xntrova palette (#001720, #0075A2, #FAAE39, #C82318, #22D3EE)
+ * - Seamless bidirectional vertical scroll driver
  */
 const CAPABILITY_GEOMETRIES = [
   {
     id: "seo",
-    code: "SYS // CRAWL-INDEX-01",
     primaryColor: "#0075A2",
     secondaryColor: "#001720",
     accentColor: "#FAAE39",
-    surfaceTint: "#EAF2F6",
-    polygonClip: "polygon(0% 0%, 92% 0%, 100% 100%, 8% 100%)",
-    initialPolygonOffset: "translate3d(0, 0, 0)",
-    initialBlockOffset: "translate3d(16px, -12px, 0)",
-    initialWireOffset: "translate3d(-14px, 18px, 0) rotate(-2deg)",
+    surfaceTint: "rgba(0, 117, 162, 0.08)",
+    // Dominant Primary Plane (Large angled polygon spanning right-center stage)
+    shape1: {
+      clipPath: "polygon(14% 0%, 100% 0%, 86% 100%, 0% 100%)",
+      transform: "translate3d(10vw, -4vh, 0) rotate(-4deg)",
+      width: "48vw",
+      height: "76vh",
+      bg: "#0075A2",
+      opacity: 0.94,
+    },
+    // Intersecting Secondary Plane
+    shape2: {
+      clipPath: "polygon(0% 16%, 100% 0%, 84% 100%, 0% 84%)",
+      transform: "translate3d(24vw, 22vh, 0) rotate(4deg)",
+      width: "32vw",
+      height: "44vh",
+      bg: "#001720",
+      opacity: 0.90,
+    },
+    // Architectural Accent Trajectory Beam
+    beam: {
+      transform: "translate3d(14vw, 12vh, 0) rotate(12deg)",
+      width: "28vw",
+      height: "3px",
+      bg: "#FAAE39",
+    },
     layers: [
       { code: "01", title: "Crawl & Indexation", detail: "Core Web Vitals, JSON-LD schema hierarchy, and canonical architecture." },
       { code: "02", title: "Commercial Keywords", detail: "High-intent B2B topic clustering and authoritative link acquisition." },
@@ -30,15 +51,32 @@ const CAPABILITY_GEOMETRIES = [
   },
   {
     id: "ppc",
-    code: "SYS // ATTRIB-PPC-02",
     primaryColor: "#C82318",
     secondaryColor: "#0075A2",
     accentColor: "#FAAE39",
-    surfaceTint: "#F6ECEB",
-    polygonClip: "polygon(12% 0%, 100% 0%, 88% 100%, 0% 100%)",
-    initialPolygonOffset: "translate3d(14px, 6px, 0)",
-    initialBlockOffset: "translate3d(-18px, 14px, 0)",
-    initialWireOffset: "translate3d(18px, -16px, 0) rotate(3deg)",
+    surfaceTint: "rgba(200, 35, 24, 0.08)",
+    shape1: {
+      clipPath: "polygon(0% 0%, 100% 28%, 76% 100%, 14% 82%)",
+      transform: "translate3d(12vw, -6vh, 0) rotate(7deg) scale(1.02)",
+      width: "48vw",
+      height: "78vh",
+      bg: "#C82318",
+      opacity: 0.92,
+    },
+    shape2: {
+      clipPath: "polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)",
+      transform: "translate3d(8vw, 26vh, 0) rotate(-5deg)",
+      width: "34vw",
+      height: "42vh",
+      bg: "#0075A2",
+      opacity: 0.88,
+    },
+    beam: {
+      transform: "translate3d(14vw, 18vh, 0) rotate(-14deg)",
+      width: "34vw",
+      height: "4px",
+      bg: "#FAAE39",
+    },
     layers: [
       { code: "01", title: "Intent Intercept", detail: "Exact-match search queries and Google Performance Max campaigns." },
       { code: "02", title: "Funnel Qualification", detail: "Message-matched landing page CRO and audience qualification." },
@@ -47,15 +85,32 @@ const CAPABILITY_GEOMETRIES = [
   },
   {
     id: "web-dev",
-    code: "SYS // WEB-ENG-03",
     primaryColor: "#001720",
     secondaryColor: "#0075A2",
     accentColor: "#22D3EE",
-    surfaceTint: "#EBF1F4",
-    polygonClip: "polygon(0% 8%, 100% 0%, 94% 94%, 6% 100%)",
-    initialPolygonOffset: "translate3d(-10px, -6px, 0)",
-    initialBlockOffset: "translate3d(14px, -18px, 0)",
-    initialWireOffset: "translate3d(-12px, 14px, 0) rotate(-1deg)",
+    surfaceTint: "rgba(0, 23, 32, 0.08)",
+    shape1: {
+      clipPath: "polygon(0% 0%, 96% 6%, 100% 100%, 4% 94%)",
+      transform: "translate3d(11vw, 2vh, 0) rotate(-3deg) scale(0.98)",
+      width: "48vw",
+      height: "72vh",
+      bg: "#001720",
+      opacity: 0.96,
+    },
+    shape2: {
+      clipPath: "polygon(12% 0%, 100% 0%, 88% 100%, 0% 100%)",
+      transform: "translate3d(26vw, -6vh, 0) rotate(5deg)",
+      width: "28vw",
+      height: "48vh",
+      bg: "#22D3EE",
+      opacity: 0.85,
+    },
+    beam: {
+      transform: "translate3d(14vw, 16vh, 0) rotate(0deg)",
+      width: "34vw",
+      height: "3px",
+      bg: "#0075A2",
+    },
     layers: [
       { code: "01", title: "Interface Architecture", detail: "Accessible, sub-second responsive UI engineered for engagement." },
       { code: "02", title: "Performance Engineering", detail: "Semantic markup, code-splitting, and 95+ Core Web Vitals speed." },
@@ -64,15 +119,32 @@ const CAPABILITY_GEOMETRIES = [
   },
   {
     id: "ecommerce",
-    code: "SYS // COMMERCE-04",
     primaryColor: "#0075A2",
     secondaryColor: "#FAAE39",
     accentColor: "#C82318",
-    surfaceTint: "#EEF4F7",
-    polygonClip: "polygon(6% 0%, 94% 0%, 100% 92%, 0% 100%)",
-    initialPolygonOffset: "translate3d(8px, 12px, 0)",
-    initialBlockOffset: "translate3d(-20px, -10px, 0)",
-    initialWireOffset: "translate3d(16px, 18px, 0) rotate(2deg)",
+    surfaceTint: "rgba(250, 174, 57, 0.09)",
+    shape1: {
+      clipPath: "polygon(0% 14%, 86% 0%, 100% 86%, 14% 100%)",
+      transform: "translate3d(11vw, -4vh, 0) rotate(8deg)",
+      width: "48vw",
+      height: "72vh",
+      bg: "#0075A2",
+      opacity: 0.90,
+    },
+    shape2: {
+      clipPath: "polygon(16% 0%, 100% 12%, 84% 100%, 0% 88%)",
+      transform: "translate3d(22vw, 22vh, 0) rotate(-6deg)",
+      width: "32vw",
+      height: "44vh",
+      bg: "#FAAE39",
+      opacity: 0.92,
+    },
+    beam: {
+      transform: "translate3d(10vw, 16vh, 0) rotate(-8deg)",
+      width: "30vw",
+      height: "4px",
+      bg: "#C82318",
+    },
     layers: [
       { code: "01", title: "Catalog Schema", detail: "Merchant feed structure, rich product data, and category taxonomy." },
       { code: "02", title: "Performance Shopping", detail: "High-intent Google Shopping, Meta catalog ads, and Amazon PPC." },
@@ -81,15 +153,32 @@ const CAPABILITY_GEOMETRIES = [
   },
   {
     id: "smo",
-    code: "SYS // REPUTATION-05",
     primaryColor: "#C82318",
     secondaryColor: "#001720",
     accentColor: "#0075A2",
-    surfaceTint: "#F5ECEB",
-    polygonClip: "polygon(0% 0%, 100% 10%, 88% 100%, 12% 90%)",
-    initialPolygonOffset: "translate3d(-12px, 10px, 0)",
-    initialBlockOffset: "translate3d(18px, 16px, 0)",
-    initialWireOffset: "translate3d(-18px, -14px, 0) rotate(-3deg)",
+    surfaceTint: "rgba(200, 35, 24, 0.08)",
+    shape1: {
+      clipPath: "polygon(0% 0%, 100% 0%, 78% 100%, 22% 100%)",
+      transform: "translate3d(12vw, -2vh, 0) rotate(-5deg)",
+      width: "48vw",
+      height: "78vh",
+      bg: "#C82318",
+      opacity: 0.92,
+    },
+    shape2: {
+      clipPath: "polygon(12% 0%, 100% 16%, 88% 100%, 0% 84%)",
+      transform: "translate3d(20vw, 26vh, 0) rotate(5deg)",
+      width: "36vw",
+      height: "46vh",
+      bg: "#001720",
+      opacity: 0.94,
+    },
+    beam: {
+      transform: "translate3d(10vw, 32vh, 0) rotate(6deg)",
+      width: "36vw",
+      height: "3px",
+      bg: "#0075A2",
+    },
     layers: [
       { code: "01", title: "Brand Positioning", detail: "Authoritative social narrative tailored to executive decision-makers." },
       { code: "02", title: "Sentiment Radar", detail: "Proactive multi-channel sentiment listening and review monitoring." },
@@ -98,15 +187,32 @@ const CAPABILITY_GEOMETRIES = [
   },
   {
     id: "content",
-    code: "SYS // CONTENT-06",
     primaryColor: "#001720",
     secondaryColor: "#C82318",
     accentColor: "#FAAE39",
-    surfaceTint: "#EAF0F3",
-    polygonClip: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
-    initialPolygonOffset: "translate3d(10px, -8px, 0)",
-    initialBlockOffset: "translate3d(-14px, -16px, 0)",
-    initialWireOffset: "translate3d(16px, 12px, 0) rotate(1deg)",
+    surfaceTint: "rgba(0, 23, 32, 0.08)",
+    shape1: {
+      clipPath: "polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%)",
+      transform: "translate3d(12vw, 4vh, 0) rotate(4deg)",
+      width: "48vw",
+      height: "70vh",
+      bg: "#001720",
+      opacity: 0.95,
+    },
+    shape2: {
+      clipPath: "polygon(0% 12%, 88% 0%, 100% 88%, 12% 100%)",
+      transform: "translate3d(26vw, -8vh, 0) rotate(-4deg)",
+      width: "30vw",
+      height: "48vh",
+      bg: "#FAAE39",
+      opacity: 0.90,
+    },
+    beam: {
+      transform: "translate3d(14vw, 20vh, 0) rotate(-10deg)",
+      width: "32vw",
+      height: "4px",
+      bg: "#C82318",
+    },
     layers: [
       { code: "01", title: "Editorial Authority", detail: "Original research, technical guides, and search-aligned articles." },
       { code: "02", title: "Lifecycle Email", detail: "Automated nurture sequences and segmentation for qualified pipeline." },
@@ -122,25 +228,33 @@ export default function ServicesSection({ onSelectService }) {
 
   // Natural vertical scroll driver for Desktop (lg+)
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const containerEl = containerRef.current;
-      if (!containerEl || window.innerWidth < 1024) return;
+      if (ticking) return;
+      ticking = true;
 
-      const rect = containerEl.getBoundingClientRect();
-      const viewportH = window.innerHeight || 800;
-      const scrollable = Math.max(1, rect.height - viewportH);
+      window.requestAnimationFrame(() => {
+        ticking = false;
+        const containerEl = containerRef.current;
+        if (!containerEl || window.innerWidth < 1024) return;
 
-      // Progress across the entire section travel distance (0 to 1)
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-      setScrollProgress(progress);
+        const rect = containerEl.getBoundingClientRect();
+        const viewportH = window.innerHeight || 800;
+        const scrollable = Math.max(1, rect.height - viewportH);
 
-      // Active discipline chapter index (0 to 5)
-      const count = CORE_SERVICES.length;
-      const currentIdx = Math.min(
-        count - 1,
-        Math.max(0, Math.floor(progress * count))
-      );
-      setActiveIdx((prev) => (prev === currentIdx ? prev : currentIdx));
+        // Progress across the entire section travel distance (0 to 1)
+        const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+        setScrollProgress(progress);
+
+        // Active discipline chapter index (0 to 5)
+        const count = CORE_SERVICES.length;
+        const currentIdx = Math.min(
+          count - 1,
+          Math.max(0, Math.floor(progress * count))
+        );
+        setActiveIdx((prev) => (prev === currentIdx ? prev : currentIdx));
+      });
     };
 
     handleScroll();
@@ -153,42 +267,14 @@ export default function ServicesSection({ onSelectService }) {
     };
   }, []);
 
-  const jumpToChapter = (targetIdx) => {
-    setActiveIdx(targetIdx);
-    if (!containerRef.current || window.innerWidth < 1024) return;
-
-    const containerEl = containerRef.current;
-    const rect = containerEl.getBoundingClientRect();
-    const viewportH = window.innerHeight || 800;
-    const scrollable = Math.max(1, rect.height - viewportH);
-    const containerTopDoc = window.scrollY + rect.top;
-    const targetY =
-      containerTopDoc +
-      (targetIdx / Math.max(1, CORE_SERVICES.length - 1)) * scrollable +
-      16;
-
-    window.scrollTo({
-      top: targetY,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-    });
-  };
-
   const activeService = CORE_SERVICES[activeIdx] || CORE_SERVICES[0];
   const activeGeo = CAPABILITY_GEOMETRIES[activeIdx] || CAPABILITY_GEOMETRIES[0];
-
-  // Within-chapter dynamic delta for continuous geometric transformation
-  const chapterProgress = (scrollProgress * CORE_SERVICES.length) % 1;
-  const deltaX = Math.round((chapterProgress - 0.5) * 32);
-  const deltaY = Math.round((chapterProgress - 0.5) * 20);
-  const scaleDelta = (1 + (chapterProgress - 0.5) * 0.08).toFixed(3);
 
   return (
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="relative border-b border-[#DCE5EA] bg-[#F4F8FA] text-[#001720]"
+      className="relative bg-[#F4F8FA] text-[#001720]"
     >
       {/* Editorial Opening Header */}
       <div className="mx-auto max-w-[1440px] px-4 pt-20 sm:px-8 sm:pt-28 lg:px-12 lg:pt-32">
@@ -216,275 +302,252 @@ export default function ServicesSection({ onSelectService }) {
       </div>
 
       {/* ============================================================
-          DESKTOP STICKY GEOMETRIC SCROLL STAGE (lg+)
-          Natural vertical scroll drives chapter progression & shape morphing
+          DESKTOP FULL-STAGE SCROLL-DRIVEN GEOMETRIC EXPERIENCE (lg+)
+          Natural vertical scroll drives dramatic shape morphing across all 6 disciplines.
+          Completely free of small cards, framed boxes, or decorative counters.
           ============================================================ */}
       <div
         ref={containerRef}
-        style={{ minHeight: "320vh" }}
+        style={{ minHeight: "360vh" }}
         className="hidden lg:block relative"
       >
-        <div className="sticky top-20 flex h-[calc(100vh-5rem)] flex-col justify-between overflow-hidden px-8 py-8 xl:px-12">
-          {/* Top Chapter Progress Track (Clean minimalist hair-track, no redundant counters) */}
-          <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between border-b border-[#DCE5EA] pb-3">
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#001720]">
-                {activeService.title}
-              </span>
-              <span className="h-3 w-px bg-[#DCE5EA]" aria-hidden="true" />
-              <span className="font-mono text-xs text-[#0075A2] uppercase tracking-[0.16em]">
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between px-8 py-10 lg:px-12 xl:px-16">
+          {/* FULL-STAGE GEOMETRIC BACKDROP (Large Asymmetric Overlapping Planes) */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 overflow-hidden"
+          >
+            {/* Ambient Tonal Wash */}
+            <div
+              className="absolute inset-0 transition-colors duration-700 ease-out"
+              style={{ backgroundColor: activeGeo.surfaceTint }}
+            />
+
+            {/* Dominant Primary Angled Geometric Plane */}
+            <div
+              className="absolute right-0 top-1/2 -translate-y-1/2 transition-all duration-700 ease-out drop-shadow-[0_24px_48px_rgba(0,23,32,0.12)]"
+              style={{
+                clipPath: activeGeo.shape1.clipPath,
+                transform: activeGeo.shape1.transform,
+                width: activeGeo.shape1.width,
+                height: activeGeo.shape1.height,
+                backgroundColor: activeGeo.shape1.bg,
+                opacity: activeGeo.shape1.opacity,
+              }}
+            />
+
+            {/* Intersecting Secondary Geometric Slab */}
+            <div
+              className="absolute right-0 top-1/2 -translate-y-1/2 transition-all duration-700 ease-out"
+              style={{
+                clipPath: activeGeo.shape2.clipPath,
+                transform: activeGeo.shape2.transform,
+                width: activeGeo.shape2.width,
+                height: activeGeo.shape2.height,
+                backgroundColor: activeGeo.shape2.bg,
+                opacity: activeGeo.shape2.opacity,
+              }}
+            />
+
+            {/* Architectural Accent Beam / Trajectory Vector */}
+            <div
+              className="absolute right-0 top-1/2 -translate-y-1/2 transition-all duration-700 ease-out"
+              style={{
+                transform: activeGeo.beam.transform,
+                width: activeGeo.beam.width,
+                height: activeGeo.beam.height,
+                backgroundColor: activeGeo.beam.bg,
+              }}
+            />
+          </div>
+
+          {/* TOP STAGE BAR: Minimalist Category Tracking Bar */}
+          <div className="relative z-10 mx-auto flex w-full max-w-[1440px] items-center justify-between border-b border-[#001720]/10 pb-4">
+            <div className="flex items-center gap-3">
+              <span
+                className="h-2.5 w-2.5 transition-colors duration-500"
+                style={{ backgroundColor: activeGeo.primaryColor }}
+                aria-hidden="true"
+              />
+              <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#001720]">
                 {activeService.categoryLabel}
               </span>
             </div>
 
-            {/* Interactive Chapter Indicator Ticks */}
-            <div
-              role="tablist"
-              aria-label="Direct discipline selector"
-              className="flex items-center gap-2"
-            >
-              {CORE_SERVICES.map((svc, sIdx) => {
-                const isCurrent = activeIdx === sIdx;
-                return (
-                  <button
-                    key={svc.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isCurrent}
-                    aria-label={`Jump to ${svc.title}`}
-                    onClick={() => jumpToChapter(sIdx)}
-                    className={`h-2 transition-all duration-300 cursor-pointer ${
-                      isCurrent
-                        ? "w-8 bg-[#001720]"
-                        : "w-2 bg-[#D0DDE4] hover:bg-[#0075A2]"
-                    }`}
-                  />
-                );
-              })}
+            {/* Subtle Progress Bar */}
+            <div className="flex items-center gap-1.5" aria-hidden="true">
+              {CORE_SERVICES.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-1 transition-all duration-500 ${
+                    idx === activeIdx
+                      ? "w-8 bg-[#001720]"
+                      : "w-2 bg-[#001720]/20"
+                  }`}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Main Stage Grid: Left Narrative + Right Evolving Geometry */}
-          <div className="mx-auto my-auto w-full max-w-[1440px] py-4">
-            <div className="grid grid-cols-12 gap-12 xl:gap-16 items-center">
-              {/* LEFT COLUMN (Cols 1-6): Typographic Narrative & Key Deliverables */}
-              <div className="col-span-6 space-y-6">
-                <div>
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#0075A2]">
-                    {activeGeo.code}
-                  </span>
-                  <h3 className="mt-2 font-display text-4xl xl:text-5xl font-medium leading-[1.02] tracking-[-0.035em] text-[#001720]">
-                    {activeService.title}
-                  </h3>
-                  <p className="mt-4 text-base xl:text-lg leading-relaxed text-[#3B5260] max-w-xl">
-                    {activeService.summary}
-                  </p>
-                </div>
+          {/* MAIN STAGE COMPOSITION: Monumental Typography & Deliverables */}
+          <div className="relative z-10 mx-auto my-auto w-full max-w-[1440px] py-6">
+            <div className="max-w-2xl xl:max-w-3xl">
+              {/* Category Eyebrow */}
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-[#0075A2]">
+                {activeService.categoryLabel}
+              </p>
 
-                {/* Three Real Deliverables with Architectural Line Accents */}
-                <div className="border-t border-[#DCE5EA] pt-5">
-                  <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
-                    {activeGeo.layers.map((layer) => (
-                      <div
-                        key={layer.code}
-                        className="border-l-2 pl-3 transition-colors duration-300"
-                        style={{ borderColor: activeGeo.primaryColor }}
-                      >
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#7A909A]">
-                          Layer {layer.code}
-                        </span>
-                        <p className="mt-1 font-display text-sm font-medium text-[#001720]">
-                          {layer.title}
-                        </p>
-                        <p className="mt-1 text-xs leading-relaxed text-[#5A707A]">
-                          {layer.detail}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              {/* Monumental Service Title */}
+              <h3 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl xl:text-[4.75rem] font-medium leading-[1.0] tracking-[-0.035em] text-[#001720] transition-all duration-500">
+                {activeService.title}
+              </h3>
 
-                {/* Sub-Specializations & Action */}
-                <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#DCE5EA] pt-5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    {activeService.subServices.map((sub) => (
-                      <a
-                        key={sub.href}
-                        href={sub.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border border-[#DCE5EA] bg-white px-3 py-1.5 font-mono text-[11px] font-medium text-[#001720] transition-colors hover:border-[#0075A2] hover:text-[#0075A2]"
-                      >
-                        {sub.label} ↗
-                      </a>
-                    ))}
-                  </div>
+              {/* Supporting Editorial Summary */}
+              <p className="mt-5 text-base sm:text-lg lg:text-xl leading-relaxed text-[#2B3E48] max-w-xl transition-all duration-500">
+                {activeService.summary}
+              </p>
 
-                  <button
-                    type="button"
-                    onClick={() => onSelectService && onSelectService(activeService.title)}
-                    className="inline-flex items-center gap-2 bg-[#001720] px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-white hover:bg-[#0075A2] transition-colors cursor-pointer"
-                  >
-                    <span>Request Audit</span>
-                    <span className="text-[#FAAE39]" aria-hidden="true">→</span>
-                  </button>
+              {/* Three Verified Deliverables (Directly in Negative Space with Clear Separation) */}
+              <div className="mt-8 border-t border-[#001720]/12 pt-6 max-w-2xl xl:max-w-3xl">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                  {activeGeo.layers.map((layer) => (
+                    <div
+                      key={layer.title}
+                      className="border-l-2 pl-3.5 transition-colors duration-500"
+                      style={{ borderColor: activeGeo.primaryColor }}
+                    >
+                      <p className="font-display text-sm sm:text-base font-semibold text-[#001720]">
+                        {layer.title}
+                      </p>
+                      <p className="mt-1 text-xs sm:text-sm text-[#4A6270] leading-relaxed">
+                        {layer.detail}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* RIGHT COLUMN (Cols 7-12): Dynamic Morphing Geometric Composition */}
-              <div className="col-span-6">
-                <div className="relative h-[440px] xl:h-[480px] w-full overflow-hidden border border-[#D5E1E7] bg-white p-8 flex items-center justify-center shadow-xs">
-                  {/* Layer 1: Large Angled Architectural Polygon Plane (Transforms with Scroll) */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-4 transition-all duration-500 ease-out"
-                    style={{
-                      backgroundColor: activeGeo.surfaceTint,
-                      clipPath: activeGeo.polygonClip,
-                      transform: `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scaleDelta})`,
-                    }}
-                  />
-
-                  {/* Layer 2: Shifting Solid Color Architectural Block */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute h-36 w-52 sm:h-44 sm:w-64 opacity-90 transition-all duration-500 ease-out"
-                    style={{
-                      backgroundColor: activeGeo.primaryColor,
-                      clipPath: "polygon(14% 0%, 100% 0%, 86% 100%, 0% 100%)",
-                      transform: `translate3d(${-deltaX * 1.2}px, ${deltaY * 1.1}px, 0)`,
-                    }}
-                  />
-
-                  {/* Layer 3: Secondary Accent Geometric Plane */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute h-24 w-36 sm:h-28 sm:w-44 opacity-80 transition-all duration-500 ease-out"
-                    style={{
-                      backgroundColor: activeGeo.secondaryColor,
-                      clipPath: "polygon(0% 0%, 82% 0%, 100% 100%, 18% 100%)",
-                      transform: `translate3d(${deltaX * 1.5}px, ${-deltaY * 1.3}px, 0)`,
-                    }}
-                  />
-
-                  {/* Layer 4: Shifting Wireframe Geometric Frame */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute h-52 w-72 sm:h-60 sm:w-84 border-2 transition-all duration-500 ease-out"
-                    style={{
-                      borderColor: activeGeo.accentColor,
-                      transform: `translate3d(${deltaY}px, ${-deltaX}px, 0) rotate(${(chapterProgress - 0.5) * 6}deg)`,
-                    }}
-                  />
-
-                  {/* Top-Right Architectural Coordinate Stamp */}
-                  <div className="absolute top-5 right-6 z-10 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#5A707A]">
-                    {activeGeo.code}
-                  </div>
-
-                  {/* Bottom-Left Capability Focus Emblem */}
-                  <div className="absolute bottom-5 left-6 z-10 flex items-center gap-2.5">
-                    <span
-                      className="h-2 w-2 transition-colors duration-300"
-                      style={{ backgroundColor: activeGeo.primaryColor }}
-                    />
-                    <span className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[#001720]">
-                      {activeService.title}
-                    </span>
-                  </div>
+              {/* Sub-Specializations & CTA Action */}
+              <div className="mt-8 flex flex-wrap items-center gap-4 pt-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  {activeService.subServices.map((sub) => (
+                    <a
+                      key={sub.href}
+                      href={sub.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border border-[#001720]/15 bg-white/80 backdrop-blur-xs px-3.5 py-1.5 font-mono text-xs font-medium text-[#001720] transition-colors hover:border-[#0075A2] hover:text-[#0075A2]"
+                    >
+                      {sub.label} ↗
+                    </a>
+                  ))}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => onSelectService && onSelectService(activeService.title)}
+                  className="inline-flex items-center gap-2 bg-[#001720] px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-white hover:bg-[#0075A2] transition-colors cursor-pointer"
+                >
+                  <span>Request Audit</span>
+                  <span className="text-[#FAAE39]" aria-hidden="true">→</span>
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Bottom Horizon Strip (Clean negative space, no extra decoration) */}
-          <div className="mx-auto w-full max-w-[1440px] pt-2" />
+          {/* BOTTOM HORIZON FOOTER */}
+          <div className="relative z-10 mx-auto w-full max-w-[1440px] pt-2" />
         </div>
       </div>
 
       {/* ============================================================
           MOBILE & TABLET SEQUENTIAL CHAPTERS (< lg)
-          Natural, accessible, touch-friendly reading flow with proportionate geometry
+          Natural, accessible, touch-friendly reading flow with expansive geometry
           ============================================================ */}
-      <div className="mx-auto max-w-7xl px-4 py-12 lg:hidden space-y-10">
+      <div className="mx-auto max-w-7xl px-4 py-12 lg:hidden space-y-16">
         {CORE_SERVICES.map((service, sIdx) => {
           const geo = CAPABILITY_GEOMETRIES[sIdx] || CAPABILITY_GEOMETRIES[0];
 
           return (
             <article
               key={service.id}
-              className="border border-[#D5E1E7] bg-white p-6 shadow-xs"
+              className="relative overflow-hidden border-b border-[#DCE5EA] pb-12"
             >
-              <div className="flex items-center justify-between border-b border-[#E4ECEF] pb-3 mb-4">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#0075A2]">
-                  {geo.code}
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#5A707A]">
-                  {service.categoryLabel}
-                </span>
-              </div>
+              {/* Atmospheric Background Geometry for Mobile */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-12 -top-8 h-48 w-48 opacity-25"
+                style={{
+                  clipPath: geo.shape1.clipPath,
+                  backgroundColor: geo.primaryColor,
+                }}
+              />
 
-              <h3 className="font-display text-2xl font-medium text-[#001720]">
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#0075A2]">
+                {service.categoryLabel}
+              </p>
+
+              <h3 className="mt-2 font-display text-3xl font-medium text-[#001720]">
                 {service.title}
               </h3>
-              <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#3B5260]">
+
+              <p className="mt-3 text-sm leading-relaxed text-[#3B5260]">
                 {service.summary}
               </p>
 
-              {/* Mobile Geometric Visual Frame */}
-              <div className="relative my-5 h-44 w-full overflow-hidden border border-[#E2ECF0] bg-[#F8FAFB] flex items-center justify-center">
+              {/* Mobile Geometric Graphic Strip */}
+              <div className="relative my-6 h-36 w-full overflow-hidden border border-[#DCE5EA] bg-white flex items-center justify-center">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-3"
+                  className="pointer-events-none absolute inset-2"
                   style={{
                     backgroundColor: geo.surfaceTint,
-                    clipPath: geo.polygonClip,
+                    clipPath: geo.shape1.clipPath,
                   }}
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute h-24 w-36 opacity-85"
+                  className="pointer-events-none absolute h-24 w-40 opacity-90"
                   style={{
                     backgroundColor: geo.primaryColor,
-                    clipPath: "polygon(14% 0%, 100% 0%, 86% 100%, 0% 100%)",
+                    clipPath: geo.shape1.clipPath,
                   }}
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute h-16 w-24 opacity-80"
+                  className="pointer-events-none absolute h-16 w-28 opacity-85"
                   style={{
                     backgroundColor: geo.secondaryColor,
-                    clipPath: "polygon(0% 0%, 82% 0%, 100% 100%, 18% 100%)",
+                    clipPath: geo.shape2.clipPath,
                   }}
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute h-28 w-44 border-2"
-                  style={{ borderColor: geo.accentColor }}
+                  className="pointer-events-none absolute h-1 w-32"
+                  style={{ backgroundColor: geo.accentColor }}
                 />
               </div>
 
               {/* Deliverables List */}
-              <div className="space-y-2 border-t border-[#E4ECEF] pt-4">
+              <div className="space-y-3 pt-2">
                 {geo.layers.map((layer) => (
-                  <div key={layer.code} className="flex items-baseline gap-2.5">
-                    <span
-                      className="font-mono text-[10px] font-bold text-[#C82318]"
-                    >
-                      {layer.code}.
-                    </span>
-                    <span className="text-xs font-medium text-[#001720]">
-                      {layer.title} —
-                    </span>
-                    <span className="text-xs text-[#5A707A]">
+                  <div
+                    key={layer.title}
+                    className="border-l-2 pl-3"
+                    style={{ borderColor: geo.primaryColor }}
+                  >
+                    <p className="font-display text-sm font-semibold text-[#001720]">
+                      {layer.title}
+                    </p>
+                    <p className="mt-0.5 text-xs text-[#5A707A] leading-relaxed">
                       {layer.detail}
-                    </span>
+                    </p>
                   </div>
                 ))}
               </div>
 
-              {/* Bottom Action */}
-              <div className="mt-5 pt-4 border-t border-[#E4ECEF] flex flex-wrap items-center justify-between gap-3">
+              {/* Bottom Action & Links */}
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#DCE5EA]">
                 <div className="flex flex-wrap items-center gap-1.5">
                   {service.subServices.map((sub) => (
                     <a
@@ -492,7 +555,7 @@ export default function ServicesSection({ onSelectService }) {
                       href={sub.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-[#DCE5EA] bg-[#F8FAFB] px-2 py-1 font-mono text-[10px] text-[#001720]"
+                      className="border border-[#DCE5EA] bg-white px-2.5 py-1 font-mono text-[11px] text-[#001720]"
                     >
                       {sub.label} ↗
                     </a>
@@ -502,7 +565,7 @@ export default function ServicesSection({ onSelectService }) {
                 <button
                   type="button"
                   onClick={() => onSelectService && onSelectService(service.title)}
-                  className="bg-[#001720] px-3.5 py-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-white"
+                  className="bg-[#001720] px-3.5 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-white"
                 >
                   Request Audit →
                 </button>
