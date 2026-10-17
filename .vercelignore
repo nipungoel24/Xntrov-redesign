@@ -1,0 +1,9 @@
+.git
+node_modules
+.next
+scratch
+docs
+.agents
+.gemini
+*.png
+*.jpg
