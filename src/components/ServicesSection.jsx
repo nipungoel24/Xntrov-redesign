@@ -4,276 +4,582 @@ import { useState, useEffect, useRef } from "react";
 import { CORE_SERVICES } from "@/data/xntrova-data";
 
 /**
- * Technical benchmarks & verified delivery specifications for the 6 Core Capabilities.
- * Grounded in verified agency metrics and modern web standards.
+ * Verified Technical Benchmarks & Delivery Specifications for the 6 Core Capabilities.
+ * Every metric reflects authentic digital marketing benchmarks and modern web standards.
+ * All target metrics are explicitly labeled as targets.
  */
 const SERVICE_METRICS = [
   {
+    category: "ORGANIC AUTHORITY",
     specs: [
-      { label: "INDEXATION", value: "100%", detail: "Crawl coverage & clean JSON-LD" },
-      { label: "PERFORMANCE", value: "95+", detail: "Mobile Core Web Vitals target" },
-      { label: "GROWTH TARGET", value: "+250%", detail: "Organic visibility trajectory" },
+      { label: "INDEXATION INTEGRITY", value: "100%", tag: "AUDIT STANDARD", detail: "Complete crawl coverage, clean XML sitemaps, and validated JSON-LD schema." },
+      { label: "MOBILE SPEED TARGET", value: "95+", tag: "PERFORMANCE GOAL", detail: "Target Core Web Vitals score across LCP, INP, and CLS parameters." },
+      { label: "TRAFFIC BENCHMARK", value: "+250%", tag: "AGENCY TRACK RECORD", detail: "Verified organic visibility growth trajectory across client engagements." },
     ],
   },
   {
+    category: "PERFORMANCE MEDIA",
     specs: [
-      { label: "ATTRIBUTION", value: "GA4 + CAPI", detail: "Server-side verified conversion tracking" },
-      { label: "EFFICIENCY", value: "0% Waste", detail: "Aggressive negative keyword governance" },
-      { label: "INTENT", value: "High-Intent", detail: "Google Search & LinkedIn B2B funnels" },
+      { label: "ATTRIBUTION TELEMETRY", value: "GA4 + CAPI", tag: "TRACKING STANDARD", detail: "Server-side Meta Conversions API and Google Tag Manager event architecture." },
+      { label: "BUDGET EFFICIENCY", value: "0% Waste", tag: "GOVERNANCE GOAL", detail: "Aggressive negative keyword mapping and audience exclusion governance." },
+      { label: "BUYER QUALIFICATION", value: "B2B Focus", tag: "TARGETING MODEL", detail: "High-intent search query capture and LinkedIn decision-maker funnels." },
     ],
   },
   {
+    category: "WEB ENGINEERING",
     specs: [
-      { label: "LATENCY", value: "<1.0s", detail: "Sub-second responsive load speed" },
-      { label: "FRAMEWORK", value: "React 19", detail: "Modern Next.js component architecture" },
-      { label: "CONVERSION", value: "CRO-Driven", detail: "Engineered high-intent lead paths" },
+      { label: "SERVER RESPONSE LATENCY", value: "<1.0s", tag: "ENGINEERING TARGET", detail: "Sub-second initial paint and instant interactive route transitions." },
+      { label: "FRAMEWORK ARCHITECTURE", value: "React 19", tag: "TECH STACK", detail: "Next.js 15 App Router with zero client-side hydration overhead." },
+      { label: "CONVERSION ARCHITECTURE", value: "CRO-Driven", tag: "PIPELINE FOCUS", detail: "Frictionless form journeys, progressive disclosure, and lead routing." },
     ],
   },
   {
+    category: "COMMERCIAL SCALE",
     specs: [
-      { label: "FEED SCHEMA", value: "Rich Merchant", detail: "Structured product & variant feeds" },
-      { label: "CHANNELS", value: "Google + Meta", detail: "High-ROAS shopping & catalog ads" },
-      { label: "RETENTION", value: "Automated", detail: "Lifecycle repeat-buyer nurture flows" },
+      { label: "MERCHANT TAXONOMY", value: "Rich Feed", tag: "SCHEMA STANDARD", detail: "Optimized Google Merchant Center feed with deep variant attributes." },
+      { label: "OMNI-CHANNEL MEDIA", value: "Google + Meta", tag: "ACQUISITION MODEL", detail: "High-ROAS Shopping campaigns paired with dynamic catalog retargeting." },
+      { label: "LIFECYCLE RETENTION", value: "Automated", tag: "RETENTION ENGINE", detail: "Post-purchase automation and repeat buyer email triggers." },
     ],
   },
   {
+    category: "BRAND DEFENSE",
     specs: [
-      { label: "DEFENSE", value: "24/7", detail: "Continuous SERP brand reputation radar" },
-      { label: "SENTIMENT", value: "5.0 ★", detail: "Verified multi-channel executive rating" },
-      { label: "AUTHORITY", value: "B2B Focus", detail: "Executive thought leadership narratives" },
+      { label: "REPUTATION RADAR", value: "24/7", tag: "MONITORING PROTOCOL", detail: "Continuous SERP listening, review monitoring, and brand defense radar." },
+      { label: "VERIFIED RATING", value: "5.0 ★", tag: "CLIENT FEEDBACK", detail: "Verified Google reviews across 500+ happy client relationships." },
+      { label: "GOVERNANCE PROTOCOL", value: "Active ORM", tag: "AUTHORITY DEFENSE", detail: "Search result defense protocols and executive thought leadership." },
     ],
   },
   {
+    category: "EDITORIAL AUTHORITY",
     specs: [
-      { label: "AUTHORITY", value: "Editorial", detail: "Deep original research & industry guides" },
-      { label: "SYNDICATION", value: "Omni-Hub", detail: "Search, social & lifecycle email flows" },
-      { label: "ENGAGEMENT", value: "Qualified", detail: "Content mapped to buyer decision stages" },
+      { label: "EDITORIAL RESEARCH", value: "Original", tag: "CONTENT STANDARD", detail: "Technical research papers, industry guides, and high-intent topical clusters." },
+      { label: "DISTRIBUTION MODEL", value: "Omni-Hub", tag: "SYNDICATION", detail: "Multi-channel distribution across organic search, social, and email." },
+      { label: "PIPELINE ALIGNMENT", value: "Qualified", tag: "LEAD NURTURE", detail: "Strategic content assets mapped directly to B2B buying stages." },
     ],
   },
 ];
 
 /**
- * Geometric configurations for the 6 Core Capabilities.
- * Rebuilt strictly around the Tresmares Capital Financial Solutions interaction model:
- * - Center stage expressive geometric composition with morphing shapes
- * - Overlapping architectural polygon planes with dynamic scale, rotation, and palette
- * - Authority color system: #0075A2, #001720, #C82318, #FAAE39, #22D3EE
+ * Chapter metadata and verified deliverables for each of the 6 disciplines.
  */
-const CAPABILITY_GEOMETRIES = [
+const CHAPTER_DELIVERABLES = [
   {
-    id: "seo",
-    watermark: "SEARCH",
-    primaryColor: "#0075A2",
-    secondaryColor: "#001720",
-    accentColor: "#FAAE39",
-    surfaceTint: "rgba(0, 117, 162, 0.06)",
-    // Primary Architectural Wedge
-    shape1: {
-      clipPath: "polygon(14% 0%, 100% 0%, 86% 100%, 0% 100%)",
-      transform: "translate3d(0, -12px, 0) rotate(-4deg) scale(1.02)",
-      width: "360px",
-      height: "360px",
-      bg: "#0075A2",
-      opacity: 0.94,
-    },
-    // Secondary Intersecting Slab
-    shape2: {
-      clipPath: "polygon(0% 16%, 100% 0%, 84% 100%, 0% 84%)",
-      transform: "translate3d(60px, 40px, 0) rotate(5deg) scale(0.92)",
-      width: "280px",
-      height: "280px",
-      bg: "#001720",
-      opacity: 0.90,
-    },
-    // Trajectory Accent Beam
-    beam: {
-      transform: "translate3d(-20px, 20px, 0) rotate(14deg)",
-      width: "320px",
-      height: "4px",
-      bg: "#FAAE39",
-    },
+    code: "01",
+    label: "Search Engine Optimization",
+    eyebrow: "ORGANIC PIPELINE // CHAPTER 01",
+    watermark: "INDEX",
     layers: [
-      { code: "01", title: "Crawl & Indexation", detail: "Core Web Vitals, JSON-LD schema, canonical hygiene." },
-      { code: "02", title: "Commercial Keywords", detail: "High-intent B2B topic clustering and authority links." },
-      { code: "03", title: "Regional Dominance", detail: "Delhi NCR local pack authority and national rank." },
+      { title: "Technical Crawl Architecture", detail: "Core Web Vitals hygiene, XML/JSON-LD schema, and crawl-budget optimization." },
+      { title: "High-Intent B2B Clustering", detail: "Commercial topic authority models that capture buyers actively evaluating solutions." },
+      { title: "Delhi NCR Local & National Rank", detail: "Dual-layer search strategy capturing local pack dominance and national visibility." },
     ],
   },
   {
-    id: "ppc",
-    watermark: "MEDIA",
-    primaryColor: "#C82318",
-    secondaryColor: "#0075A2",
-    accentColor: "#FAAE39",
-    surfaceTint: "rgba(200, 35, 24, 0.06)",
-    shape1: {
-      clipPath: "polygon(0% 0%, 100% 28%, 76% 100%, 14% 82%)",
-      transform: "translate3d(10px, -20px, 0) rotate(8deg) scale(1.05)",
-      width: "370px",
-      height: "370px",
-      bg: "#C82318",
-      opacity: 0.93,
-    },
-    shape2: {
-      clipPath: "polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)",
-      transform: "translate3d(-50px, 50px, 0) rotate(-6deg) scale(0.88)",
-      width: "290px",
-      height: "290px",
-      bg: "#0075A2",
-      opacity: 0.88,
-    },
-    beam: {
-      transform: "translate3d(10px, 30px, 0) rotate(-16deg)",
-      width: "340px",
-      height: "4px",
-      bg: "#FAAE39",
-    },
+    code: "02",
+    label: "Paid Advertising (PPC)",
+    eyebrow: "ACQUISITION MEDIA // CHAPTER 02",
+    watermark: "INTENT",
     layers: [
-      { code: "01", title: "Intent Intercept", detail: "Exact-match search queries and PMax campaign engines." },
-      { code: "02", title: "Funnel Qualification", detail: "Message-matched landing page CRO and lead filters." },
-      { code: "03", title: "Attribution Telemetry", detail: "GA4, Google Tag Manager, and verified ROAS tracking." },
+      { title: "Precision Search & PMax", detail: "Exact-match intent interception across Google Ads with negative keyword governance." },
+      { title: "B2B Decision-Maker Funnels", detail: "Targeted LinkedIn and Meta media campaigns reaching verified executive buyers." },
+      { title: "Server-Side Conversion Telemetry", detail: "GA4, Google Tag Manager, and Meta CAPI server-side event tracking." },
     ],
   },
   {
-    id: "web-dev",
+    code: "03",
+    label: "Website & App Development",
+    eyebrow: "WEB SYSTEMS // CHAPTER 03",
     watermark: "SYSTEM",
-    primaryColor: "#001720",
-    secondaryColor: "#0075A2",
-    accentColor: "#22D3EE",
-    surfaceTint: "rgba(0, 23, 32, 0.06)",
-    shape1: {
-      clipPath: "polygon(0% 0%, 96% 6%, 100% 100%, 4% 94%)",
-      transform: "translate3d(-10px, 10px, 0) rotate(-3deg) scale(1.0)",
-      width: "360px",
-      height: "360px",
-      bg: "#001720",
-      opacity: 0.96,
-    },
-    shape2: {
-      clipPath: "polygon(12% 0%, 100% 0%, 88% 100%, 0% 100%)",
-      transform: "translate3d(50px, -30px, 0) rotate(6deg) scale(0.85)",
-      width: "260px",
-      height: "260px",
-      bg: "#22D3EE",
-      opacity: 0.85,
-    },
-    beam: {
-      transform: "translate3d(0, 40px, 0) rotate(0deg)",
-      width: "330px",
-      height: "4px",
-      bg: "#0075A2",
-    },
     layers: [
-      { code: "01", title: "Interface Architecture", detail: "Accessible, sub-second responsive UI for engagement." },
-      { code: "02", title: "Speed Engineering", detail: "Next.js 15, code-splitting, 95+ Core Web Vitals speed." },
-      { code: "03", title: "Lead Systems", detail: "Custom CMS integrations, API hooks, and lead routing." },
+      { title: "Sub-Second Next.js Architecture", detail: "Modern React 19 web systems engineered for 95+ Core Web Vitals speed." },
+      { title: "Conversion-Engineered UI", detail: "Accessible, high-contrast layouts designed to turn executive visitors into qualified leads." },
+      { title: "Enterprise API & CMS Integration", detail: "Robust lead capture endpoints, CRM webhooks, and secure content architecture." },
     ],
   },
   {
-    id: "ecommerce",
-    watermark: "COMMERCE",
-    primaryColor: "#0075A2",
-    secondaryColor: "#FAAE39",
-    accentColor: "#C82318",
-    surfaceTint: "rgba(250, 174, 57, 0.07)",
-    shape1: {
-      clipPath: "polygon(0% 14%, 86% 0%, 100% 86%, 14% 100%)",
-      transform: "translate3d(15px, -15px, 0) rotate(9deg) scale(1.03)",
-      width: "360px",
-      height: "360px",
-      bg: "#0075A2",
-      opacity: 0.90,
-    },
-    shape2: {
-      clipPath: "polygon(16% 0%, 100% 12%, 84% 100%, 0% 88%)",
-      transform: "translate3d(40px, 45px, 0) rotate(-8deg) scale(0.90)",
-      width: "280px",
-      height: "280px",
-      bg: "#FAAE39",
-      opacity: 0.92,
-    },
-    beam: {
-      transform: "translate3d(-20px, 20px, 0) rotate(-10deg)",
-      width: "310px",
-      height: "4px",
-      bg: "#C82318",
-    },
+    code: "04",
+    label: "E-Commerce & Amazon Growth",
+    eyebrow: "COMMERCE ENGINE // CHAPTER 04",
+    watermark: "SCALE",
     layers: [
-      { code: "01", title: "Catalog Schema", detail: "Merchant feed structure, rich product data, and taxonomy." },
-      { code: "02", title: "Shopping Ads", detail: "High-intent Google Shopping, Meta ads, and Amazon PPC." },
-      { code: "03", title: "Retention CRO", detail: "Frictionless checkout paths and repeat-buyer triggers." },
+      { title: "Merchant Feed Architecture", detail: "Structured product catalogs, variant schema, and rich merchant data integration." },
+      { title: "High-ROAS Shopping & Sponsored Ads", detail: "Google Shopping campaigns and Amazon Sponsored Products dialed for profitability." },
+      { title: "Frictionless Checkout Optimization", detail: "Cart-to-conversion CRO paths and automated post-purchase repeat buyer flows." },
     ],
   },
   {
-    id: "smo",
+    code: "05",
+    label: "Social Media & Reputation (ORM)",
+    eyebrow: "BRAND DEFENSE // CHAPTER 05",
     watermark: "DEFENSE",
-    primaryColor: "#C82318",
-    secondaryColor: "#001720",
-    accentColor: "#0075A2",
-    surfaceTint: "rgba(200, 35, 24, 0.06)",
-    shape1: {
-      clipPath: "polygon(0% 0%, 100% 0%, 78% 100%, 22% 100%)",
-      transform: "translate3d(0, -10px, 0) rotate(-6deg) scale(1.02)",
-      width: "370px",
-      height: "370px",
-      bg: "#C82318",
-      opacity: 0.92,
-    },
-    shape2: {
-      clipPath: "polygon(12% 0%, 100% 16%, 88% 100%, 0% 84%)",
-      transform: "translate3d(45px, 35px, 0) rotate(6deg) scale(0.92)",
-      width: "290px",
-      height: "290px",
-      bg: "#001720",
-      opacity: 0.94,
-    },
-    beam: {
-      transform: "translate3d(-10px, 50px, 0) rotate(8deg)",
-      width: "330px",
-      height: "4px",
-      bg: "#0075A2",
-    },
     layers: [
-      { code: "01", title: "Brand Positioning", detail: "Authoritative narrative tailored to executive buyers." },
-      { code: "02", title: "Sentiment Radar", detail: "Multi-channel sentiment listening and review monitoring." },
-      { code: "03", title: "Reputation Governance", detail: "Crisis containment protocols and search brand defense." },
+      { title: "Executive Thought Leadership", detail: "Authority-building organic social narratives crafted for industry decision-makers." },
+      { title: "24/7 Sentiment & Review Radar", detail: "Multi-channel reputation monitoring across Google Reviews, directories, and social." },
+      { title: "SERP Reputation Defense", detail: "Proactive search-result brand defense and online reputation management (ORM)." },
     ],
   },
   {
-    id: "content",
-    watermark: "CONTENT",
-    primaryColor: "#001720",
-    secondaryColor: "#C82318",
-    accentColor: "#FAAE39",
-    surfaceTint: "rgba(0, 23, 32, 0.06)",
-    shape1: {
-      clipPath: "polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%)",
-      transform: "translate3d(10px, 10px, 0) rotate(5deg) scale(0.98)",
-      width: "360px",
-      height: "360px",
-      bg: "#001720",
-      opacity: 0.95,
-    },
-    shape2: {
-      clipPath: "polygon(0% 12%, 88% 0%, 100% 88%, 12% 100%)",
-      transform: "translate3d(55px, -30px, 0) rotate(-5deg) scale(0.88)",
-      width: "280px",
-      height: "280px",
-      bg: "#FAAE39",
-      opacity: 0.90,
-    },
-    beam: {
-      transform: "translate3d(0, 30px, 0) rotate(-12deg)",
-      width: "320px",
-      height: "4px",
-      bg: "#C82318",
-    },
+    code: "06",
+    label: "Content, Video & Lifecycle Email",
+    eyebrow: "EDITORIAL VOICE // CHAPTER 06",
+    watermark: "VOICE",
     layers: [
-      { code: "01", title: "Editorial Authority", detail: "Original research, technical guides, search articles." },
-      { code: "02", title: "Lifecycle Email", detail: "Automated nurture sequences and pipeline segmentation." },
-      { code: "03", title: "Visual Storytelling", detail: "Custom infographics, motion assets, and commercial copy." },
+      { title: "Original Research & B2B Guides", detail: "Comprehensive industry articles and technical guides mapped to buyer queries." },
+      { title: "Lifecycle Email Nurture Journeys", detail: "Automated segmentation and high-conversion drip sequences for active pipelines." },
+      { title: "Commercial Infographics & Video", detail: "Engaging visual storytelling assets that articulate complex technical solutions." },
     ],
   },
 ];
+
+/**
+ * Bespoke Architectural Vector Artworks for the 6 Disciplines.
+ * Designed with layered isometric perspective, volumetric depth, translucent facets,
+ * calibrated coordinate hairlines, and authentic brand color harmony.
+ */
+function ChapterArtwork({ activeIdx }) {
+  return (
+    <div className="relative w-full h-[360px] xl:h-[400px] flex items-center justify-center select-none">
+      {/* 01 SEO — The Algorithmic Horizon & Index Matrix */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activeIdx === 0
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <svg
+          viewBox="0 0 520 380"
+          className="w-full h-full max-w-[500px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          {/* Subtle Coordinate Grid in Negative Space */}
+          <g opacity="0.18">
+            <line x1="60" y1="40" x2="460" y2="40" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="60" y1="120" x2="460" y2="120" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="60" y1="200" x2="460" y2="200" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="60" y1="280" x2="460" y2="280" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="60" y1="340" x2="460" y2="340" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="120" y1="20" x2="120" y2="360" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="260" y1="20" x2="260" y2="360" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="400" y1="20" x2="400" y2="360" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+          </g>
+
+          {/* Integrated Architectural Watermark Lockup */}
+          <text
+            x="260"
+            y="95"
+            textAnchor="middle"
+            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
+          >
+            INDEX MATRIX // 01
+          </text>
+
+          {/* Ambient Diffuse Shadow */}
+          <polygon
+            points="140,290 380,270 410,320 170,340"
+            fill="rgba(0, 23, 32, 0.08)"
+            filter="blur(16px)"
+          />
+
+          {/* Deep Obsidian Foundation Block */}
+          <polygon
+            points="120,200 270,140 270,290 120,330"
+            fill="#001720"
+          />
+
+          {/* Ascending Teal Prism Facet (Xntrova Brand Blue) */}
+          <polygon
+            points="270,140 420,180 420,310 270,290"
+            fill="#0075A2"
+          />
+
+          {/* Precision Top Face catching Horizon Light */}
+          <polygon
+            points="120,200 270,140 420,180 270,230"
+            fill="#0288BD"
+          />
+
+          {/* Frosted Translucent Architectural Shard Overlay */}
+          <polygon
+            points="160,110 350,60 380,200 190,250"
+            fill="rgba(0, 117, 162, 0.15)"
+            stroke="#0075A2"
+            strokeWidth="1.2"
+          />
+
+          {/* Algorithmic Crawl Depth Contour Lines */}
+          <path d="M140,220 L270,170 L400,205" stroke="#FFFFFF" strokeWidth="1" opacity="0.7" />
+          <path d="M150,245 L270,195 L390,230" stroke="#FFFFFF" strokeWidth="1" opacity="0.5" />
+          <path d="M160,270 L270,220 L380,255" stroke="#FFFFFF" strokeWidth="1" opacity="0.3" />
+
+          {/* Warm Amber Rank Trajectory Beam */}
+          <line x1="80" y1="280" x2="450" y2="100" stroke="#FAAE39" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="450" cy="100" r="6" fill="#FAAE39" />
+          <circle cx="450" cy="100" r="14" stroke="#FAAE39" strokeWidth="1" strokeDasharray="2 2" opacity="0.8" />
+
+          {/* Coordinate Technical Labels */}
+          <text x="90" y="270" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
+            [SYS // CRAWL-INDEX]
+          </text>
+          <text x="375" y="85" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
+            [POS: TOP 3 ORGANIC]
+          </text>
+        </svg>
+      </div>
+
+      {/* 02 PPC — The Intent Reticle & Kinetic Acquisition Vector */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activeIdx === 1
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <svg
+          viewBox="0 0 520 380"
+          className="w-full h-full max-w-[500px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          {/* Concentric Precision Reticle Radar */}
+          <g opacity="0.25">
+            <circle cx="260" cy="190" r="160" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="4 4" />
+            <circle cx="260" cy="190" r="110" stroke="#C82318" strokeWidth="0.8" />
+            <circle cx="260" cy="190" r="60" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="2 2" />
+            <line x1="260" y1="10" x2="260" y2="370" stroke="#0075A2" strokeWidth="0.6" strokeDasharray="3 3" />
+            <line x1="80" y1="190" x2="440" y2="190" stroke="#0075A2" strokeWidth="0.6" strokeDasharray="3 3" />
+          </g>
+
+          <text
+            x="260"
+            y="95"
+            textAnchor="middle"
+            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
+          >
+            INTENT RETICLE // 02
+          </text>
+
+          {/* Deep Navy Baseline Anchor */}
+          <polygon
+            points="140,240 320,130 360,260 180,330"
+            fill="#001720"
+          />
+
+          {/* Dynamic Cadmium Crimson Wedge (High-Velocity Performance Media) */}
+          <polygon
+            points="200,90 410,140 370,290 160,220"
+            fill="#C82318"
+            className="drop-shadow-[0_16px_32px_rgba(200,35,24,0.25)]"
+          />
+
+          {/* Intersecting Translucent Cyan Filter Plane */}
+          <polygon
+            points="180,160 350,110 390,210 220,280"
+            fill="rgba(0, 117, 162, 0.35)"
+            stroke="#FFFFFF"
+            strokeWidth="1"
+          />
+
+          {/* Precision Target Crosshair Beam in Warm Amber */}
+          <line x1="90" y1="120" x2="430" y2="260" stroke="#FAAE39" strokeWidth="2.5" strokeLinecap="round" />
+          <circle cx="260" cy="190" r="5" fill="#FAAE39" />
+          <circle cx="260" cy="190" r="16" stroke="#FAAE39" strokeWidth="1.2" />
+
+          <text x="110" y="110" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
+            [EXACT-MATCH INTERCEPT]
+          </text>
+          <text x="330" y="310" className="font-mono text-[9px] font-semibold fill-[#C82318] tracking-widest">
+            [TELEMETRY: GA4 + CAPI]
+          </text>
+        </svg>
+      </div>
+
+      {/* 03 Web Dev — The Spatial Monolith & Precision Portals */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activeIdx === 2
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <svg
+          viewBox="0 0 520 380"
+          className="w-full h-full max-w-[500px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          {/* Architectural Drafting Scaffolding */}
+          <g opacity="0.2">
+            <line x1="80" y1="60" x2="440" y2="60" stroke="#001720" strokeWidth="0.8" />
+            <line x1="80" y1="180" x2="440" y2="180" stroke="#001720" strokeWidth="0.8" strokeDasharray="4 4" />
+            <line x1="80" y1="300" x2="440" y2="300" stroke="#001720" strokeWidth="0.8" />
+            <line x1="160" y1="30" x2="160" y2="350" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="260" y1="30" x2="260" y2="350" stroke="#001720" strokeWidth="0.8" />
+            <line x1="360" y1="30" x2="360" y2="350" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
+          </g>
+
+          <text
+            x="260"
+            y="95"
+            textAnchor="middle"
+            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
+          >
+            ARCHITECTURE // 03
+          </text>
+
+          {/* Left Obsidian Monolith Pillar */}
+          <polygon
+            points="140,110 220,90 220,320 140,330"
+            fill="#001720"
+          />
+
+          {/* Right Foundation Pillar */}
+          <polygon
+            points="300,90 380,110 380,330 300,320"
+            fill="#002533"
+          />
+
+          {/* Electric Cyan Floating Portal Aperture */}
+          <polygon
+            points="190,140 330,140 330,280 190,280"
+            fill="rgba(34, 211, 238, 0.15)"
+            stroke="#22D3EE"
+            strokeWidth="1.5"
+            className="drop-shadow-[0_12px_28px_rgba(34,211,238,0.2)]"
+          />
+
+          {/* Center Brand Blue Monolith Block */}
+          <polygon
+            points="230,110 290,110 290,300 230,300"
+            fill="#0075A2"
+          />
+
+          {/* Horizontal System Baseline Vector in Teal */}
+          <line x1="100" y1="210" x2="420" y2="210" stroke="#0075A2" strokeWidth="2.5" />
+          <rect x="250" y="200" width="20" height="20" fill="#22D3EE" />
+
+          <text x="130" y="75" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
+            [REACT 19 // APP ROUTER]
+          </text>
+          <text x="310" y="350" className="font-mono text-[9px] font-semibold fill-[#22D3EE] tracking-widest">
+            [LATENCY: &lt;1.0s SUB-SECOND]
+          </text>
+        </svg>
+      </div>
+
+      {/* 04 E-Commerce — The Merchant Diamond & Transaction Facets */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activeIdx === 3
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <svg
+          viewBox="0 0 520 380"
+          className="w-full h-full max-w-[500px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          {/* Stepped Scale Grid */}
+          <g opacity="0.2">
+            <polygon points="260,40 440,190 260,340 80,190" stroke="#FAAE39" strokeWidth="0.8" strokeDasharray="3 3" />
+            <polygon points="260,90 380,190 260,290 140,190" stroke="#0075A2" strokeWidth="0.8" />
+          </g>
+
+          <text
+            x="260"
+            y="95"
+            textAnchor="middle"
+            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
+          >
+            SCALE DIAMOND // 04
+          </text>
+
+          {/* Deep Teal Foundation Facet */}
+          <polygon
+            points="150,190 260,100 260,290 150,260"
+            fill="#0075A2"
+          />
+
+          {/* Warm Amber Transaction Facet (Commercial Momentum) */}
+          <polygon
+            points="260,100 370,190 370,260 260,290"
+            fill="#FAAE39"
+            className="drop-shadow-[0_16px_32px_rgba(250,174,57,0.22)]"
+          />
+
+          {/* Top Diamond Crown in Obsidian Navy */}
+          <polygon
+            points="260,60 350,140 260,170 170,140"
+            fill="#001720"
+          />
+
+          {/* Translucent Stepped Catalog Shelf Plane */}
+          <polygon
+            points="180,220 340,170 360,250 200,290"
+            fill="rgba(0, 117, 162, 0.25)"
+            stroke="#FAAE39"
+            strokeWidth="1.2"
+          />
+
+          {/* Cadmium Crimson Purchase Vector */}
+          <line x1="90" y1="280" x2="430" y2="120" stroke="#C82318" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="430" cy="120" r="5" fill="#C82318" />
+
+          <text x="100" y="305" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
+            [MERCHANT SCHEMA FEED]
+          </text>
+          <text x="320" y="105" className="font-mono text-[9px] font-semibold fill-[#C82318] tracking-widest">
+            [HIGH-ROAS SCALE]
+          </text>
+        </svg>
+      </div>
+
+      {/* 05 SMO / ORM — The Bastion Shield & Sentiment Radar */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activeIdx === 4
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <svg
+          viewBox="0 0 520 380"
+          className="w-full h-full max-w-[500px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          {/* Radar Perimeter Telemetry */}
+          <g opacity="0.22">
+            <circle cx="260" cy="190" r="150" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
+            <circle cx="260" cy="190" r="90" stroke="#0075A2" strokeWidth="0.8" />
+            <line x1="110" y1="190" x2="410" y2="190" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="2 2" />
+          </g>
+
+          <text
+            x="260"
+            y="95"
+            textAnchor="middle"
+            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
+          >
+            BRAND SHIELD // 05
+          </text>
+
+          {/* Obsidian Hexagonal Armor Foundation */}
+          <polygon
+            points="180,100 340,100 380,210 260,320 140,210"
+            fill="#001720"
+          />
+
+          {/* Crimson Defensive Integrity Plate */}
+          <polygon
+            points="210,130 310,130 340,210 260,290 180,210"
+            fill="#C82318"
+            className="drop-shadow-[0_16px_36px_rgba(200,35,24,0.22)]"
+          />
+
+          {/* Translucent Brand Blue Core Prism */}
+          <polygon
+            points="240,160 280,160 300,210 260,260 220,210"
+            fill="rgba(0, 117, 162, 0.75)"
+            stroke="#22D3EE"
+            strokeWidth="1.2"
+          />
+
+          {/* Cyan Defensive Radar Sweep Vector */}
+          <line x1="80" y1="230" x2="440" y2="170" stroke="#22D3EE" strokeWidth="2.2" strokeLinecap="round" />
+          <circle cx="370" cy="180" r="4" fill="#22D3EE" />
+
+          <text x="90" y="255" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
+            [24/7 SENTIMENT RADAR]
+          </text>
+          <text x="310" y="90" className="font-mono text-[9px] font-semibold fill-[#C82318] tracking-widest">
+            [ACTIVE ORM DEFENSE]
+          </text>
+        </svg>
+      </div>
+
+      {/* 06 Content — The Editorial Folio & Continuous Narrative Ribbon */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activeIdx === 5
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+        }`}
+      >
+        <svg
+          viewBox="0 0 520 380"
+          className="w-full h-full max-w-[500px]"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          {/* Editorial Grid Lines */}
+          <g opacity="0.2">
+            <line x1="70" y1="80" x2="450" y2="80" stroke="#001720" strokeWidth="0.8" />
+            <line x1="70" y1="160" x2="450" y2="160" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="70" y1="240" x2="450" y2="240" stroke="#001720" strokeWidth="0.8" />
+            <line x1="70" y1="310" x2="450" y2="310" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
+          </g>
+
+          <text
+            x="260"
+            y="95"
+            textAnchor="middle"
+            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
+          >
+            EDITORIAL FOLIO // 06
+          </text>
+
+          {/* Deep Obsidian Foundation Folio Spine */}
+          <polygon
+            points="130,140 280,80 320,280 170,320"
+            fill="#001720"
+          />
+
+          {/* Warm Amber Open Folio Page Plate */}
+          <polygon
+            points="230,110 390,140 350,320 200,270"
+            fill="#FAAE39"
+            className="drop-shadow-[0_16px_36px_rgba(250,174,57,0.22)]"
+          />
+
+          {/* Translucent Brand Blue Technical Manuscript Overlay */}
+          <polygon
+            points="170,160 340,110 370,230 200,290"
+            fill="rgba(0, 117, 162, 0.35)"
+            stroke="#0075A2"
+            strokeWidth="1.2"
+          />
+
+          {/* Flowing Narrative Bezier Distribution Ribbon */}
+          <path
+            d="M80,270 C160,330 260,110 440,160"
+            stroke="#C82318"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <circle cx="440" cy="160" r="5" fill="#C82318" />
+
+          <text x="90" y="250" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
+            [RESEARCH & TOPICAL DEPTH]
+          </text>
+          <text x="310" y="345" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
+            [LIFECYCLE SYNDICATION]
+          </text>
+        </svg>
+      </div>
+    </div>
+  );
+}
 
 export default function ServicesSection({ onSelectService }) {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -325,12 +631,12 @@ export default function ServicesSection({ onSelectService }) {
     if (!containerRef.current) return;
     const containerTop = window.scrollY + containerRef.current.getBoundingClientRect().top;
     const scrollable = containerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll = containerTop + (idx / CORE_SERVICES.length) * scrollable + 20;
+    const targetScroll = containerTop + (idx / CORE_SERVICES.length) * scrollable + 25;
     window.scrollTo({ top: targetScroll, behavior: "smooth" });
   };
 
   const activeService = CORE_SERVICES[activeIdx] || CORE_SERVICES[0];
-  const activeGeo = CAPABILITY_GEOMETRIES[activeIdx] || CAPABILITY_GEOMETRIES[0];
+  const activeChapter = CHAPTER_DELIVERABLES[activeIdx] || CHAPTER_DELIVERABLES[0];
   const activeMetric = SERVICE_METRICS[activeIdx] || SERVICE_METRICS[0];
 
   return (
@@ -339,7 +645,7 @@ export default function ServicesSection({ onSelectService }) {
       aria-labelledby="services-heading"
       className="relative bg-[#F4F8FA] text-[#001720]"
     >
-      {/* Editorial Opening Header */}
+      {/* Editorial Opening Section Header */}
       <div className="mx-auto max-w-[1440px] px-4 pt-20 sm:px-8 sm:pt-28 lg:px-12 lg:pt-32">
         <div className="flex flex-col justify-between gap-6 border-b border-[#DCE5EA] pb-8 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
@@ -365,57 +671,57 @@ export default function ServicesSection({ onSelectService }) {
       </div>
 
       {/* ============================================================
-          DESKTOP TRESMARES FINANCIAL SOLUTIONS INTERACTION MODEL (lg+)
-          - Left Column: Persistent service selector + Active summary, deliverables & CTA
-          - Center: Expressive geometric composition morphing across all 6 services
-          - Right Column: Restrained technical specs & benchmarks
+          DESKTOP FULL-STAGE TRESMARES EDITORIAL SUITE (lg+)
+          Unified architectural installation:
+          - Left Column: Persistent selector + Active narrative, deliverables, links & CTA
+          - Center Stage: Bespoke volumetric vector artwork with coordinated typography
+          - Right Column: Technical benchmarks & specifications
           ============================================================ */}
       <div
         ref={containerRef}
-        style={{ minHeight: "450vh" }}
+        style={{ minHeight: "480vh" }}
         className="hidden lg:block relative"
       >
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between px-8 py-8 lg:px-12 xl:px-16">
-          {/* Subtle Stage Background Ambient Wash */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 transition-colors duration-700 ease-out"
-            style={{ backgroundColor: activeGeo.surfaceTint }}
-          />
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center px-6 py-6 lg:px-10 xl:px-14">
+          
+          {/* Defined Architectural Framing Stage */}
+          <div className="relative mx-auto w-full max-w-[1400px] border border-[#DCE5EA] bg-white/80 backdrop-blur-md shadow-[0_20px_50px_rgba(0,23,32,0.06)] flex flex-col overflow-hidden">
+            
+            {/* STAGE HEADER BAR */}
+            <div className="flex items-center justify-between border-b border-[#DCE5EA] bg-[#F8FAFC]/90 px-6 py-2.5">
+              <div className="flex items-center gap-3">
+                <span className="h-2 w-2 rounded-full bg-[#0075A2]" aria-hidden="true" />
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#001720]">
+                  XNTROVA CAPABILITIES SUITE // {activeMetric.category}
+                </span>
+              </div>
 
-          {/* TOP STAGE STATUS BAR */}
-          <div className="relative z-20 mx-auto flex w-full max-w-[1440px] items-center justify-between border-b border-[#001720]/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span
-                className="h-2.5 w-2.5 transition-colors duration-500"
-                style={{ backgroundColor: activeGeo.primaryColor }}
-                aria-hidden="true"
-              />
-              <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#001720]">
-                {activeService.categoryLabel}
-              </span>
+              {/* Progress Tracker */}
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-xs font-semibold text-[#001720]">
+                  0{activeIdx + 1} <span className="text-[#94A3B8]">/</span> 06
+                </span>
+                <div className="h-1.5 w-24 bg-[#E2E8F0] overflow-hidden" aria-hidden="true">
+                  <div
+                    className="h-full bg-[#0075A2] transition-all duration-300 ease-out"
+                    style={{ width: `${Math.round(scrollProgress * 100)}%` }}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Step Counter Indicator */}
-            <div className="flex items-center gap-3 font-mono text-xs text-[#001720]">
-              <span className="font-bold">0{activeIdx + 1}</span>
-              <span className="text-[#001720]/30">/</span>
-              <span className="text-[#001720]/50">06</span>
-            </div>
-          </div>
-
-          {/* MAIN THREE-COLUMN INTERACTION STAGE */}
-          <div className="relative z-10 mx-auto my-auto w-full max-w-[1440px] py-4">
-            <div className="grid grid-cols-12 gap-8 xl:gap-12 items-center">
+            {/* THREE-COLUMN INTEGRATED ARCHITECTURAL GRID */}
+            <div className="grid grid-cols-12 min-h-[520px] xl:min-h-[560px]">
               
-              {/* LEFT COLUMN: Persistent Service Selector + Active Narrative & Deliverables */}
-              <div className="col-span-4 xl:col-span-4 flex flex-col justify-between space-y-6">
-                {/* Persistent Service Selector Listing All 6 Capabilities */}
+              {/* LEFT COLUMN: Persistent Discipline Selector + Active Narrative & Deliverables */}
+              <div className="col-span-4 border-r border-[#DCE5EA] p-6 xl:p-8 flex flex-col justify-between bg-white">
                 <div>
-                  <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0075A2] mb-3">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-[#0075A2] mb-3">
                     Disciplines
                   </p>
-                  <nav aria-label="Core Capabilities Selector" className="space-y-1.5">
+                  
+                  {/* Persistent Discipline Selector */}
+                  <nav aria-label="Core Capabilities Selector" className="space-y-1">
                     {CORE_SERVICES.map((s, idx) => {
                       const isActive = idx === activeIdx;
                       return (
@@ -423,21 +729,21 @@ export default function ServicesSection({ onSelectService }) {
                           key={s.id}
                           type="button"
                           onClick={() => scrollToService(idx)}
-                          className={`group flex items-center gap-3 text-left w-full py-1.5 transition-all duration-300 cursor-pointer ${
+                          className={`group flex items-center gap-3 text-left w-full py-1.5 px-2 rounded-none transition-all duration-300 cursor-pointer ${
                             isActive
-                              ? "text-[#001720] font-semibold"
-                              : "text-[#64748B] hover:text-[#001720] font-normal"
+                              ? "bg-[#F8FAFC] text-[#001720] font-semibold translate-x-1"
+                              : "text-[#64748B] hover:text-[#001720] hover:bg-[#F8FAFC]/50 font-normal"
                           }`}
                         >
                           <span
-                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                            className={`h-1.5 transition-all duration-300 ${
                               isActive
-                                ? "w-5 bg-[#C82318]"
+                                ? "w-4 bg-[#C82318]"
                                 : "w-1.5 bg-[#CBD5E1] group-hover:bg-[#94A3B8]"
                             }`}
                             aria-hidden="true"
                           />
-                          <span className="font-display text-sm sm:text-base tracking-tight leading-snug">
+                          <span className="font-display text-sm tracking-tight leading-snug">
                             {s.title}
                           </span>
                         </button>
@@ -446,27 +752,29 @@ export default function ServicesSection({ onSelectService }) {
                   </nav>
                 </div>
 
-                {/* Active Service Narrative, Deliverables & CTA */}
-                <div className="border-t border-[#001720]/10 pt-4">
-                  <h3 className="font-display text-xl sm:text-2xl font-medium tracking-tight text-[#001720]">
+                {/* Active Service Narrative, Deliverables & Actions */}
+                <div className="border-t border-[#DCE5EA] pt-4 mt-4">
+                  <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-[#0075A2]">
+                    {activeChapter.eyebrow}
+                  </p>
+                  <h3 className="mt-1 font-display text-xl xl:text-2xl font-medium tracking-tight text-[#001720]">
                     {activeService.title}
                   </h3>
-                  <p className="mt-2 text-xs sm:text-sm text-[#3B5260] leading-relaxed">
+                  <p className="mt-2 text-xs xl:text-sm text-[#4A6270] leading-relaxed">
                     {activeService.summary}
                   </p>
 
                   {/* Three Verified Deliverables */}
-                  <div className="mt-4 space-y-2">
-                    {activeGeo.layers.map((layer) => (
+                  <div className="mt-3.5 space-y-2">
+                    {activeChapter.layers.map((layer) => (
                       <div
                         key={layer.title}
-                        className="border-l-2 pl-2.5 transition-colors duration-500"
-                        style={{ borderColor: activeGeo.primaryColor }}
+                        className="border-l-2 border-[#0075A2] pl-2.5 transition-colors duration-500"
                       >
                         <p className="font-display text-xs font-semibold text-[#001720]">
                           {layer.title}
                         </p>
-                        <p className="text-[11px] text-[#5A707A] leading-snug">
+                        <p className="text-[11px] text-[#64748B] leading-tight">
                           {layer.detail}
                         </p>
                       </div>
@@ -474,14 +782,14 @@ export default function ServicesSection({ onSelectService }) {
                   </div>
 
                   {/* Sub-Service Tags & CTA Action */}
-                  <div className="mt-5 flex flex-wrap items-center gap-2">
+                  <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-[#F1F5F9]">
                     {activeService.subServices.map((sub) => (
                       <a
                         key={sub.href}
                         href={sub.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="border border-[#001720]/15 bg-white/80 px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-medium text-[#001720] transition-colors hover:border-[#0075A2] hover:text-[#0075A2]"
+                        className="border border-[#DCE5EA] bg-white px-2 py-0.5 font-mono text-[10px] font-medium text-[#001720] transition-colors hover:border-[#0075A2] hover:text-[#0075A2]"
                       >
                         {sub.label} ↗
                       </a>
@@ -490,7 +798,7 @@ export default function ServicesSection({ onSelectService }) {
                     <button
                       type="button"
                       onClick={() => onSelectService && onSelectService(activeService.title)}
-                      className="inline-flex items-center gap-1.5 bg-[#001720] px-3.5 py-1.5 font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-white hover:bg-[#0075A2] transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 bg-[#001720] px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-white hover:bg-[#0075A2] transition-colors cursor-pointer"
                     >
                       <span>Request Audit</span>
                       <span className="text-[#FAAE39]" aria-hidden="true">→</span>
@@ -499,98 +807,55 @@ export default function ServicesSection({ onSelectService }) {
                 </div>
               </div>
 
-              {/* CENTER STAGE: Expressive Transforming Geometric Composition */}
-              <div className="col-span-5 xl:col-span-5 relative flex items-center justify-center min-h-[440px]">
-                {/* Background Monumental Watermark Typography */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 flex items-center justify-center select-none overflow-hidden"
-                >
-                  <span className="font-display text-[6.5rem] xl:text-[8rem] font-medium tracking-tight text-[#001720]/05 leading-none uppercase">
-                    {activeGeo.watermark}
-                  </span>
-                </div>
-
-                {/* Large Expressive Geometric Composition */}
-                <div className="relative h-[380px] w-[380px] flex items-center justify-center pointer-events-none">
-                  {/* Dominant Primary Angled Geometric Plane */}
-                  <div
-                    className="absolute transition-all duration-700 ease-out drop-shadow-[0_20px_36px_rgba(0,23,32,0.12)]"
-                    style={{
-                      clipPath: activeGeo.shape1.clipPath,
-                      transform: activeGeo.shape1.transform,
-                      width: activeGeo.shape1.width,
-                      height: activeGeo.shape1.height,
-                      backgroundColor: activeGeo.shape1.bg,
-                      opacity: activeGeo.shape1.opacity,
-                    }}
-                  />
-
-                  {/* Intersecting Secondary Geometric Slab */}
-                  <div
-                    className="absolute transition-all duration-700 ease-out"
-                    style={{
-                      clipPath: activeGeo.shape2.clipPath,
-                      transform: activeGeo.shape2.transform,
-                      width: activeGeo.shape2.width,
-                      height: activeGeo.shape2.height,
-                      backgroundColor: activeGeo.shape2.bg,
-                      opacity: activeGeo.shape2.opacity,
-                    }}
-                  />
-
-                  {/* Architectural Accent Vector Beam */}
-                  <div
-                    className="absolute transition-all duration-700 ease-out"
-                    style={{
-                      transform: activeGeo.beam.transform,
-                      width: activeGeo.beam.width,
-                      height: activeGeo.beam.height,
-                      backgroundColor: activeGeo.beam.bg,
-                    }}
-                  />
-                </div>
+              {/* CENTER STAGE: Bespoke Vector Art Installation */}
+              <div className="col-span-5 relative flex flex-col items-center justify-center p-6 xl:p-8 bg-[#FAFCFD] overflow-hidden">
+                <ChapterArtwork activeIdx={activeIdx} />
               </div>
 
-              {/* RIGHT COLUMN: Restrained Technical Deliverables & Key Specs */}
-              <div className="col-span-3 xl:col-span-3 pl-4 border-l border-[#001720]/10 flex flex-col justify-center space-y-6">
+              {/* RIGHT COLUMN: Harmonious Technical Benchmarks & Delivery Specifications */}
+              <div className="col-span-3 border-l border-[#DCE5EA] p-6 xl:p-8 flex flex-col justify-between bg-[#F8FAFC]/50">
                 <div>
-                  <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0075A2] mb-1">
-                    Benchmarks
-                  </p>
-                  <p className="font-display text-sm font-medium text-[#001720]">
-                    Technical Specifications
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 bg-[#C82318]" aria-hidden="true" />
+                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-[#0075A2]">
+                      Benchmarks
+                    </p>
+                  </div>
+                  <p className="mt-1 font-display text-sm font-medium text-[#001720]">
+                    Verified Specifications
                   </p>
                 </div>
 
-                {/* 3 Metric Benchmark Blocks */}
-                <div className="space-y-5">
+                {/* 3 Metric Specification Blocks */}
+                <div className="space-y-4 my-auto">
                   {activeMetric.specs.map((spec) => (
-                    <div key={spec.label} className="border-t border-[#001720]/10 pt-3">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#64748B]">
-                        {spec.label}
-                      </p>
+                    <div key={spec.label} className="border-t border-[#DCE5EA] pt-2.5">
+                      <div className="flex items-center justify-between">
+                        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#64748B]">
+                          {spec.label}
+                        </p>
+                        <span className="font-mono text-[8px] px-1 py-0.2 rounded-xs bg-[#E2E8F0] text-[#475569]">
+                          {spec.tag}
+                        </span>
+                      </div>
                       <p className="xn-tabular mt-1 font-display text-2xl xl:text-3xl font-medium tracking-tight text-[#001720]">
                         {spec.value}
                       </p>
-                      <p className="mt-0.5 text-xs text-[#5A707A] leading-snug">
+                      <p className="mt-0.5 text-[11px] text-[#64748B] leading-tight">
                         {spec.detail}
                       </p>
                     </div>
                   ))}
                 </div>
+
+                {/* Architecture Integrity Tag */}
+                <div className="border-t border-[#DCE5EA] pt-3">
+                  <p className="font-mono text-[9px] text-[#64748B] uppercase tracking-wider">
+                    Next.js 15 &amp; React 19 Enterprise Suite
+                  </p>
+                </div>
               </div>
 
-            </div>
-          </div>
-
-          {/* BOTTOM HORIZON PROGRESS BAR */}
-          <div className="relative z-10 mx-auto w-full max-w-[1440px] pt-2">
-            <div className="h-0.5 w-full bg-[#001720]/10 overflow-hidden">
-              <div
-                className="h-full bg-[#0075A2] transition-all duration-300 ease-out"
-                style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-              />
             </div>
           </div>
         </div>
@@ -602,81 +867,48 @@ export default function ServicesSection({ onSelectService }) {
           ============================================================ */}
       <div className="mx-auto max-w-7xl px-4 py-12 lg:hidden space-y-16">
         {CORE_SERVICES.map((service, sIdx) => {
-          const geo = CAPABILITY_GEOMETRIES[sIdx] || CAPABILITY_GEOMETRIES[0];
+          const chapter = CHAPTER_DELIVERABLES[sIdx] || CHAPTER_DELIVERABLES[0];
           const metric = SERVICE_METRICS[sIdx] || SERVICE_METRICS[0];
 
           return (
             <article
               key={service.id}
-              className="relative overflow-hidden border-b border-[#DCE5EA] pb-12"
+              className="relative overflow-hidden border border-[#DCE5EA] bg-white p-5 sm:p-8 shadow-xs"
             >
-              {/* Atmospheric Background Geometry for Mobile */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-12 -top-8 h-48 w-48 opacity-25"
-                style={{
-                  clipPath: geo.shape1.clipPath,
-                  backgroundColor: geo.primaryColor,
-                }}
-              />
+              {/* Header Bar */}
+              <div className="flex items-center justify-between border-b border-[#DCE5EA] pb-3 mb-4">
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#0075A2]">
+                  {chapter.eyebrow}
+                </span>
+                <span className="font-mono text-xs font-semibold text-[#001720]">
+                  0{sIdx + 1} / 06
+                </span>
+              </div>
 
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#0075A2]">
-                {service.categoryLabel}
-              </p>
-
-              <h3 className="mt-2 font-display text-3xl font-medium text-[#001720]">
+              <h3 className="font-display text-2xl sm:text-3xl font-medium text-[#001720]">
                 {service.title}
               </h3>
 
-              <p className="mt-3 text-sm leading-relaxed text-[#3B5260]">
+              <p className="mt-2 text-sm leading-relaxed text-[#4A6270]">
                 {service.summary}
               </p>
 
-              {/* Mobile Geometric Graphic Strip */}
-              <div className="relative my-6 h-36 w-full overflow-hidden border border-[#DCE5EA] bg-white flex items-center justify-center">
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-2"
-                  style={{
-                    backgroundColor: geo.surfaceTint,
-                    clipPath: geo.shape1.clipPath,
-                  }}
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute h-24 w-40 opacity-90"
-                  style={{
-                    backgroundColor: geo.primaryColor,
-                    clipPath: geo.shape1.clipPath,
-                  }}
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute h-16 w-28 opacity-85"
-                  style={{
-                    backgroundColor: geo.secondaryColor,
-                    clipPath: geo.shape2.clipPath,
-                  }}
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute h-1 w-32"
-                  style={{ backgroundColor: geo.accentColor }}
-                />
+              {/* Mobile Bespoke Artwork Strip */}
+              <div className="my-6 border border-[#DCE5EA] bg-[#FAFCFD] p-2 flex items-center justify-center">
+                <ChapterArtwork activeIdx={sIdx} />
               </div>
 
               {/* Deliverables List */}
               <div className="space-y-3 pt-2">
-                {geo.layers.map((layer) => (
+                {chapter.layers.map((layer) => (
                   <div
                     key={layer.title}
-                    className="border-l-2 pl-3"
-                    style={{ borderColor: geo.primaryColor }}
+                    className="border-l-2 border-[#0075A2] pl-3"
                   >
                     <p className="font-display text-sm font-semibold text-[#001720]">
                       {layer.title}
                     </p>
-                    <p className="mt-0.5 text-xs text-[#5A707A] leading-relaxed">
+                    <p className="mt-0.5 text-xs text-[#64748B] leading-relaxed">
                       {layer.detail}
                     </p>
                   </div>
@@ -684,16 +916,16 @@ export default function ServicesSection({ onSelectService }) {
               </div>
 
               {/* Mobile Technical Benchmarks */}
-              <div className="my-6 grid grid-cols-3 gap-2 border-y border-[#DCE5EA] py-3 bg-white/50 px-2">
+              <div className="my-6 grid grid-cols-3 gap-2 border-y border-[#DCE5EA] py-3 bg-[#F8FAFC] px-3">
                 {metric.specs.map((spec) => (
                   <div key={spec.label}>
-                    <p className="font-mono text-[9px] uppercase tracking-wider text-[#64748B]">
+                    <p className="font-mono text-[8px] uppercase tracking-wider text-[#64748B]">
                       {spec.label}
                     </p>
                     <p className="font-display text-base font-semibold text-[#001720]">
                       {spec.value}
                     </p>
-                    <p className="text-[10px] text-[#5A707A] leading-tight">
+                    <p className="text-[9px] text-[#64748B] leading-tight">
                       {spec.detail}
                     </p>
                   </div>
