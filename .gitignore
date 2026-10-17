@@ -32,3 +32,6 @@ next-env.d.ts
 
 # Temporary scratch directory
 /scratch
+
+.vercel
+.env*
