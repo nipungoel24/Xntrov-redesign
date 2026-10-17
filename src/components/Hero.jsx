@@ -129,14 +129,14 @@ export default function Hero() {
             <div className="lg:col-span-8">
               <h1
                 id="hero-heading"
-                className="font-display text-5xl font-medium leading-[0.98] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)] sm:text-7xl lg:text-[5.25rem] xl:text-[6.25rem] 2xl:text-[6.75rem]"
+                className="font-display text-4xl sm:text-6xl lg:text-[3.5rem] xl:text-[5rem] 2xl:text-[6rem] font-medium leading-[0.98] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)]"
               >
-                <span className="block">Search Authority,</span>
+                <span className="block">SEO, Paid Media &amp;</span>
                 <span className="mt-1.5 block text-white/95">
-                  Paid Acquisition
+                  Web Development
                 </span>
                 <span className="mt-1.5 block text-[#FAAE39]">
-                  &amp; Web Systems.
+                  That Drives Growth.
                 </span>
               </h1>
 

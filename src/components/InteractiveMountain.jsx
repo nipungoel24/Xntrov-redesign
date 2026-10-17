@@ -98,25 +98,25 @@ export default function InteractiveMountain({ className = "" }) {
     // ========================================================
     const drawDistantPeaks = (px, py, t) => {
       const isMobile = width < 768;
-      const mOffset = isMobile ? height * 0.16 : 0;
-      const shiftX = px * 18;
-      const shiftY = py * 10;
-      const breathe = Math.sin(t * 0.001) * 4;
+      const mOffset = isMobile ? height * 0.12 : 0;
+      const shiftX = px * 14;
+      const shiftY = py * 8;
+      const breathe = Math.sin(t * 0.001) * 3;
 
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(-40 + shiftX, height);
 
-      // Crest points spanning across hero width
+      // Crest points spanning across hero width in lower negative space
       const pts = [
-        { x: -0.05, y: height * 0.76 + mOffset * 0.6 },
-        { x: 0.15, y: height * 0.65 + shiftY * 0.3 + mOffset * 0.7 },
-        { x: 0.32, y: height * 0.58 + shiftY * 0.5 + breathe + mOffset * 0.8 },
-        { x: 0.48, y: height * 0.50 + shiftY * 0.6 + mOffset * 0.9 },
-        { x: 0.64, y: height * 0.38 + shiftY * 0.9 + mOffset }, // Prominent distant peak
-        { x: 0.76, y: height * 0.46 + shiftY * 0.5 + mOffset * 0.9 },
-        { x: 0.88, y: height * 0.36 + shiftY * 1.0 - breathe + mOffset },
-        { x: 1.05, y: height * 0.58 + mOffset * 0.7 },
+        { x: -0.05, y: height * 0.88 + mOffset * 0.5 },
+        { x: 0.15, y: height * 0.80 + shiftY * 0.3 + mOffset * 0.6 },
+        { x: 0.32, y: height * 0.74 + shiftY * 0.4 + breathe + mOffset * 0.7 },
+        { x: 0.48, y: height * 0.68 + shiftY * 0.5 + mOffset * 0.8 },
+        { x: 0.65, y: height * 0.59 + shiftY * 0.7 + mOffset }, // Elegant distant peak
+        { x: 0.76, y: height * 0.66 + shiftY * 0.4 + mOffset * 0.85 },
+        { x: 0.88, y: height * 0.58 + shiftY * 0.8 - breathe + mOffset },
+        { x: 1.05, y: height * 0.72 + mOffset * 0.6 },
       ];
 
       ctx.lineTo(pts[0].x * width + shiftX, pts[0].y);
@@ -130,7 +130,7 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.lineTo(width + 40 + shiftX, height);
       ctx.closePath();
 
-      const grad = ctx.createLinearGradient(0, height * 0.32, 0, height);
+      const grad = ctx.createLinearGradient(0, height * 0.56 + mOffset, 0, height);
       grad.addColorStop(0, "rgba(2, 22, 32, 0.88)");
       grad.addColorStop(0.45, "rgba(0, 14, 22, 0.96)");
       grad.addColorStop(1, "rgba(0, 8, 14, 0.99)");
@@ -149,25 +149,25 @@ export default function InteractiveMountain({ className = "" }) {
     // ========================================================
     const drawMidRidge = (px, py, t) => {
       const isMobile = width < 768;
-      const mOffset = isMobile ? height * 0.16 : 0;
-      const shiftX = px * 32;
-      const shiftY = py * 18;
-      const sway = Math.cos(t * 0.0012) * 5;
+      const mOffset = isMobile ? height * 0.12 : 0;
+      const shiftX = px * 24;
+      const shiftY = py * 14;
+      const sway = Math.cos(t * 0.0012) * 4;
 
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(-30 + shiftX, height);
 
       const pts = [
-        { x: -0.05, y: height * 0.82 + mOffset * 0.6 },
-        { x: 0.18, y: height * 0.72 + shiftY * 0.5 + mOffset * 0.7 },
-        { x: 0.35, y: height * 0.62 + shiftY * 0.8 + sway + mOffset * 0.85 },
-        { x: 0.50, y: height * 0.56 + shiftY * 0.6 + mOffset * 0.9 },
-        { x: 0.68, y: height * 0.42 + shiftY * 1.2 + mOffset }, // Sharp angular massif peak
-        { x: 0.78, y: height * 0.50 + shiftY * 0.7 + mOffset * 0.95 },
-        { x: 0.88, y: height * 0.42 + shiftY * 1.2 + sway + mOffset },
-        { x: 0.98, y: height * 0.58 + mOffset * 0.8 },
-        { x: 1.05, y: height * 0.68 + mOffset * 0.7 },
+        { x: -0.05, y: height * 0.91 + mOffset * 0.5 },
+        { x: 0.18, y: height * 0.84 + shiftY * 0.4 + mOffset * 0.6 },
+        { x: 0.35, y: height * 0.77 + shiftY * 0.6 + sway + mOffset * 0.75 },
+        { x: 0.50, y: height * 0.72 + shiftY * 0.5 + mOffset * 0.8 },
+        { x: 0.68, y: height * 0.63 + shiftY * 0.9 + mOffset }, // Sharp angular massif peak
+        { x: 0.78, y: height * 0.69 + shiftY * 0.6 + mOffset * 0.85 },
+        { x: 0.88, y: height * 0.62 + shiftY * 0.9 + sway + mOffset },
+        { x: 0.98, y: height * 0.73 + mOffset * 0.7 },
+        { x: 1.05, y: height * 0.80 + mOffset * 0.6 },
       ];
 
       ctx.lineTo(pts[0].x * width + shiftX, pts[0].y);
@@ -177,7 +177,7 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.lineTo(width + 30 + shiftX, height);
       ctx.closePath();
 
-      const midGrad = ctx.createLinearGradient(0, height * 0.40 + mOffset, 0, height);
+      const midGrad = ctx.createLinearGradient(0, height * 0.60 + mOffset, 0, height);
       midGrad.addColorStop(0, "#01141E");
       midGrad.addColorStop(0.35, "#000B12");
       midGrad.addColorStop(1, "#000508");
@@ -185,20 +185,20 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.fill();
 
       // Topographic Contour Curves across Ridge
-      for (let rib = 0; rib < 7; rib++) {
-        const ribYOffset = rib * 26;
-        const ribAlpha = (0.28 - rib * 0.035).toFixed(3);
+      for (let rib = 0; rib < 6; rib++) {
+        const ribYOffset = rib * 22;
+        const ribAlpha = (0.26 - rib * 0.035).toFixed(3);
         ctx.beginPath();
         ctx.strokeStyle = `rgba(14, 148, 184, ${Math.max(0.06, ribAlpha)})`;
         ctx.lineWidth = 1.1;
         const startX = (0.34 + rib * 0.05) * width + shiftX;
-        const startY = height * 0.52 + ribYOffset + shiftY * 0.7 + mOffset;
+        const startY = height * 0.70 + ribYOffset + shiftY * 0.6 + mOffset;
         ctx.moveTo(startX, startY);
         ctx.quadraticCurveTo(
-          (0.62 + rib * 0.03) * width + shiftX + px * 16,
-          startY + 18 + py * 12,
+          (0.62 + rib * 0.03) * width + shiftX + px * 14,
+          startY + 15 + py * 10,
           (0.86 + rib * 0.02) * width + shiftX,
-          startY + 50
+          startY + 40
         );
         ctx.stroke();
       }
@@ -215,24 +215,24 @@ export default function InteractiveMountain({ className = "" }) {
     // ========================================================
     const drawForegroundMountain = (px, py, t) => {
       const isMobile = width < 768;
-      const mOffset = isMobile ? height * 0.16 : 0;
-      const shiftX = px * 48;
-      const shiftY = py * 26;
-      const pulse = Math.sin(t * 0.0016) * 4;
+      const mOffset = isMobile ? height * 0.12 : 0;
+      const shiftX = px * 36;
+      const shiftY = py * 20;
+      const pulse = Math.sin(t * 0.0016) * 3;
 
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(-20 + shiftX, height);
 
       const fgPts = [
-        { x: -0.05, y: height * 0.89 + mOffset * 0.4 },
-        { x: 0.20, y: height * 0.78 + shiftY * 0.6 + mOffset * 0.6 },
-        { x: 0.40, y: height * 0.69 + shiftY * 0.9 + mOffset * 0.8 },
-        { x: 0.56, y: height * 0.58 + shiftY * 1.1 + pulse + mOffset * 0.9 },
-        { x: 0.72, y: height * 0.45 + shiftY * 1.4 + mOffset }, // Massive foreground peak
-        { x: 0.83, y: height * 0.54 + shiftY * 0.9 + mOffset * 0.95 },
-        { x: 0.94, y: height * 0.47 + shiftY * 1.3 + pulse + mOffset },
-        { x: 1.05, y: height * 0.68 + mOffset * 0.7 },
+        { x: -0.05, y: height * 0.94 + mOffset * 0.4 },
+        { x: 0.20, y: height * 0.88 + shiftY * 0.5 + mOffset * 0.5 },
+        { x: 0.40, y: height * 0.81 + shiftY * 0.7 + mOffset * 0.7 },
+        { x: 0.56, y: height * 0.74 + shiftY * 0.8 + pulse + mOffset * 0.8 },
+        { x: 0.72, y: height * 0.66 + shiftY * 1.1 + mOffset }, // Massive foreground peak
+        { x: 0.83, y: height * 0.73 + shiftY * 0.7 + mOffset * 0.85 },
+        { x: 0.94, y: height * 0.68 + shiftY * 1.0 + pulse + mOffset * 0.9 },
+        { x: 1.05, y: height * 0.82 + mOffset * 0.6 },
       ];
 
       ctx.lineTo(fgPts[0].x * width + shiftX, fgPts[0].y);
@@ -243,7 +243,7 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.closePath();
 
       // Deepest black bedrock foundation
-      const fgGrad = ctx.createLinearGradient(0, height * 0.45 + mOffset, 0, height);
+      const fgGrad = ctx.createLinearGradient(0, height * 0.64 + mOffset, 0, height);
       fgGrad.addColorStop(0, "#010A0F");
       fgGrad.addColorStop(0.3, "#000407");
       fgGrad.addColorStop(1, "#000203");
@@ -252,38 +252,38 @@ export default function InteractiveMountain({ className = "" }) {
 
       // Large Faceted Chasm / Cleavage Plane under the Peak
       const peakX = 0.72 * width + shiftX;
-      const peakY = height * 0.45 + shiftY * 1.4 + mOffset;
+      const peakY = height * 0.66 + shiftY * 1.1 + mOffset;
       ctx.beginPath();
       ctx.moveTo(peakX, peakY);
-      ctx.lineTo(0.56 * width + shiftX - px * 16, height * 0.84 + mOffset * 0.5);
-      ctx.lineTo(0.82 * width + shiftX + px * 18, height * 0.92 + mOffset * 0.3);
+      ctx.lineTo(0.56 * width + shiftX - px * 14, height * 0.90 + mOffset * 0.4);
+      ctx.lineTo(0.82 * width + shiftX + px * 16, height * 0.96 + mOffset * 0.2);
       ctx.closePath();
 
-      const facetGrad = ctx.createLinearGradient(peakX, peakY, peakX, height * 0.92);
+      const facetGrad = ctx.createLinearGradient(peakX, peakY, peakX, height * 0.96);
       facetGrad.addColorStop(0, "rgba(0, 117, 162, 0.35)");
       facetGrad.addColorStop(0.35, "rgba(0, 23, 32, 0.80)");
       facetGrad.addColorStop(1, "rgba(0, 3, 5, 0.98)");
       ctx.fillStyle = facetGrad;
       ctx.fill();
 
-      // Warm Amber Geological Glint on Main Spine Ridge (Harmonizing with "& Web Systems")
+      // Warm Amber Geological Glint on Main Spine Ridge (Harmonizing with headline amber)
       ctx.beginPath();
       ctx.moveTo(peakX, peakY);
-      ctx.lineTo(0.56 * width + shiftX - px * 16, height * 0.84 + mOffset * 0.5);
+      ctx.lineTo(0.56 * width + shiftX - px * 14, height * 0.90 + mOffset * 0.4);
       ctx.strokeStyle = "rgba(250, 174, 57, 0.48)";
       ctx.lineWidth = 1.6;
       ctx.stroke();
 
       // Secondary Luminous Topographic Contours on the Face
-      for (let i = 0; i < 6; i++) {
-        const yPos = height * 0.58 + i * 28 + shiftY * 0.8 + mOffset;
+      for (let i = 0; i < 5; i++) {
+        const yPos = height * 0.74 + i * 24 + shiftY * 0.6 + mOffset;
         ctx.beginPath();
         ctx.moveTo(0.44 * width + shiftX + i * 16, yPos);
         ctx.quadraticCurveTo(
-          0.66 * width + shiftX + px * 20,
-          yPos - 18 + py * 10,
+          0.66 * width + shiftX + px * 16,
+          yPos - 14 + py * 8,
           0.90 * width + shiftX,
-          yPos + 38
+          yPos + 30
         );
         ctx.strokeStyle = `rgba(255, 255, 255, ${(0.14 - i * 0.02).toFixed(3)})`;
         ctx.lineWidth = 1;
