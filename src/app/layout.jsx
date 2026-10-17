@@ -1,25 +1,16 @@
-import { Space_Grotesk, DM_Sans, Poppins } from "next/font/google";
+import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { XNTROVA_BRAND, VERIFIED_FAQS, CORE_SERVICES } from "@/data/xntrova-data";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-space-grotesk",
   display: "swap",
 });
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-dm-sans",
-  display: "swap",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -121,7 +112,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${dmSans.variable} ${poppins.variable}`}
+      className={`${spaceGrotesk.variable} ${dmSans.variable}`}
     >
       <body className="min-h-dvh flex flex-col bg-white text-[#001720] antialiased">
         <a
