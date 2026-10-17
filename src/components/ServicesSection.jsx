@@ -66,527 +66,219 @@ const CHAPTER_DELIVERABLES = [
   {
     code: "01",
     label: "Search Engine Optimization",
-    eyebrow: "ORGANIC PIPELINE // CHAPTER 01",
-    watermark: "INDEX",
+    eyebrow: "ORGANIC PIPELINE // 01",
     layers: [
       { title: "Technical Crawl Architecture", detail: "Core Web Vitals hygiene, XML/JSON-LD schema, and crawl-budget optimization." },
-      { title: "High-Intent B2B Clustering", detail: "Commercial topic authority models that capture buyers actively evaluating solutions." },
-      { title: "Delhi NCR Local & National Rank", detail: "Dual-layer search strategy capturing local pack dominance and national visibility." },
+      { title: "High-Intent B2B Clustering", detail: "Commercial topic authority models capturing active buyers." },
+      { title: "Delhi NCR Local & National Rank", detail: "Dual-layer search strategy capturing local pack and national dominance." },
     ],
   },
   {
     code: "02",
     label: "Paid Advertising (PPC)",
-    eyebrow: "ACQUISITION MEDIA // CHAPTER 02",
-    watermark: "INTENT",
+    eyebrow: "ACQUISITION MEDIA // 02",
     layers: [
-      { title: "Precision Search & PMax", detail: "Exact-match intent interception across Google Ads with negative keyword governance." },
-      { title: "B2B Decision-Maker Funnels", detail: "Targeted LinkedIn and Meta media campaigns reaching verified executive buyers." },
+      { title: "Precision Search & PMax", detail: "Exact-match intent interception with negative keyword governance." },
+      { title: "B2B Decision-Maker Funnels", detail: "Targeted LinkedIn and Meta media campaigns for executive buyers." },
       { title: "Server-Side Conversion Telemetry", detail: "GA4, Google Tag Manager, and Meta CAPI server-side event tracking." },
     ],
   },
   {
     code: "03",
     label: "Website & App Development",
-    eyebrow: "WEB SYSTEMS // CHAPTER 03",
-    watermark: "SYSTEM",
+    eyebrow: "WEB SYSTEMS // 03",
     layers: [
-      { title: "Sub-Second Next.js Architecture", detail: "Modern React 19 web systems engineered for 95+ Core Web Vitals speed." },
-      { title: "Conversion-Engineered UI", detail: "Accessible, high-contrast layouts designed to turn executive visitors into qualified leads." },
-      { title: "Enterprise API & CMS Integration", detail: "Robust lead capture endpoints, CRM webhooks, and secure content architecture." },
+      { title: "Sub-Second Next.js Architecture", detail: "Modern React 19 web systems engineered for 95+ Core Web Vitals." },
+      { title: "Conversion-Engineered UI", detail: "Accessible, high-contrast layouts designed to convert executive visitors." },
+      { title: "Enterprise API & CMS Integration", detail: "Robust lead capture endpoints, CRM webhooks, and secure content." },
     ],
   },
   {
     code: "04",
     label: "E-Commerce & Amazon Growth",
-    eyebrow: "COMMERCE ENGINE // CHAPTER 04",
-    watermark: "SCALE",
+    eyebrow: "COMMERCE ENGINE // 04",
     layers: [
-      { title: "Merchant Feed Architecture", detail: "Structured product catalogs, variant schema, and rich merchant data integration." },
-      { title: "High-ROAS Shopping & Sponsored Ads", detail: "Google Shopping campaigns and Amazon Sponsored Products dialed for profitability." },
-      { title: "Frictionless Checkout Optimization", detail: "Cart-to-conversion CRO paths and automated post-purchase repeat buyer flows." },
+      { title: "Merchant Feed Architecture", detail: "Structured product catalogs, variant schema, and rich merchant integration." },
+      { title: "High-ROAS Shopping & Sponsored Ads", detail: "Google Shopping campaigns and Amazon Sponsored Products dialed for scale." },
+      { title: "Frictionless Checkout Optimization", detail: "Cart-to-conversion CRO paths and automated post-purchase flows." },
     ],
   },
   {
     code: "05",
     label: "Social Media & Reputation (ORM)",
-    eyebrow: "BRAND DEFENSE // CHAPTER 05",
-    watermark: "DEFENSE",
+    eyebrow: "BRAND DEFENSE // 05",
     layers: [
-      { title: "Executive Thought Leadership", detail: "Authority-building organic social narratives crafted for industry decision-makers." },
-      { title: "24/7 Sentiment & Review Radar", detail: "Multi-channel reputation monitoring across Google Reviews, directories, and social." },
-      { title: "SERP Reputation Defense", detail: "Proactive search-result brand defense and online reputation management (ORM)." },
+      { title: "Executive Thought Leadership", detail: "Authority-building organic social narratives crafted for decision-makers." },
+      { title: "24/7 Sentiment & Review Radar", detail: "Multi-channel reputation monitoring across Google Reviews and social." },
+      { title: "SERP Reputation Defense", detail: "Proactive search-result brand defense and online reputation management." },
     ],
   },
   {
     code: "06",
     label: "Content, Video & Lifecycle Email",
-    eyebrow: "EDITORIAL VOICE // CHAPTER 06",
-    watermark: "VOICE",
+    eyebrow: "EDITORIAL VOICE // 06",
     layers: [
-      { title: "Original Research & B2B Guides", detail: "Comprehensive industry articles and technical guides mapped to buyer queries." },
-      { title: "Lifecycle Email Nurture Journeys", detail: "Automated segmentation and high-conversion drip sequences for active pipelines." },
-      { title: "Commercial Infographics & Video", detail: "Engaging visual storytelling assets that articulate complex technical solutions." },
+      { title: "Original Research & B2B Guides", detail: "Comprehensive technical guides mapped to buyer query stages." },
+      { title: "Lifecycle Email Nurture Journeys", detail: "Automated segmentation and high-conversion drip sequences." },
+      { title: "Commercial Infographics & Video", detail: "Engaging visual storytelling assets that articulate complex solutions." },
     ],
   },
 ];
 
 /**
- * Bespoke Architectural Vector Artworks for the 6 Disciplines.
- * Designed with layered isometric perspective, volumetric depth, translucent facets,
- * calibrated coordinate hairlines, and authentic brand color harmony.
+ * Bold Geometric Artwork Silhouettes directly matching the visual rhythm of Tresmares Capital.
+ * Clean, bold, solid graphic silhouettes with zero HUD clutter, zero coordinate hairlines,
+ * zero telemetry brackets, and instant legibility at any viewing distance.
  */
-function ChapterArtwork({ activeIdx }) {
+function GeometricSilhouettes({ activeIdx }) {
   return (
-    <div className="relative w-full h-[360px] xl:h-[400px] flex items-center justify-center select-none">
-      {/* 01 SEO — The Algorithmic Horizon & Index Matrix */}
+    <div className="relative w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] xl:w-[480px] xl:h-[480px] flex items-center justify-center select-none pointer-events-none">
+      
+      {/* 01 SEO — Two Staggered Isometric Prism Blocks + Golden Trajectory */}
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           activeIdx === 0
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            : "opacity-0 scale-90 translate-y-8 pointer-events-none"
         }`}
       >
-        <svg
-          viewBox="0 0 520 380"
-          className="w-full h-full max-w-[500px]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Subtle Coordinate Grid in Negative Space */}
-          <g opacity="0.18">
-            <line x1="60" y1="40" x2="460" y2="40" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="60" y1="120" x2="460" y2="120" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="60" y1="200" x2="460" y2="200" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="60" y1="280" x2="460" y2="280" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="60" y1="340" x2="460" y2="340" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="120" y1="20" x2="120" y2="360" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="260" y1="20" x2="260" y2="360" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="400" y1="20" x2="400" y2="360" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-          </g>
+        <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-xl" fill="none">
+          {/* Base Navy Isometric Block */}
+          <polygon points="80,180 240,100 320,150 160,230" fill="#001720" />
+          <polygon points="160,230 320,150 320,220 160,300" fill="#000E14" />
+          <polygon points="80,180 160,230 160,300 80,250" fill="#002838" />
 
-          {/* Integrated Architectural Watermark Lockup */}
-          <text
-            x="260"
-            y="95"
-            textAnchor="middle"
-            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
-          >
-            INDEX MATRIX // 01
-          </text>
+          {/* Staggered Cerulean Floating Facet */}
+          <polygon points="120,140 280,60 340,95 180,175" fill="#0075A2" fillOpacity="0.9" />
+          <polygon points="180,175 340,95 340,145 180,225" fill="#005B80" />
+          <polygon points="120,140 180,175 180,225 120,190" fill="#0088BC" />
 
-          {/* Ambient Diffuse Shadow */}
-          <polygon
-            points="140,290 380,270 410,320 170,340"
-            fill="rgba(0, 23, 32, 0.08)"
-            filter="blur(16px)"
-          />
-
-          {/* Deep Obsidian Foundation Block */}
-          <polygon
-            points="120,200 270,140 270,290 120,330"
-            fill="#001720"
-          />
-
-          {/* Ascending Teal Prism Facet (Xntrova Brand Blue) */}
-          <polygon
-            points="270,140 420,180 420,310 270,290"
-            fill="#0075A2"
-          />
-
-          {/* Precision Top Face catching Horizon Light */}
-          <polygon
-            points="120,200 270,140 420,180 270,230"
-            fill="#0288BD"
-          />
-
-          {/* Frosted Translucent Architectural Shard Overlay */}
-          <polygon
-            points="160,110 350,60 380,200 190,250"
-            fill="rgba(0, 117, 162, 0.15)"
-            stroke="#0075A2"
-            strokeWidth="1.2"
-          />
-
-          {/* Algorithmic Crawl Depth Contour Lines */}
-          <path d="M140,220 L270,170 L400,205" stroke="#FFFFFF" strokeWidth="1" opacity="0.7" />
-          <path d="M150,245 L270,195 L390,230" stroke="#FFFFFF" strokeWidth="1" opacity="0.5" />
-          <path d="M160,270 L270,220 L380,255" stroke="#FFFFFF" strokeWidth="1" opacity="0.3" />
-
-          {/* Warm Amber Rank Trajectory Beam */}
-          <line x1="80" y1="280" x2="450" y2="100" stroke="#FAAE39" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="450" cy="100" r="6" fill="#FAAE39" />
-          <circle cx="450" cy="100" r="14" stroke="#FAAE39" strokeWidth="1" strokeDasharray="2 2" opacity="0.8" />
-
-          {/* Coordinate Technical Labels */}
-          <text x="90" y="270" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
-            [SYS // CRAWL-INDEX]
-          </text>
-          <text x="375" y="85" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
-            [POS: TOP 3 ORGANIC]
-          </text>
+          {/* Ascending Golden Growth Trajectory */}
+          <line x1="40" y1="290" x2="360" y2="90" stroke="#FAAE39" strokeWidth="6" strokeLinecap="round" />
+          <circle cx="360" cy="90" r="10" fill="#FAAE39" />
+          <circle cx="360" cy="90" r="18" stroke="#FAAE39" strokeWidth="2" strokeOpacity="0.4" />
         </svg>
       </div>
 
-      {/* 02 PPC — The Intent Reticle & Kinetic Acquisition Vector */}
+      {/* 02 PPC — Two Bold Staggered Solid Rectangles (Direct Tresmares Private Equity Match) */}
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           activeIdx === 1
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            : "opacity-0 scale-90 translate-y-8 pointer-events-none"
         }`}
       >
-        <svg
-          viewBox="0 0 520 380"
-          className="w-full h-full max-w-[500px]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Concentric Precision Reticle Radar */}
-          <g opacity="0.25">
-            <circle cx="260" cy="190" r="160" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="4 4" />
-            <circle cx="260" cy="190" r="110" stroke="#C82318" strokeWidth="0.8" />
-            <circle cx="260" cy="190" r="60" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="2 2" />
-            <line x1="260" y1="10" x2="260" y2="370" stroke="#0075A2" strokeWidth="0.6" strokeDasharray="3 3" />
-            <line x1="80" y1="190" x2="440" y2="190" stroke="#0075A2" strokeWidth="0.6" strokeDasharray="3 3" />
-          </g>
+        <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-xl" fill="none">
+          {/* Top-Left Bold Crimson Solid Rectangle */}
+          <rect x="50" y="90" width="190" height="110" rx="2" fill="#C82318" />
 
-          <text
-            x="260"
-            y="95"
-            textAnchor="middle"
-            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
-          >
-            INTENT RETICLE // 02
-          </text>
+          {/* Bottom-Right Staggered Deep Navy Solid Rectangle */}
+          <rect x="160" y="195" width="190" height="110" rx="2" fill="#001720" />
 
-          {/* Deep Navy Baseline Anchor */}
-          <polygon
-            points="140,240 320,130 360,260 180,330"
-            fill="#001720"
-          />
-
-          {/* Dynamic Cadmium Crimson Wedge (High-Velocity Performance Media) */}
-          <polygon
-            points="200,90 410,140 370,290 160,220"
-            fill="#C82318"
-            className="drop-shadow-[0_16px_32px_rgba(200,35,24,0.25)]"
-          />
-
-          {/* Intersecting Translucent Cyan Filter Plane */}
-          <polygon
-            points="180,160 350,110 390,210 220,280"
-            fill="rgba(0, 117, 162, 0.35)"
-            stroke="#FFFFFF"
-            strokeWidth="1"
-          />
-
-          {/* Precision Target Crosshair Beam in Warm Amber */}
-          <line x1="90" y1="120" x2="430" y2="260" stroke="#FAAE39" strokeWidth="2.5" strokeLinecap="round" />
-          <circle cx="260" cy="190" r="5" fill="#FAAE39" />
-          <circle cx="260" cy="190" r="16" stroke="#FAAE39" strokeWidth="1.2" />
-
-          <text x="110" y="110" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
-            [EXACT-MATCH INTERCEPT]
-          </text>
-          <text x="330" y="310" className="font-mono text-[9px] font-semibold fill-[#C82318] tracking-widest">
-            [TELEMETRY: GA4 + CAPI]
-          </text>
+          {/* Dynamic Laser Intercept Line */}
+          <line x1="30" y1="250" x2="370" y2="140" stroke="#FAAE39" strokeWidth="4" strokeLinecap="round" strokeDasharray="8 6" />
         </svg>
       </div>
 
-      {/* 03 Web Dev — The Spatial Monolith & Precision Portals */}
+      {/* 03 Web Dev — 2x2 Grid of Four Beveled Blocks (Direct Tresmares Direct Lending Match) */}
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           activeIdx === 2
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            : "opacity-0 scale-90 translate-y-8 pointer-events-none"
         }`}
       >
-        <svg
-          viewBox="0 0 520 380"
-          className="w-full h-full max-w-[500px]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Architectural Drafting Scaffolding */}
-          <g opacity="0.2">
-            <line x1="80" y1="60" x2="440" y2="60" stroke="#001720" strokeWidth="0.8" />
-            <line x1="80" y1="180" x2="440" y2="180" stroke="#001720" strokeWidth="0.8" strokeDasharray="4 4" />
-            <line x1="80" y1="300" x2="440" y2="300" stroke="#001720" strokeWidth="0.8" />
-            <line x1="160" y1="30" x2="160" y2="350" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="260" y1="30" x2="260" y2="350" stroke="#001720" strokeWidth="0.8" />
-            <line x1="360" y1="30" x2="360" y2="350" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
-          </g>
+        <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-xl" fill="none">
+          {/* Top-Left Block (Cerulean) */}
+          <polygon points="70,160 175,160 175,65 105,65 70,100" fill="#0075A2" />
+          <polygon points="70,100 105,65 175,65 140,100" fill="#008BC0" fillOpacity="0.4" />
 
-          <text
-            x="260"
-            y="95"
-            textAnchor="middle"
-            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
-          >
-            ARCHITECTURE // 03
-          </text>
+          {/* Top-Right Block (Deep Navy) */}
+          <polygon points="225,160 330,160 330,100 295,65 225,65" fill="#001720" />
+          <polygon points="225,65 295,65 330,100 260,100" fill="#002D3F" fillOpacity="0.6" />
 
-          {/* Left Obsidian Monolith Pillar */}
-          <polygon
-            points="140,110 220,90 220,320 140,330"
-            fill="#001720"
-          />
+          {/* Bottom-Left Block (Deep Navy) */}
+          <polygon points="70,240 175,240 140,335 70,335" fill="#001720" />
+          <polygon points="175,240 140,335 110,335 145,240" fill="#002D3F" fillOpacity="0.6" />
 
-          {/* Right Foundation Pillar */}
-          <polygon
-            points="300,90 380,110 380,330 300,320"
-            fill="#002533"
-          />
-
-          {/* Electric Cyan Floating Portal Aperture */}
-          <polygon
-            points="190,140 330,140 330,280 190,280"
-            fill="rgba(34, 211, 238, 0.15)"
-            stroke="#22D3EE"
-            strokeWidth="1.5"
-            className="drop-shadow-[0_12px_28px_rgba(34,211,238,0.2)]"
-          />
-
-          {/* Center Brand Blue Monolith Block */}
-          <polygon
-            points="230,110 290,110 290,300 230,300"
-            fill="#0075A2"
-          />
-
-          {/* Horizontal System Baseline Vector in Teal */}
-          <line x1="100" y1="210" x2="420" y2="210" stroke="#0075A2" strokeWidth="2.5" />
-          <rect x="250" y="200" width="20" height="20" fill="#22D3EE" />
-
-          <text x="130" y="75" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
-            [REACT 19 // APP ROUTER]
-          </text>
-          <text x="310" y="350" className="font-mono text-[9px] font-semibold fill-[#22D3EE] tracking-widest">
-            [LATENCY: &lt;1.0s SUB-SECOND]
-          </text>
+          {/* Bottom-Right Block (Cerulean) */}
+          <polygon points="225,240 330,240 330,335 260,335 225,300" fill="#0075A2" />
+          <polygon points="225,300 260,335 330,335 295,300" fill="#005B80" fillOpacity="0.5" />
         </svg>
       </div>
 
-      {/* 04 E-Commerce — The Merchant Diamond & Transaction Facets */}
+      {/* 04 E-Commerce — Faceted Diamond / Hexagonal Prism in Warm Amber & Deep Navy */}
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           activeIdx === 3
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            : "opacity-0 scale-90 translate-y-8 pointer-events-none"
         }`}
       >
-        <svg
-          viewBox="0 0 520 380"
-          className="w-full h-full max-w-[500px]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Stepped Scale Grid */}
-          <g opacity="0.2">
-            <polygon points="260,40 440,190 260,340 80,190" stroke="#FAAE39" strokeWidth="0.8" strokeDasharray="3 3" />
-            <polygon points="260,90 380,190 260,290 140,190" stroke="#0075A2" strokeWidth="0.8" />
-          </g>
-
-          <text
-            x="260"
-            y="95"
-            textAnchor="middle"
-            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
-          >
-            SCALE DIAMOND // 04
-          </text>
-
-          {/* Deep Teal Foundation Facet */}
-          <polygon
-            points="150,190 260,100 260,290 150,260"
-            fill="#0075A2"
-          />
-
-          {/* Warm Amber Transaction Facet (Commercial Momentum) */}
-          <polygon
-            points="260,100 370,190 370,260 260,290"
-            fill="#FAAE39"
-            className="drop-shadow-[0_16px_32px_rgba(250,174,57,0.22)]"
-          />
-
-          {/* Top Diamond Crown in Obsidian Navy */}
-          <polygon
-            points="260,60 350,140 260,170 170,140"
-            fill="#001720"
-          />
-
-          {/* Translucent Stepped Catalog Shelf Plane */}
-          <polygon
-            points="180,220 340,170 360,250 200,290"
-            fill="rgba(0, 117, 162, 0.25)"
-            stroke="#FAAE39"
-            strokeWidth="1.2"
-          />
-
-          {/* Cadmium Crimson Purchase Vector */}
-          <line x1="90" y1="280" x2="430" y2="120" stroke="#C82318" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="430" cy="120" r="5" fill="#C82318" />
-
-          <text x="100" y="305" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
-            [MERCHANT SCHEMA FEED]
-          </text>
-          <text x="320" y="105" className="font-mono text-[9px] font-semibold fill-[#C82318] tracking-widest">
-            [HIGH-ROAS SCALE]
-          </text>
+        <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-xl" fill="none">
+          {/* Top Warm Amber Diamond Facet */}
+          <polygon points="200,60 320,140 200,220 80,140" fill="#FAAE39" />
+          {/* Left Deep Navy Facet */}
+          <polygon points="80,140 200,220 200,340 80,260" fill="#001720" />
+          {/* Right Cerulean Blue Facet */}
+          <polygon points="200,220 320,140 320,260 200,340" fill="#0075A2" />
+          {/* Intersecting Scaled Vector */}
+          <line x1="50" y1="290" x2="350" y2="110" stroke="#FAAE39" strokeWidth="4" strokeLinecap="round" />
         </svg>
       </div>
 
-      {/* 05 SMO / ORM — The Bastion Shield & Sentiment Radar */}
+      {/* 05 SMO / ORM — Solid Bastion Shield (Brand Defense) */}
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           activeIdx === 4
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            : "opacity-0 scale-90 translate-y-8 pointer-events-none"
         }`}
       >
-        <svg
-          viewBox="0 0 520 380"
-          className="w-full h-full max-w-[500px]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Radar Perimeter Telemetry */}
-          <g opacity="0.22">
-            <circle cx="260" cy="190" r="150" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="3 3" />
-            <circle cx="260" cy="190" r="90" stroke="#0075A2" strokeWidth="0.8" />
-            <line x1="110" y1="190" x2="410" y2="190" stroke="#0075A2" strokeWidth="0.8" strokeDasharray="2 2" />
-          </g>
+        <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-xl" fill="none">
+          {/* Outer Heavy Hexagonal Shield in Deep Navy */}
+          <polygon points="200,50 325,120 325,260 200,345 75,260 75,120" fill="#001720" />
 
-          <text
-            x="260"
-            y="95"
-            textAnchor="middle"
-            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
-          >
-            BRAND SHIELD // 05
-          </text>
+          {/* Inner Bold Crimson Chevron Crest */}
+          <polygon points="200,95 290,145 290,240 200,300 110,240 110,145" fill="#C82318" />
 
-          {/* Obsidian Hexagonal Armor Foundation */}
-          <polygon
-            points="180,100 340,100 380,210 260,320 140,210"
-            fill="#001720"
-          />
-
-          {/* Crimson Defensive Integrity Plate */}
-          <polygon
-            points="210,130 310,130 340,210 260,290 180,210"
-            fill="#C82318"
-            className="drop-shadow-[0_16px_36px_rgba(200,35,24,0.22)]"
-          />
-
-          {/* Translucent Brand Blue Core Prism */}
-          <polygon
-            points="240,160 280,160 300,210 260,260 220,210"
-            fill="rgba(0, 117, 162, 0.75)"
-            stroke="#22D3EE"
-            strokeWidth="1.2"
-          />
-
-          {/* Cyan Defensive Radar Sweep Vector */}
-          <line x1="80" y1="230" x2="440" y2="170" stroke="#22D3EE" strokeWidth="2.2" strokeLinecap="round" />
-          <circle cx="370" cy="180" r="4" fill="#22D3EE" />
-
-          <text x="90" y="255" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
-            [24/7 SENTIMENT RADAR]
-          </text>
-          <text x="310" y="90" className="font-mono text-[9px] font-semibold fill-[#C82318] tracking-widest">
-            [ACTIVE ORM DEFENSE]
-          </text>
+          {/* Center Cerulean Core Facet */}
+          <polygon points="200,140 255,170 255,225 200,260 145,225 145,170" fill="#0075A2" />
         </svg>
       </div>
 
-      {/* 06 Content — The Editorial Folio & Continuous Narrative Ribbon */}
+      {/* 06 Content — Split Circular Arc & Flow Ribbon (Direct Tresmares Fund of Funds Match) */}
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           activeIdx === 5
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            : "opacity-0 scale-90 translate-y-8 pointer-events-none"
         }`}
       >
-        <svg
-          viewBox="0 0 520 380"
-          className="w-full h-full max-w-[500px]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Editorial Grid Lines */}
-          <g opacity="0.2">
-            <line x1="70" y1="80" x2="450" y2="80" stroke="#001720" strokeWidth="0.8" />
-            <line x1="70" y1="160" x2="450" y2="160" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="70" y1="240" x2="450" y2="240" stroke="#001720" strokeWidth="0.8" />
-            <line x1="70" y1="310" x2="450" y2="310" stroke="#001720" strokeWidth="0.8" strokeDasharray="3 3" />
-          </g>
+        <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-xl" fill="none">
+          {/* Top-Right Warm Amber Semi-Circle Arc */}
+          <path d="M 200 80 A 120 120 0 0 1 320 200 L 200 200 Z" fill="#FAAE39" />
 
-          <text
-            x="260"
-            y="95"
-            textAnchor="middle"
-            className="font-display font-medium text-[42px] tracking-tight fill-[#001720]/08"
-          >
-            EDITORIAL FOLIO // 06
-          </text>
+          {/* Bottom-Left Deep Navy Semi-Circle Arc */}
+          <path d="M 200 200 A 120 120 0 0 1 80 200 L 200 200 Z" fill="#001720" />
 
-          {/* Deep Obsidian Foundation Folio Spine */}
-          <polygon
-            points="130,140 280,80 320,280 170,320"
-            fill="#001720"
-          />
-
-          {/* Warm Amber Open Folio Page Plate */}
-          <polygon
-            points="230,110 390,140 350,320 200,270"
-            fill="#FAAE39"
-            className="drop-shadow-[0_16px_36px_rgba(250,174,57,0.22)]"
-          />
-
-          {/* Translucent Brand Blue Technical Manuscript Overlay */}
-          <polygon
-            points="170,160 340,110 370,230 200,290"
-            fill="rgba(0, 117, 162, 0.35)"
-            stroke="#0075A2"
-            strokeWidth="1.2"
-          />
-
-          {/* Flowing Narrative Bezier Distribution Ribbon */}
+          {/* Interlocking Cerulean S-Curve Folio */}
           <path
-            d="M80,270 C160,330 260,110 440,160"
-            stroke="#C82318"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
+            d="M 100 260 C 140 320, 260 320, 300 260 C 340 200, 260 140, 200 140 C 140 140, 100 200, 100 260 Z"
+            fill="#0075A2"
+            fillOpacity="0.85"
           />
-          <circle cx="440" cy="160" r="5" fill="#C82318" />
-
-          <text x="90" y="250" className="font-mono text-[9px] font-semibold fill-[#FAAE39] tracking-widest">
-            [RESEARCH & TOPICAL DEPTH]
-          </text>
-          <text x="310" y="345" className="font-mono text-[9px] font-semibold fill-[#0075A2] tracking-widest">
-            [LIFECYCLE SYNDICATION]
-          </text>
         </svg>
       </div>
+
     </div>
   );
 }
 
 export default function ServicesSection({ onSelectService }) {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeIdx, setActiveIdx] = useState(0);
   const containerRef = useRef(null);
+  const [activeIdx, setActiveIdx] = useState(0);
 
-  // Natural vertical scroll driver for Desktop (lg+)
   useEffect(() => {
     let ticking = false;
 
@@ -605,7 +297,6 @@ export default function ServicesSection({ onSelectService }) {
 
         // Progress across the entire section travel distance (0 to 1)
         const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-        setScrollProgress(progress);
 
         // Active discipline chapter index (0 to 5)
         const count = CORE_SERVICES.length;
@@ -631,7 +322,7 @@ export default function ServicesSection({ onSelectService }) {
     if (!containerRef.current) return;
     const containerTop = window.scrollY + containerRef.current.getBoundingClientRect().top;
     const scrollable = containerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll = containerTop + (idx / CORE_SERVICES.length) * scrollable + 25;
+    const targetScroll = containerTop + ((idx + 0.5) / CORE_SERVICES.length) * scrollable;
     window.scrollTo({ top: targetScroll, behavior: "smooth" });
   };
 
@@ -643,11 +334,11 @@ export default function ServicesSection({ onSelectService }) {
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="relative bg-[#F4F8FA] text-[#001720]"
+      className="relative bg-[#ECEFF1] text-[#001720]"
     >
       {/* Editorial Opening Section Header */}
-      <div className="mx-auto max-w-[1440px] px-4 pt-20 sm:px-8 sm:pt-28 lg:px-12 lg:pt-32">
-        <div className="flex flex-col justify-between gap-6 border-b border-[#DCE5EA] pb-8 lg:flex-row lg:items-end">
+      <div className="mx-auto max-w-[1440px] px-6 pt-20 sm:px-12 sm:pt-28 lg:px-16 lg:pt-32">
+        <div className="flex flex-col justify-between gap-6 border-b border-[#CFD8DC] pb-8 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2.5">
               <span className="h-2 w-2 bg-[#C82318]" aria-hidden="true" />
@@ -663,7 +354,7 @@ export default function ServicesSection({ onSelectService }) {
             </h2>
           </div>
 
-          <p className="max-w-md text-sm leading-relaxed text-[#4A6270] sm:text-base">
+          <p className="max-w-md text-sm leading-relaxed text-[#455A64] sm:text-base">
             We unite search authority, performance media, conversion web engineering,
             and reputation governance into a unified, measurable growth engine.
           </p>
@@ -672,192 +363,140 @@ export default function ServicesSection({ onSelectService }) {
 
       {/* ============================================================
           DESKTOP FULL-STAGE TRESMARES EDITORIAL SUITE (lg+)
-          Unified architectural installation:
-          - Left Column: Persistent selector + Active narrative, deliverables, links & CTA
-          - Center Stage: Bespoke volumetric vector artwork with coordinated typography
-          - Right Column: Technical benchmarks & specifications
+          Replicates the exact 4-corner spatial distribution of Tresmares Capital:
+          - Top-Left: Unboxed vertical text discipline selector (positioned below fixed header)
+          - Center: Giant watermark typography + Bold geometric silhouette artwork
+          - Bottom-Left: Active narrative, deliverables, links & CTA
+          - Bottom-Right: Floating unboxed verified technical benchmarks
           ============================================================ */}
       <div
         ref={containerRef}
         style={{ minHeight: "480vh" }}
         className="hidden lg:block relative"
       >
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center px-6 py-6 lg:px-10 xl:px-14">
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
           
-          {/* Defined Architectural Framing Stage */}
-          <div className="relative mx-auto w-full max-w-[1400px] border border-[#DCE5EA] bg-white/80 backdrop-blur-md shadow-[0_20px_50px_rgba(0,23,32,0.06)] flex flex-col overflow-hidden">
+          {/* ========================================================
+              CENTER STAGE: Monumental Watermark Typography + Bold Graphic Silhouette
+              Centered in the viewport, breathing freely in expansive negative space
+              ======================================================== */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 px-6 overflow-hidden">
             
-            {/* STAGE HEADER BAR */}
-            <div className="flex items-center justify-between border-b border-[#DCE5EA] bg-[#F8FAFC]/90 px-6 py-2.5">
-              <div className="flex items-center gap-3">
-                <span className="h-2 w-2 rounded-full bg-[#0075A2]" aria-hidden="true" />
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#001720]">
-                  XNTROVA CAPABILITIES SUITE // {activeMetric.category}
-                </span>
-              </div>
+            {/* Monumental Watermark Typography */}
+            <h2
+              key={`watermark-${activeIdx}`}
+              className="absolute font-display font-bold text-center tracking-tighter text-[#001720]/[0.07] uppercase select-none text-[5vw] xl:text-[4.5vw] leading-none max-w-4xl px-4 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            >
+              {activeService.title}
+            </h2>
 
-              {/* Progress Tracker */}
-              <div className="flex items-center gap-4">
-                <span className="font-mono text-xs font-semibold text-[#001720]">
-                  0{activeIdx + 1} <span className="text-[#94A3B8]">/</span> 06
-                </span>
-                <div className="h-1.5 w-24 bg-[#E2E8F0] overflow-hidden" aria-hidden="true">
-                  <div
-                    className="h-full bg-[#0075A2] transition-all duration-300 ease-out"
-                    style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-                  />
-                </div>
-              </div>
-            </div>
+            {/* Bold Graphic Silhouette Composition */}
+            <GeometricSilhouettes activeIdx={activeIdx} />
+          </div>
 
-            {/* THREE-COLUMN INTEGRATED ARCHITECTURAL GRID */}
-            <div className="grid grid-cols-12 min-h-[520px] xl:min-h-[560px]">
-              
-              {/* LEFT COLUMN: Persistent Discipline Selector + Active Narrative & Deliverables */}
-              <div className="col-span-4 border-r border-[#DCE5EA] p-6 xl:p-8 flex flex-col justify-between bg-white">
-                <div>
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-[#0075A2] mb-3">
-                    Disciplines
-                  </p>
-                  
-                  {/* Persistent Discipline Selector */}
-                  <nav aria-label="Core Capabilities Selector" className="space-y-1">
-                    {CORE_SERVICES.map((s, idx) => {
-                      const isActive = idx === activeIdx;
-                      return (
-                        <button
-                          key={s.id}
-                          type="button"
-                          onClick={() => scrollToService(idx)}
-                          className={`group flex items-center gap-3 text-left w-full py-1.5 px-2 rounded-none transition-all duration-300 cursor-pointer ${
-                            isActive
-                              ? "bg-[#F8FAFC] text-[#001720] font-semibold translate-x-1"
-                              : "text-[#64748B] hover:text-[#001720] hover:bg-[#F8FAFC]/50 font-normal"
-                          }`}
-                        >
-                          <span
-                            className={`h-1.5 transition-all duration-300 ${
-                              isActive
-                                ? "w-4 bg-[#C82318]"
-                                : "w-1.5 bg-[#CBD5E1] group-hover:bg-[#94A3B8]"
-                            }`}
-                            aria-hidden="true"
-                          />
-                          <span className="font-display text-sm tracking-tight leading-snug">
-                            {s.title}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </nav>
-                </div>
-
-                {/* Active Service Narrative, Deliverables & Actions */}
-                <div className="border-t border-[#DCE5EA] pt-4 mt-4">
-                  <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-[#0075A2]">
-                    {activeChapter.eyebrow}
-                  </p>
-                  <h3 className="mt-1 font-display text-xl xl:text-2xl font-medium tracking-tight text-[#001720]">
-                    {activeService.title}
-                  </h3>
-                  <p className="mt-2 text-xs xl:text-sm text-[#4A6270] leading-relaxed">
-                    {activeService.summary}
-                  </p>
-
-                  {/* Three Verified Deliverables */}
-                  <div className="mt-3.5 space-y-2">
-                    {activeChapter.layers.map((layer) => (
-                      <div
-                        key={layer.title}
-                        className="border-l-2 border-[#0075A2] pl-2.5 transition-colors duration-500"
-                      >
-                        <p className="font-display text-xs font-semibold text-[#001720]">
-                          {layer.title}
-                        </p>
-                        <p className="text-[11px] text-[#64748B] leading-tight">
-                          {layer.detail}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Sub-Service Tags & CTA Action */}
-                  <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-[#F1F5F9]">
-                    {activeService.subServices.map((sub) => (
-                      <a
-                        key={sub.href}
-                        href={sub.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border border-[#DCE5EA] bg-white px-2 py-0.5 font-mono text-[10px] font-medium text-[#001720] transition-colors hover:border-[#0075A2] hover:text-[#0075A2]"
-                      >
-                        {sub.label} ↗
-                      </a>
-                    ))}
-
+          {/* ========================================================
+              TOP-LEFT: Unboxed Vertical Service Selector (Tresmares Anchors)
+              Pure minimalist typography, no boxes, no cards, no borders.
+              Positioned at top-24 / top-28 to clear fixed navbar with generous breathing space.
+              ======================================================== */}
+          <nav
+            aria-label="Core Capabilities Selector"
+            className="absolute top-24 left-8 xl:top-28 xl:left-14 z-20"
+          >
+            <ul className="space-y-1.5">
+              {CORE_SERVICES.map((s, idx) => {
+                const isActive = idx === activeIdx;
+                return (
+                  <li key={s.id}>
                     <button
                       type="button"
-                      onClick={() => onSelectService && onSelectService(activeService.title)}
-                      className="inline-flex items-center gap-1.5 bg-[#001720] px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-white hover:bg-[#0075A2] transition-colors cursor-pointer"
+                      onClick={() => scrollToService(idx)}
+                      className={`text-left text-xs xl:text-sm tracking-tight transition-colors duration-300 block cursor-pointer ${
+                        isActive
+                          ? "text-[#001720] font-bold"
+                          : "text-[#78909C] hover:text-[#001720] font-normal"
+                      }`}
                     >
-                      <span>Request Audit</span>
-                      <span className="text-[#FAAE39]" aria-hidden="true">→</span>
+                      {s.title}
                     </button>
-                  </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          {/* ========================================================
+              BOTTOM-LEFT: Active Service Narrative, Deliverables & Actions
+              Crisp editorial hierarchy floating freely in negative space
+              ======================================================== */}
+          <div className="absolute bottom-8 left-8 xl:bottom-12 xl:left-14 z-20 max-w-sm xl:max-w-md">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#0075A2]">
+              {activeChapter.eyebrow}
+            </p>
+            <h3 className="mt-1 font-display text-xl xl:text-2xl font-medium tracking-tight text-[#001720]">
+              {activeService.title}
+            </h3>
+            <p className="mt-2 text-xs xl:text-sm text-[#455A64] leading-relaxed">
+              {activeService.summary}
+            </p>
+
+            {/* Three Verified Deliverables */}
+            <div className="mt-3.5 space-y-1.5">
+              {activeChapter.layers.map((layer) => (
+                <div key={layer.title} className="text-xs">
+                  <span className="font-semibold text-[#001720]">{layer.title}: </span>
+                  <span className="text-[#607D8B]">{layer.detail}</span>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              {/* CENTER STAGE: Bespoke Vector Art Installation */}
-              <div className="col-span-5 relative flex flex-col items-center justify-center p-6 xl:p-8 bg-[#FAFCFD] overflow-hidden">
-                <ChapterArtwork activeIdx={activeIdx} />
-              </div>
+            {/* Sub-Service Links & Request Audit CTA */}
+            <div className="mt-4 flex flex-wrap items-center gap-2.5">
+              {activeService.subServices.map((sub) => (
+                <a
+                  key={sub.href}
+                  href={sub.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[11px] font-medium text-[#001720] underline hover:text-[#0075A2] transition-colors"
+                >
+                  {sub.label} ↗
+                </a>
+              ))}
 
-              {/* RIGHT COLUMN: Harmonious Technical Benchmarks & Delivery Specifications */}
-              <div className="col-span-3 border-l border-[#DCE5EA] p-6 xl:p-8 flex flex-col justify-between bg-[#F8FAFC]/50">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 bg-[#C82318]" aria-hidden="true" />
-                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-[#0075A2]">
-                      Benchmarks
-                    </p>
-                  </div>
-                  <p className="mt-1 font-display text-sm font-medium text-[#001720]">
-                    Verified Specifications
-                  </p>
-                </div>
-
-                {/* 3 Metric Specification Blocks */}
-                <div className="space-y-4 my-auto">
-                  {activeMetric.specs.map((spec) => (
-                    <div key={spec.label} className="border-t border-[#DCE5EA] pt-2.5">
-                      <div className="flex items-center justify-between">
-                        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#64748B]">
-                          {spec.label}
-                        </p>
-                        <span className="font-mono text-[8px] px-1 py-0.2 rounded-xs bg-[#E2E8F0] text-[#475569]">
-                          {spec.tag}
-                        </span>
-                      </div>
-                      <p className="xn-tabular mt-1 font-display text-2xl xl:text-3xl font-medium tracking-tight text-[#001720]">
-                        {spec.value}
-                      </p>
-                      <p className="mt-0.5 text-[11px] text-[#64748B] leading-tight">
-                        {spec.detail}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Architecture Integrity Tag */}
-                <div className="border-t border-[#DCE5EA] pt-3">
-                  <p className="font-mono text-[9px] text-[#64748B] uppercase tracking-wider">
-                    Next.js 15 &amp; React 19 Enterprise Suite
-                  </p>
-                </div>
-              </div>
-
+              <button
+                type="button"
+                onClick={() => onSelectService && onSelectService(activeService.title)}
+                className="inline-flex items-center gap-1.5 bg-[#001720] px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-white hover:bg-[#0075A2] transition-colors cursor-pointer"
+              >
+                <span>Request Audit</span>
+                <span className="text-[#FAAE39]" aria-hidden="true">→</span>
+              </button>
             </div>
           </div>
+
+          {/* ========================================================
+              BOTTOM-RIGHT: Floating Technical Benchmarks & Specifications
+              Unboxed vertical stack floating cleanly in negative space
+              ======================================================== */}
+          <div className="absolute bottom-8 right-8 xl:bottom-12 xl:right-14 z-20 max-w-[240px] xl:max-w-[280px]">
+            <div className="space-y-4">
+              {activeMetric.specs.map((spec) => (
+                <div key={spec.label}>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#78909C]">
+                    {spec.label}
+                  </p>
+                  <p className="xn-tabular mt-0.5 font-display text-2xl xl:text-3xl font-medium tracking-tight text-[#001720]">
+                    {spec.value}
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-[#607D8B] leading-tight">
+                    {spec.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -873,10 +512,10 @@ export default function ServicesSection({ onSelectService }) {
           return (
             <article
               key={service.id}
-              className="relative overflow-hidden border border-[#DCE5EA] bg-white p-5 sm:p-8 shadow-xs"
+              className="relative overflow-hidden border-b border-[#CFD8DC] pb-12"
             >
               {/* Header Bar */}
-              <div className="flex items-center justify-between border-b border-[#DCE5EA] pb-3 mb-4">
+              <div className="flex items-center justify-between pb-2 mb-3">
                 <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#0075A2]">
                   {chapter.eyebrow}
                 </span>
@@ -889,43 +528,36 @@ export default function ServicesSection({ onSelectService }) {
                 {service.title}
               </h3>
 
-              <p className="mt-2 text-sm leading-relaxed text-[#4A6270]">
+              <p className="mt-2 text-sm leading-relaxed text-[#455A64]">
                 {service.summary}
               </p>
 
-              {/* Mobile Bespoke Artwork Strip */}
-              <div className="my-6 border border-[#DCE5EA] bg-[#FAFCFD] p-2 flex items-center justify-center">
-                <ChapterArtwork activeIdx={sIdx} />
+              {/* Mobile Graphic Silhouette */}
+              <div className="my-6 flex items-center justify-center">
+                <GeometricSilhouettes activeIdx={sIdx} />
               </div>
 
               {/* Deliverables List */}
-              <div className="space-y-3 pt-2">
+              <div className="space-y-2 pt-2">
                 {chapter.layers.map((layer) => (
-                  <div
-                    key={layer.title}
-                    className="border-l-2 border-[#0075A2] pl-3"
-                  >
-                    <p className="font-display text-sm font-semibold text-[#001720]">
-                      {layer.title}
-                    </p>
-                    <p className="mt-0.5 text-xs text-[#64748B] leading-relaxed">
-                      {layer.detail}
-                    </p>
+                  <div key={layer.title} className="text-xs">
+                    <span className="font-semibold text-[#001720]">{layer.title}: </span>
+                    <span className="text-[#607D8B]">{layer.detail}</span>
                   </div>
                 ))}
               </div>
 
               {/* Mobile Technical Benchmarks */}
-              <div className="my-6 grid grid-cols-3 gap-2 border-y border-[#DCE5EA] py-3 bg-[#F8FAFC] px-3">
+              <div className="my-6 grid grid-cols-3 gap-2 border-y border-[#CFD8DC] py-4">
                 {metric.specs.map((spec) => (
                   <div key={spec.label}>
-                    <p className="font-mono text-[8px] uppercase tracking-wider text-[#64748B]">
+                    <p className="font-mono text-[8px] uppercase tracking-wider text-[#78909C]">
                       {spec.label}
                     </p>
-                    <p className="font-display text-base font-semibold text-[#001720]">
+                    <p className="font-display text-lg font-semibold text-[#001720]">
                       {spec.value}
                     </p>
-                    <p className="text-[9px] text-[#64748B] leading-tight">
+                    <p className="text-[9px] text-[#607D8B] leading-tight">
                       {spec.detail}
                     </p>
                   </div>
@@ -933,15 +565,15 @@ export default function ServicesSection({ onSelectService }) {
               </div>
 
               {/* Bottom Action & Links */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#DCE5EA]">
-                <div className="flex flex-wrap items-center gap-1.5">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-2">
                   {service.subServices.map((sub) => (
                     <a
                       key={sub.href}
                       href={sub.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-[#DCE5EA] bg-white px-2.5 py-1 font-mono text-[11px] text-[#001720]"
+                      className="font-mono text-xs text-[#001720] underline hover:text-[#0075A2]"
                     >
                       {sub.label} ↗
                     </a>
