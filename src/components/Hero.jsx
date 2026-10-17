@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import ScrollTextReveal from "@/components/ScrollTextReveal";
+import InteractiveMountain from "@/components/InteractiveMountain";
 
 /**
  * Editorial Hero & Atmospheric Opening Sequence (Priority 2 & Priority 3)
@@ -57,65 +58,70 @@ export default function Hero() {
       aria-labelledby="hero-heading"
       className="relative overflow-hidden bg-[#001720] text-white"
     >
-      {/* Dimensional Multi-Layered Xntrova Atmospheric Gradient Canvas */}
-      <div
-        ref={glowLayerRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-[112dvh] overflow-hidden"
-      >
-        {/* Base Diagonal Tonal Foundation (#001720 -> #001F2B -> #073449) */}
+      {/* Hero Opening Atmospheric Stage */}
+      <div className="hero-stage relative min-h-dvh w-full overflow-hidden">
+        {/* Dimensional Multi-Layered Xntrova Atmospheric Gradient Canvas */}
         <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(132deg, #00131B 0%, #001F2B 38%, #083B52 72%, #001720 100%)",
-          }}
-        />
+          ref={glowLayerRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full overflow-hidden"
+        >
+          {/* Base Diagonal Tonal Foundation (#001720 -> #001F2B -> #073449) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(132deg, #00131B 0%, #001F2B 38%, #083B52 72%, #001720 100%)",
+            }}
+          />
 
-        {/* Primary Cerulean & Cyan Atmospheric Plume (Upper-Right / Center-Right) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(980px 680px at 76% 30%, rgba(0, 117, 162, 0.68) 0%, rgba(12, 138, 178, 0.36) 36%, rgba(0, 31, 43, 0.08) 68%, transparent 82%)",
-          }}
-        />
+          {/* Primary Cerulean & Cyan Atmospheric Plume (Upper-Right / Center-Right) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(980px 680px at 76% 30%, rgba(0, 117, 162, 0.68) 0%, rgba(12, 138, 178, 0.36) 36%, rgba(0, 31, 43, 0.08) 68%, transparent 82%)",
+            }}
+          />
 
-        {/* Secondary Deep Cerulean Halo Behind Headline (Center-Left) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(820px 560px at 24% 46%, rgba(0, 117, 162, 0.42) 0%, rgba(10, 66, 87, 0.28) 44%, transparent 74%)",
-          }}
-        />
+          {/* Secondary Deep Cerulean Halo Behind Headline (Center-Left) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(820px 560px at 24% 46%, rgba(0, 117, 162, 0.42) 0%, rgba(10, 66, 87, 0.28) 44%, transparent 74%)",
+            }}
+          />
 
-        {/* Restrained Cool Teal Highlight Cone (Top-Center Crest) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(640px 420px at 54% 16%, rgba(34, 211, 238, 0.20) 0%, rgba(0, 117, 162, 0.12) 48%, transparent 76%)",
-          }}
-        />
+          {/* Restrained Cool Teal Highlight Cone (Top-Center Crest) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(640px 420px at 54% 16%, rgba(34, 211, 238, 0.20) 0%, rgba(0, 117, 162, 0.12) 48%, transparent 76%)",
+            }}
+          />
 
-        {/* Subtle Solar Amber Warmth Counter-Glow Behind Third Headline Line */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(560px 380px at 62% 64%, rgba(250, 174, 57, 0.15) 0%, rgba(250, 174, 57, 0.04) 50%, transparent 78%)",
-          }}
-        />
+          {/* Subtle Solar Amber Warmth Counter-Glow Behind Third Headline Line */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(560px 380px at 62% 64%, rgba(250, 174, 57, 0.15) 0%, rgba(250, 174, 57, 0.04) 50%, transparent 78%)",
+            }}
+          />
 
-        {/* Fine Architectural Grid Hairlines for Spatial Scale */}
-        <div className="mx-auto h-full max-w-[1440px] px-4 sm:px-8 lg:px-12">
-          <div className="h-full w-full border-x border-white/[0.06]" />
+          {/* Fine Architectural Grid Hairlines for Spatial Scale */}
+          <div className="mx-auto h-full max-w-[1440px] px-4 sm:px-8 lg:px-12">
+            <div className="h-full w-full border-x border-white/[0.06]" />
+          </div>
         </div>
-      </div>
 
-      {/* Main Viewport Spatial Composition */}
-      <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-center px-4 pt-28 pb-16 sm:px-8 sm:pt-32 sm:pb-20 lg:px-12 lg:pt-36">
+        {/* Tresmares-Inspired Interactive Mountain Terrain Silhouette & Contours */}
+        <InteractiveMountain className="z-[6]" />
+
+        {/* Main Viewport Spatial Composition */}
+        <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-center px-4 pt-28 pb-16 sm:px-8 sm:pt-32 sm:pb-20 lg:px-12 lg:pt-36">
         {/* Main Content Area: Left Headline & Delhi/NCR line + Right Supporting Paragraph & Google Indicator */}
         <div className="py-8 lg:py-16">
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
@@ -213,6 +219,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       {/* Atmospheric Horizon Bridge: Dimensional Navy/Cerulean Dissolving into Editorial Mist (#F4F8FA) */}
