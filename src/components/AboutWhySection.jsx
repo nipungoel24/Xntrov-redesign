@@ -142,7 +142,7 @@ export default function AboutWhySection() {
       id="about"
       ref={sectionRef}
       aria-labelledby="about-heading"
-      className="relative border-b border-[#DCE5EA] bg-white py-20 text-[#001720] sm:py-28 lg:py-36"
+      className="relative border-b border-t border-[#DCE5EA] bg-white pt-12 pb-20 text-[#001720] sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-36"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
         {/* Top Peripheral Coordinate Hairline */}

@@ -533,7 +533,7 @@ export default function ServicesSection({ onSelectService }) {
         ref={containerRef}
         className="capabilities-scroll-track relative hidden h-[420vh] w-full bg-[#001720] md:block"
       >
-        <div className="capabilities-sticky-stage sticky top-16 sm:top-[72px] flex h-[calc(100svh-4rem)] sm:h-[calc(100svh-4.5rem)] w-full flex-col overflow-hidden bg-white shadow-sm">
+        <div className="capabilities-sticky-stage sticky top-16 sm:top-[72px] flex h-[calc(100svh-4rem)] sm:h-[calc(100svh-4.5rem)] w-full flex-col overflow-hidden bg-[#001720] shadow-sm">
           {/* PINNED SECTION HEADER: Stays visible while exploring all 6 cards with generous space above */}
           <div className="capabilities-pinned-header flex w-full shrink-0 flex-col justify-center border-b border-[#001720]/10 bg-white/95 px-6 pt-8 pb-5 backdrop-blur-md sm:px-8 sm:pt-10 sm:pb-6 lg:px-12 lg:pt-12 lg:pb-7">
             <div className="inline-flex items-center gap-2 mb-2 sm:mb-2.5">
