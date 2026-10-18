@@ -142,7 +142,7 @@ export default function ContactSection({ preselectedService, selectedService }) 
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative bg-[linear-gradient(180deg,#001720_0%,#03202D_55%,#001720_100%)] pt-14 pb-16 text-white sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24"
+      className="relative bg-[linear-gradient(180deg,#001720_0%,#03202D_55%,#001720_100%)] pt-14 pb-14 text-white sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-16"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
         {/* Section opens directly with the headline — no index, label, or divider */}
@@ -158,7 +158,7 @@ export default function ContactSection({ preselectedService, selectedService }) 
 
         {/* Supporting copy, direct coordinates and the audit form in one block */}
         <div className="mt-8 grid grid-cols-1 items-start gap-10 sm:mt-10 lg:grid-cols-12 lg:gap-14 xl:gap-20">
-          <Reveal variant="up" className="lg:col-span-5">
+          <Reveal variant="up" className="lg:sticky lg:top-28 lg:col-span-5">
             <p className="text-sm leading-relaxed text-white/75 sm:text-base">
               Share your website and commercial priorities. Our New Delhi NCR
               strategists will audit your search footprint, paid media
