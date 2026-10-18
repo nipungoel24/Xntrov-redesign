@@ -1,12 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Search,
   Target,
@@ -15,697 +10,393 @@ import {
   ShieldCheck,
   FileText,
   ArrowRight,
-  ExternalLink,
-  CheckCircle2,
-  ChevronDown,
+  ArrowUpRight,
 } from "lucide-react";
+import { RAW_CORE_SERVICES } from "@/data/xntrova-data";
 
 /**
- * Compact height of collapsed service card header in pixels
- */
-const PROJECT_HEADER_HEIGHT = 50;
-
-/**
- * Six Integrated Disciplines Data Model for Xntrova
- * Gradual 6-Step Card Color Progression (Light to Dark):
- * 1. Card 01 — White (#FFFFFF)
- * 2. Card 02 — Very light neutral (#F0F5F8)
- * 3. Card 03 — Light blue-gray (#D4E5ED)
- * 4. Card 04 — Medium blue (#0075A2)
- * 5. Card 05 — Deep blue (#00455B)
- * 6. Card 06 — Darkest navy/teal (#001720)
+ * Core Capabilities — stacked-card scroll interaction.
  *
- * Each card includes dedicated theme tokens ensuring WCAG-compliant contrast.
+ * Structure (adapted from the supplied ProjectsSection template):
+ *   1. Normal-flow section introduction (scrolls away naturally).
+ *   2. Scroll track whose height is proportional to the number of cards.
+ *   3. Sticky full-viewport stack inside the track. Each card's flexGrow is
+ *      driven by useScroll/useTransform; headers stay PROJECT_HEADER_HEIGHT tall.
+ *   4. Page flow resumes after the track ends.
  */
-const SERVICES_DATA = [
-  {
-    id: "seo",
-    number: "01",
-    title: "Search Engine Optimization",
-    categoryLabel: "Organic Growth",
-    icon: Search,
-    bgColor: "#FFFFFF",
-    theme: "light",
-    headerText: "text-[#001720]",
-    headerSub: "text-[#4A606A]",
-    headerIconBg: "bg-[#001720]/5",
-    headerIconColor: "text-[#0075A2]",
-    numberColor: "text-[#0075A2]",
-    cardBorder: "border-t border-[#001720]/10",
-    dividerColor: "border-[#001720]/10",
-    badgeDot: "bg-[#0075A2]",
-    badgeText: "text-[#0075A2]",
-    metricsText: "text-[#5A707A]",
-    summaryText: "text-[#233C47]",
-    cardBoxBg: "bg-[#F4F8FA] border-[#DBE4E8]",
-    cardBoxText: "text-[#001720]",
-    cardBoxIcon: "text-[#0075A2]",
-    tagBg: "bg-[#EBF2F6] text-[#003746] border-[#D0DFE7]",
-    ctaBg: "bg-[#001720] text-white hover:bg-[#0075A2]",
-    ctaIcon: "text-[#FAAE39]",
-    subLinkText: "text-[#003746] hover:text-[#0075A2]",
-    summary:
-      "Architectural crawl governance, authoritative keyword clusters, and high-trust digital PR that secure compounding market visibility.",
+
+const PROJECT_HEADER_HEIGHT = 64;
+// Short viewports (< 760px tall) tighten collapsed headers to 52px so the
+// expanded card still has room for its full content.
+const HEADER_HEIGHT = `var(--stack-header, ${PROJECT_HEADER_HEIGHT}px)`;
+
+const PROJECT_ICONS = {
+  seo: Search,
+  ppc: Target,
+  "web-dev": Code2,
+  ecommerce: ShoppingCart,
+  smo: ShieldCheck,
+  content: FileText,
+};
+
+/**
+ * Card surfaces: a continuous sea-blue → deep navy progression. Each card's
+ * gradient ends on the next card's starting tone, so the stack reads as one
+ * surface with no seams, gaps or margins.
+ */
+const CARD_TONES = ["#0B6A8C", "#09597A", "#074A66", "#063A52", "#052633", "#001720", "#00111A"];
+
+/**
+ * Service-specific content. Descriptions, capabilities and links come from the
+ * verified service inventory in xntrova-data; deliverables and tags restate the
+ * existing site copy for each discipline. No metrics or results are claimed.
+ */
+const SERVICE_DETAILS = {
+  seo: {
+    category: "Organic Growth",
     deliverables: [
-      "Technical crawl governance & schema architecture",
-      "High-intent keyword clusters & search intent mapping",
-      "Authoritative link acquisition & digital PR placement",
+      "Technical SEO audits, crawlability & schema architecture",
+      "High-intent keyword mapping & search-intent clusters",
+      "Authoritative link acquisition & digital PR",
     ],
-    tags: ["Crawl Governance", "Schema Architecture", "Authority Building", "SERP Dominance"],
-    subServices: [
-      { name: "SEO Packages", href: "https://www.xntrova.com/seo-packages/" },
-      { name: "Local SEO", href: "https://www.xntrova.com/local-seo-packages/" },
-    ],
-    metricsBadge: "100% Indexation Integrity",
+    tags: ["Technical SEO", "Local SEO", "Schema", "Link Building"],
   },
-  {
-    id: "ppc",
-    number: "02",
-    title: "Paid Advertising (PPC)",
-    categoryLabel: "Paid Acquisition",
-    icon: Target,
-    bgColor: "#F0F5F8",
-    theme: "light",
-    headerText: "text-[#001720]",
-    headerSub: "text-[#4A606A]",
-    headerIconBg: "bg-[#001720]/5",
-    headerIconColor: "text-[#0075A2]",
-    numberColor: "text-[#0075A2]",
-    cardBorder: "border-t border-[#001720]/10",
-    dividerColor: "border-[#001720]/10",
-    badgeDot: "bg-[#0075A2]",
-    badgeText: "text-[#0075A2]",
-    metricsText: "text-[#5A707A]",
-    summaryText: "text-[#233C47]",
-    cardBoxBg: "bg-white border-[#D6E3EA]",
-    cardBoxText: "text-[#001720]",
-    cardBoxIcon: "text-[#0075A2]",
-    tagBg: "bg-[#E2ECF2] text-[#003746] border-[#CADCE6]",
-    ctaBg: "bg-[#001720] text-white hover:bg-[#0075A2]",
-    ctaIcon: "text-[#FAAE39]",
-    subLinkText: "text-[#003746] hover:text-[#0075A2]",
-    summary:
-      "Full-funnel Google, Meta, and LinkedIn campaigns engineered to capture active buyer intent and maximize return on ad spend.",
+  ppc: {
+    category: "Paid Acquisition",
     deliverables: [
       "Google Search & Performance Max campaign architecture",
-      "Targeted B2B decision-maker funnels on Meta & LinkedIn",
-      "Server-side conversion tracking & telemetry audits",
+      "Meta & LinkedIn funnels for B2B decision-makers",
+      "GA4 / GTM conversion tracking & server-side telemetry",
     ],
-    tags: ["Google Ads", "Meta B2B", "LinkedIn Ads", "Performance Max", "CAPI Telemetry"],
-    subServices: [
-      { name: "Google & Meta PPC", href: "https://www.xntrova.com/paid-advertising/" },
-    ],
-    metricsBadge: "GA4 + CAPI Server-Side",
+    tags: ["Google Ads", "Performance Max", "Meta Ads", "LinkedIn Ads"],
   },
-  {
-    id: "web-dev",
-    number: "03",
-    title: "Website & App Development",
-    categoryLabel: "Web Engineering",
-    icon: Code2,
-    bgColor: "#D4E5ED",
-    theme: "light",
-    headerText: "text-[#001720]",
-    headerSub: "text-[#233C47]",
-    headerIconBg: "bg-[#001720]/8",
-    headerIconColor: "text-[#005A7D]",
-    numberColor: "text-[#005A7D]",
-    cardBorder: "border-t border-[#001720]/15",
-    dividerColor: "border-[#001720]/15",
-    badgeDot: "bg-[#005A7D]",
-    badgeText: "text-[#005A7D]",
-    metricsText: "text-[#233C47]",
-    summaryText: "text-[#001720]",
-    cardBoxBg: "bg-white/85 border-[#BACFD9]",
-    cardBoxText: "text-[#001720]",
-    cardBoxIcon: "text-[#005A7D]",
-    tagBg: "bg-[#BFD7E3] text-[#002431] border-[#ADC8D6]",
-    ctaBg: "bg-[#001720] text-white hover:bg-[#005A7D]",
-    ctaIcon: "text-[#FAAE39]",
-    subLinkText: "text-[#002431] hover:text-[#005A7D]",
-    summary:
-      "Fast, responsive web applications engineered for seamless user experience, Core Web Vitals compliance, and high lead capture.",
+  "web-dev": {
+    category: "Web Engineering",
     deliverables: [
-      "Custom Next.js & React full-stack application engineering",
-      "Core Web Vitals speed tuning & conversion-rate optimization",
-      "Secure REST/GraphQL API integrations & CMS backends",
+      "Responsive, SEO-ready B2B websites",
+      "Core Web Vitals speed tuning & conversion-rate optimisation",
+      "Custom web & app engineering with API integrations",
     ],
-    tags: ["Next.js / React", "Full-Stack Web", "Core Web Vitals", "API Integrations"],
-    subServices: [
-      { name: "Web Packages", href: "https://www.xntrova.com/web-development-packages/" },
-      { name: "App Development", href: "https://www.xntrova.com/app-development/" },
-    ],
-    metricsBadge: "Sub-1.2s LCP Target",
+    tags: ["Next.js / React", "Core Web Vitals", "CRO", "API Integrations"],
   },
-  {
-    id: "ecommerce",
-    number: "04",
-    title: "E-Commerce & Amazon Growth",
-    categoryLabel: "Commerce",
-    icon: ShoppingCart,
-    bgColor: "#0075A2",
-    theme: "dark",
-    headerText: "text-white",
-    headerSub: "text-white/70",
-    headerIconBg: "bg-white/10",
-    headerIconColor: "text-[#FAAE39]",
-    numberColor: "text-[#FAAE39]",
-    cardBorder: "border-t border-white/20",
-    dividerColor: "border-white/20",
-    badgeDot: "bg-[#FAAE39]",
-    badgeText: "text-[#FAAE39]",
-    metricsText: "text-white/60",
-    summaryText: "text-white/95",
-    cardBoxBg: "bg-white/[0.08] border-white/15",
-    cardBoxText: "text-white",
-    cardBoxIcon: "text-[#FAAE39]",
-    tagBg: "bg-white/10 text-white/85 border-white/15",
-    ctaBg: "bg-[#FAAE39] text-[#001720] hover:bg-white",
-    ctaIcon: "text-[#001720]",
-    subLinkText: "text-white/85 hover:text-[#FAAE39]",
-    summary:
-      "Catalog feed governance, sponsored product campaigns, and checkout conversion tactics that turn shoppers into repeat buyers.",
+  ecommerce: {
+    category: "Commerce",
     deliverables: [
-      "Storefront checkout UX & friction-free conversion paths",
-      "Amazon sponsored brand & product advertising scale",
-      "Google Merchant Center catalog feeds & dynamic retargeting",
+      "Storefront checkout UX & conversion-rate optimisation",
+      "Amazon sponsored ads & marketplace scaling",
+      "Google Shopping feeds & dynamic remarketing",
     ],
-    tags: ["Amazon Ads", "Shopify & WooCommerce", "Google Shopping", "Checkout CRO"],
-    subServices: [
-      { name: "Amazon Marketing", href: "https://www.xntrova.com/amazon-marketing-services/" },
-    ],
-    metricsBadge: "Multi-Channel Feed Sync",
+    tags: ["Amazon Ads", "Shopify / WooCommerce", "Google Shopping", "Remarketing"],
   },
-  {
-    id: "smo",
-    number: "05",
-    title: "Social Media & Reputation (ORM)",
-    categoryLabel: "Brand & Reputation",
-    icon: ShieldCheck,
-    bgColor: "#00455B",
-    theme: "dark",
-    headerText: "text-white",
-    headerSub: "text-white/70",
-    headerIconBg: "bg-white/10",
-    headerIconColor: "text-[#FAAE39]",
-    numberColor: "text-[#FAAE39]",
-    cardBorder: "border-t border-white/15",
-    dividerColor: "border-white/15",
-    badgeDot: "bg-[#FAAE39]",
-    badgeText: "text-[#FAAE39]",
-    metricsText: "text-white/60",
-    summaryText: "text-white/90",
-    cardBoxBg: "bg-white/[0.06] border-white/12",
-    cardBoxText: "text-white",
-    cardBoxIcon: "text-[#FAAE39]",
-    tagBg: "bg-white/10 text-white/80 border-white/15",
-    ctaBg: "bg-[#FAAE39] text-[#001720] hover:bg-white",
-    ctaIcon: "text-[#001720]",
-    subLinkText: "text-white/80 hover:text-[#FAAE39]",
-    summary:
-      "Strategic executive storytelling, community engagement, and proactive sentiment defense that safeguard commercial trust.",
+  smo: {
+    category: "Brand & Reputation",
     deliverables: [
-      "Executive brand narrative & multi-channel thought leadership",
-      "Proactive sentiment monitoring & customer review governance",
-      "Search result reputation defense & brand authority protection",
+      "Brand storytelling & multi-channel social distribution",
+      "Influencer collaborations & community growth",
+      "Review governance & proactive reputation management",
     ],
-    tags: ["Executive Branding", "Sentiment Defense", "Review Governance", "Trust Protection"],
-    subServices: [
-      { name: "Online Reputation (ORM)", href: "https://www.xntrova.com/online-reputation-management/" },
-    ],
-    metricsBadge: "Proactive Sentiment Monitoring",
+    tags: ["Social Media", "Influencers", "ORM", "Brand Trust"],
   },
-  {
-    id: "content",
-    number: "06",
-    title: "Content, Video & Lifecycle Email",
-    categoryLabel: "Content & Retention",
-    icon: FileText,
-    bgColor: "#001720",
-    theme: "dark",
-    headerText: "text-white",
-    headerSub: "text-white/70",
-    headerIconBg: "bg-white/10",
-    headerIconColor: "text-[#FAAE39]",
-    numberColor: "text-[#FAAE39]",
-    cardBorder: "border-t border-white/10",
-    dividerColor: "border-white/10",
-    badgeDot: "bg-[#FAAE39]",
-    badgeText: "text-[#FAAE39]",
-    metricsText: "text-white/50",
-    summaryText: "text-white/90",
-    cardBoxBg: "bg-white/[0.04] border-white/10",
-    cardBoxText: "text-white/95",
-    cardBoxIcon: "text-[#FAAE39]",
-    tagBg: "bg-white/5 text-white/70 border-white/10",
-    ctaBg: "bg-[#FAAE39] text-[#001720] hover:bg-white",
-    ctaIcon: "text-[#001720]",
-    subLinkText: "text-white/80 hover:text-[#FAAE39]",
-    summary:
-      "Commercial-intent articles, short-form video production, and automated lifecycle email sequences that nurture qualified pipeline.",
+  content: {
+    category: "Content & Retention",
     deliverables: [
-      "High-intent editorial clusters & authoritative thought pieces",
-      "Engaging video production for LinkedIn, YouTube, and Meta",
-      "Automated email nurture flows & customer lifecycle retention",
+      "SEO editorial, copywriting & topic clusters",
+      "Video campaigns & visual design",
+      "Automated lifecycle email journeys",
     ],
-    tags: ["Topic Clusters", "Video Production", "Lifecycle Nurturing", "Pipeline Retention"],
-    subServices: [
-      { name: "Content Marketing", href: "https://www.xntrova.com/content-marketing/" },
-    ],
-    metricsBadge: "Cluster Topic Authority",
+    tags: ["Content Marketing", "Video", "Email Automation", "Graphic Design"],
   },
-];
+};
+
+const SERVICES = RAW_CORE_SERVICES.map((service, index) => ({
+  ...service,
+  ...SERVICE_DETAILS[service.id],
+  Icon: PROJECT_ICONS[service.id],
+  toneFrom: CARD_TONES[index],
+  toneTo: CARD_TONES[index + 1],
+}));
+
+const TOTAL = SERVICES.length;
+const SEGMENT = 1 / TOTAL;
+// Portion of each segment boundary used to hand over from one card to the next.
+const HANDOFF = SEGMENT * 0.4;
 
 /**
- * Scroll Progress Intervals for 6 Stacked Cards
+ * Scroll-progress → flexGrow mapping. Card i owns segment [i/n, (i+1)/n].
+ * At each boundary the outgoing card contracts while the incoming card grows,
+ * so the summed flexGrow is always 1 and the stack never shows empty space.
  */
-const CARD_INTERVALS = [
-  { in: [0.0, 0.08, 0.18, 1.0], out: [1.0, 1.0, 0.0, 0.0] },
-  { in: [0.0, 0.1, 0.18, 0.28, 0.36, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
-  { in: [0.0, 0.28, 0.36, 0.46, 0.54, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
-  { in: [0.0, 0.46, 0.54, 0.64, 0.72, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
-  { in: [0.0, 0.64, 0.72, 0.82, 0.9, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
-  { in: [0.0, 0.82, 0.9, 1.0], out: [0.0, 0.0, 1.0, 1.0] },
-];
+function getFlexGrowRange(index) {
+  const start = index * SEGMENT;
+  const end = (index + 1) * SEGMENT;
+  if (index === 0) {
+    return { input: [0, end - HANDOFF / 2, end + HANDOFF / 2, 1], output: [1, 1, 0, 0] };
+  }
+  if (index === TOTAL - 1) {
+    return { input: [0, start - HANDOFF / 2, start + HANDOFF / 2, 1], output: [0, 0, 1, 1] };
+  }
+  return {
+    input: [0, start - HANDOFF / 2, start + HANDOFF / 2, end - HANDOFF / 2, end + HANDOFF / 2, 1],
+    output: [0, 0, 1, 1, 0, 0],
+  };
+}
 
-/**
- * ServiceHeader
- * Compact 56px height, hairline top border, title, numerical identifier, and icon.
- * Dynamically styled based on card's theme (light vs dark).
- */
-function ServiceHeader({ service, onCardClick, index }) {
-  const Icon = service.icon;
-
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => onCardClick(index)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onCardClick(index);
-        }
-      }}
-      style={{ height: `${PROJECT_HEADER_HEIGHT}px` }}
-      className={`flex w-full shrink-0 cursor-pointer items-center justify-between px-6 select-none sm:px-8 lg:px-12 transition-colors duration-150 ${
-        service.theme === "light"
-          ? "hover:bg-[#001720]/[0.03]"
-          : "hover:bg-white/[0.04]"
-      }`}
-      aria-label={`${service.number} ${service.title} — Click to expand`}
-    >
-      <div className="flex items-center gap-4 sm:gap-6">
-        <span
-          className={`xn-tabular font-mono text-sm font-semibold tracking-wider sm:text-base ${service.numberColor}`}
-        >
+function ProjectHeader({ service, onActivate }) {
+  const content = (
+    <>
+      <span className="flex min-w-0 items-center gap-4 sm:gap-6">
+        <span className="xn-tabular font-mono text-sm font-semibold tracking-wider text-[#FAAE39]">
           {service.number}
         </span>
-        <h3
-          className={`font-display text-sm font-medium uppercase tracking-tight sm:text-base lg:text-lg ${service.headerText}`}
-        >
+        <span className="font-display text-[15px] leading-tight font-medium sm:text-lg tracking-[-0.02em] text-white lg:text-xl">
           {service.title}
-        </h3>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <span
-          className={`hidden font-mono text-xs uppercase tracking-wider sm:inline-block ${service.headerSub}`}
-        >
-          {service.categoryLabel}
         </span>
-        <div
-          className={`flex size-8 items-center justify-center rounded-full ${service.headerIconBg}`}
-        >
-          <Icon className={`size-4 ${service.headerIconColor}`} />
-        </div>
-      </div>
-    </div>
+      </span>
+      <span
+        aria-hidden="true"
+        className="xn-tabular hidden shrink-0 font-mono text-xs tracking-[0.2em] text-white/35 sm:inline"
+      >
+        {service.number} / {String(TOTAL).padStart(2, "0")}
+      </span>
+    </>
+  );
+
+  const className =
+    "flex w-full shrink-0 items-center justify-between gap-4 border-t border-white/10 px-5 text-left sm:px-8 lg:px-12";
+
+  if (!onActivate) {
+    return (
+      <h3 style={{ height: HEADER_HEIGHT }} className={className}>
+        {content}
+      </h3>
+    );
+  }
+
+  return (
+    <h3 className="m-0">
+      <button
+        type="button"
+        onClick={onActivate}
+        style={{ height: HEADER_HEIGHT }}
+        className={`${className} cursor-pointer transition-colors hover:bg-white/[0.04]`}
+      >
+        {content}
+      </button>
+    </h3>
   );
 }
 
-/**
- * ServiceBody
- * Compact, premium card body without wasted empty space.
- * Content naturally determines height, perfectly filling available space with zero clipping.
- */
-function ServiceBody({ service, flexGrow, onSelectService }) {
-  const contentOpacity = useTransform(flexGrow, [0, 0.25, 1], [0, 0, 1]);
-  const contentScale = useTransform(flexGrow, [0, 0.5, 1], [0.99, 0.995, 1]);
+function ProjectBody({ service, onSelectService }) {
+  const Icon = service.Icon;
 
   return (
-    <motion.div
-      style={{
-        opacity: contentOpacity,
-        scale: contentScale,
-      }}
-      className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-6 py-3.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-4 lg:px-12 lg:py-4.5"
-    >
-      {/* Upper Content Area */}
-      <div className="space-y-2.5 sm:space-y-3">
-        <div
-          className={`flex flex-wrap items-center justify-between gap-2 border-b pb-2 ${service.dividerColor}`}
-        >
-          <div className="inline-flex items-center gap-2">
-            <span className={`size-2 rounded-full ${service.badgeDot}`} />
-            <span
-              className={`font-mono text-xs font-semibold uppercase tracking-[0.2em] ${service.badgeText}`}
-            >
-              {service.categoryLabel}
-            </span>
-          </div>
-          <span className={`font-mono text-xs ${service.metricsText}`}>
-            {service.metricsBadge}
+    <div className="grid h-full grid-cols-1 gap-x-10 gap-y-5 px-5 pt-3 pb-6 sm:px-8 md:grid-cols-12 lg:px-12 lg:pt-3 lg:pb-5">
+      {/* Category, icon, description and CTA */}
+      <div className="flex min-w-0 flex-col md:col-span-12 lg:col-span-5">
+        <div className="flex items-center gap-3">
+          <span className="flex size-9 shrink-0 items-center justify-center border border-white/15 bg-white/[0.06]">
+            <Icon className="size-4 text-[#22D3EE]" aria-hidden="true" />
+          </span>
+          <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7FDDF0]">
+            {"// "}
+            {service.category}
           </span>
         </div>
 
-        <p
-          className={`max-w-4xl text-sm leading-relaxed sm:text-[15px] ${service.summaryText}`}
-        >
+        <p className="mt-4 max-w-xl font-display text-lg leading-snug tracking-[-0.02em] text-white sm:text-xl lg:text-[1.125rem] xl:text-[1.3rem] 2xl:text-[1.45rem]">
           {service.summary}
         </p>
 
-        {/* Three Distinct Deliverables */}
-        <div className="grid grid-cols-1 gap-2 pt-0.5 sm:grid-cols-3">
-          {service.deliverables.map((item, dIdx) => (
-            <div
-              key={dIdx}
-              className={`flex items-start gap-2 rounded border p-2.5 sm:p-3 ${service.cardBoxBg}`}
-            >
-              <CheckCircle2
-                className={`mt-0.5 size-4 shrink-0 ${service.cardBoxIcon}`}
-              />
-              <span
-                className={`text-xs sm:text-[13px] leading-snug font-medium ${service.cardBoxText}`}
-              >
-                {item}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Supporting Footer within Card: Clean Tags & Direct CTA */}
-      <div
-        className={`mt-3 flex flex-wrap items-center justify-between gap-3 border-t pt-2.5 sm:mt-3.5 sm:pt-3 ${service.dividerColor}`}
-      >
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          {service.tags.map((tag) => (
-            <span
-              key={tag}
-              className={`rounded border px-2.5 py-0.5 font-mono text-[11px] ${service.tagBg}`}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-3 sm:gap-4">
-          {service.subServices?.map((sub) => (
-            <a
-              key={sub.name}
-              href={sub.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold transition-colors ${service.subLinkText}`}
-            >
-              <span>{sub.name}</span>
-              <ExternalLink className="size-3" />
-            </a>
-          ))}
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-auto lg:pt-4">
           <button
             type="button"
             onClick={() => onSelectService(service.title)}
-            className={`inline-flex items-center gap-2 rounded px-4 py-2 text-xs font-bold uppercase tracking-wider shadow transition-colors ${service.ctaBg}`}
+            className="xn-press inline-flex min-h-11 items-center gap-2.5 bg-[#FAAE39] px-5 text-xs font-bold uppercase tracking-[0.14em] text-[#001720] transition-colors hover:bg-white"
           >
             <span>Request Audit</span>
-            <ArrowRight className={`size-3.5 ${service.ctaIcon}`} />
+            <ArrowRight className="size-3.5" aria-hidden="true" />
           </button>
+          <a
+            href={service.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-white/85 transition-colors hover:text-[#FAAE39]"
+          >
+            <span>Explore {service.title}</span>
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </a>
         </div>
       </div>
-    </motion.div>
+
+      {/* Deliverables */}
+      <div className="min-w-0 md:col-span-7 lg:col-span-4">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+          What we deliver
+        </p>
+        <ul className="mt-2 divide-y divide-white/10 border-y border-white/10">
+          {service.deliverables.map((item, idx) => (
+            <li key={item} className="flex items-baseline gap-3 py-2.5 text-sm leading-snug text-white/90">
+              <span className="xn-tabular font-mono text-[11px] text-[#FAAE39]">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Related packages and focus tags */}
+      <div className="flex min-w-0 flex-col gap-4 md:col-span-5 lg:col-span-3">
+        {service.subServices?.length > 0 && (
+          <div className="border border-white/12 bg-white/[0.05] px-4 py-3">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+              Related services
+            </p>
+            <ul className="mt-1">
+              {service.subServices.map((sub) => (
+                <li key={sub.href}>
+                  <a
+                    href={sub.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-8 items-center gap-1 text-[13px] font-semibold text-white transition-colors hover:text-[#FAAE39]"
+                  >
+                    <span>{sub.name}</span>
+                    <ArrowUpRight className="size-3 text-[#FAAE39]" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <ul className="flex flex-wrap gap-1.5" aria-label={`${service.title} focus areas`}>
+          {service.tags.map((tag) => (
+            <li
+              key={tag}
+              className="border border-white/15 px-2.5 py-1 font-mono text-[11px] text-white/75"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 
-/**
- * ServiceStackCard
- * Sits flush edge-to-edge against adjacent cards with zero vertical gap, zero horizontal margin, and zero outer padding.
- * Its solid background color contributes directly to the vertical gradient of the complete stack.
- */
-function ServiceStackCard({
-  service,
-  index,
-  scrollYProgress,
-  onSelectService,
-  onCardClick,
-}) {
-  const interval = CARD_INTERVALS[index];
-  const flexGrow = useTransform(scrollYProgress, interval.in, interval.out);
+function ProjectStackCard({ service, index, scrollYProgress, onSelectService, onActivate }) {
+  const { input, output } = getFlexGrowRange(index);
+  const flexGrow = useTransform(scrollYProgress, input, output);
+  const bodyOpacity = useTransform(flexGrow, [0, 0.35, 1], [0, 0, 1]);
 
   return (
-    <motion.div
+    <motion.article
+      aria-label={service.title}
       style={{
         flexGrow,
         flexShrink: 0,
-        flexBasis: `${PROJECT_HEADER_HEIGHT}px`,
-        backgroundColor: service.bgColor,
+        flexBasis: HEADER_HEIGHT,
+        backgroundImage: `linear-gradient(180deg, ${service.toneFrom} 0%, ${service.toneTo} 100%)`,
       }}
-      className={`group relative flex w-full flex-col overflow-hidden ${service.cardBorder} first:border-t-0`}
+      className="relative flex min-h-0 w-full flex-col overflow-hidden"
     >
-      <ServiceHeader
-        service={service}
-        onCardClick={onCardClick}
-        index={index}
-      />
-      <ServiceBody
-        service={service}
-        flexGrow={flexGrow}
-        onSelectService={onSelectService}
-      />
-    </motion.div>
+      <ProjectHeader service={service} onActivate={() => onActivate(index)} />
+      <motion.div
+        style={{ opacity: bodyOpacity }}
+        className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <ProjectBody service={service} onSelectService={onSelectService} />
+      </motion.div>
+    </motion.article>
   );
 }
 
-/**
- * ServicesSection
- * - Section heading & label PINNED inside the sticky stage, remaining visible across all 6 cards.
- * - Removed introductory paragraph & horizontal divider completely.
- * - Zero empty space: compact, balanced card bodies.
- * - Progressive light-to-dark palette (White -> Neutral -> Blue-Gray -> Brand Blue -> Deep Blue -> Darkest Navy).
- * - Exact Framer Motion useScroll + useTransform flexGrow architecture preserved.
- */
 export default function ServicesSection({ onSelectService }) {
-  const containerRef = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [mobileOpenIdx, setMobileOpenIdx] = useState(0);
+  const trackRef = useRef(null);
 
-  // useScroll tracking the tall scroll-track container
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: trackRef,
     offset: ["start start", "end end"],
   });
 
-  const handleCardClick = (idx) => {
-    if (!containerRef.current) return;
-    const containerTop =
-      window.scrollY + containerRef.current.getBoundingClientRect().top;
-    const scrollable =
-      containerRef.current.offsetHeight - window.innerHeight;
-
-    // Direct scroll target mapping for each card
-    const targetProgress =
-      idx === 0
-        ? 0.02
-        : idx === SERVICES_DATA.length - 1
-        ? 0.98
-        : (idx + 0.45) / SERVICES_DATA.length;
-
-    window.scrollTo({
-      top: containerTop + targetProgress * scrollable,
-      behavior: "smooth",
-    });
+  // Scroll so the chosen card sits in the middle of its fully expanded range.
+  const handleActivate = (index) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const stage = track.firstElementChild;
+    const trackTop = window.scrollY + track.getBoundingClientRect().top;
+    const scrollable = track.offsetHeight - (stage?.offsetHeight ?? window.innerHeight);
+    const progress = index === 0 ? 0 : index === TOTAL - 1 ? 1 : (index + 0.5) * SEGMENT;
+    window.scrollTo({ top: trackTop + progress * scrollable, behavior: "smooth" });
   };
 
   return (
-    <div id="services" className="relative w-full scroll-mt-16 sm:scroll-mt-[72px]">
-      {/* 1. DESKTOP FULL-BLEED STACKED CARDS SCROLL TRACK WITH PINNED HEADING (md+) */}
-      <section
-        ref={containerRef}
-        className="capabilities-scroll-track relative hidden h-[420vh] w-full bg-[#001720] md:block"
-      >
-        <div className="capabilities-sticky-stage sticky top-16 sm:top-[72px] flex h-[calc(100svh-4rem)] sm:h-[calc(100svh-4.5rem)] w-full flex-col overflow-hidden bg-[#001720] shadow-sm">
-          {/* PINNED SECTION HEADER: Stays visible while exploring all 6 cards with generous space above */}
-          <div className="capabilities-pinned-header flex w-full shrink-0 flex-col justify-center border-b border-[#001720]/10 bg-white/95 px-6 pt-8 pb-5 backdrop-blur-md sm:px-8 sm:pt-10 sm:pb-6 lg:px-12 lg:pt-12 lg:pb-7">
-            <div className="inline-flex items-center gap-2 mb-2 sm:mb-2.5">
-              <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
-              <span className="xn-tabular font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
-                Core Capabilities
-              </span>
-            </div>
-            <h2
-              id="services-heading"
-              className="font-display text-3xl font-medium leading-[1.06] tracking-[-0.035em] text-[#001720] sm:text-4xl xl:text-[2.85rem]"
-            >
-              Six Integrated Disciplines for Commercial Scale.
-            </h2>
-          </div>
-
-          {/* Full-width, gap-free continuous vertical stack */}
-          <div className="flex min-h-0 flex-1 w-full flex-col">
-            {SERVICES_DATA.map((service, index) => (
-              <ServiceStackCard
-                key={service.id}
-                service={service}
-                index={index}
-                scrollYProgress={scrollYProgress}
-                onSelectService={onSelectService}
-                onCardClick={handleCardClick}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 2. MOBILE ACCORDION STAGE (< md) — Full Bleed Edge-to-Edge Stack */}
-      <section className="capabilities-mobile block w-full pt-6 pb-4 md:hidden">
-        {/* Space above heading below the company circulating */}
-        <div className="w-full bg-[#F4F8FA] border-b border-[#001720]/10 px-6 pt-8 pb-6">
-          <div className="inline-flex items-center gap-2 mb-2">
+    <section
+      id="services"
+      aria-labelledby="services-heading"
+      className="relative scroll-mt-16 bg-[#001720] sm:scroll-mt-[72px]"
+    >
+      {/* 1. Section introduction — normal document flow, never sticky */}
+      <div className="bg-[linear-gradient(180deg,#F4F8FA_0%,#E4EFF4_70%,#CFE2EA_100%)]">
+        <div className="mx-auto max-w-[1440px] px-5 pt-16 pb-12 sm:px-8 sm:pt-20 sm:pb-14 lg:px-12 lg:pt-24 lg:pb-16">
+          <div className="inline-flex items-center gap-2">
             <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
-            <span className="xn-tabular font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0075A2] sm:text-xs">
               Core Capabilities
             </span>
           </div>
-          <h2 className="font-display text-3xl font-medium leading-[1.06] tracking-[-0.035em] text-[#001720]">
-            Six Integrated Disciplines for Commercial Scale.
-          </h2>
-        </div>
-
-        <div className="flex w-full flex-col">
-          {SERVICES_DATA.map((service, idx) => (
-            <div
-              key={service.id}
-              style={{ backgroundColor: service.bgColor }}
-              className={`w-full ${service.cardBorder} first:border-t-0`}
+          <div className="mt-4 grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-10">
+            <h2
+              id="services-heading"
+              className="font-display text-3xl font-medium leading-[1.06] tracking-[-0.035em] text-[#001720] sm:text-4xl lg:col-span-8 xl:text-[3.25rem]"
             >
-              <button
-                type="button"
-                onClick={() =>
-                  setMobileOpenIdx((prev) => (prev === idx ? -1 : idx))
-                }
-                className={`flex h-14 w-full items-center justify-between px-6 text-left select-none transition-colors ${
-                  service.theme === "light"
-                    ? "hover:bg-[#001720]/[0.03]"
-                    : "hover:bg-white/[0.04]"
-                }`}
-                aria-expanded={mobileOpenIdx === idx}
-              >
-                <div className="flex items-center gap-3">
-                  <span
-                    className={`xn-tabular font-mono text-xs font-semibold ${service.numberColor}`}
-                  >
-                    {service.number}
-                  </span>
-                  <h3
-                    className={`font-display text-sm font-medium uppercase tracking-tight ${service.headerText}`}
-                  >
-                    {service.title}
-                  </h3>
-                </div>
-                <div className="flex items-center gap-3">
-                  {(() => {
-                    const Icon = service.icon;
-                    return (
-                      <Icon className={`size-4 ${service.headerIconColor}`} />
-                    );
-                  })()}
-                  <ChevronDown
-                    className={`size-4 transition-transform duration-200 ${
-                      service.theme === "light"
-                        ? "text-[#4A606A]"
-                        : "text-white/60"
-                    } ${mobileOpenIdx === idx ? "rotate-180" : ""}`}
-                  />
-                </div>
-              </button>
+              Six Integrated Disciplines for Commercial Scale.
+            </h2>
+            <p className="max-w-md text-sm leading-relaxed text-[#233C47] sm:text-base lg:col-span-4 lg:justify-self-end">
+              Search, paid media, web engineering, commerce, reputation and
+              content — planned and measured as one growth engine.
+            </p>
+          </div>
+        </div>
+      </div>
 
-              {mobileOpenIdx === idx && (
-                <div
-                  className={`space-y-3.5 border-t px-6 pt-3.5 pb-5 ${service.dividerColor}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${service.badgeText}`}
-                    >
-                      {service.categoryLabel}
-                    </span>
-                    <span className={`font-mono text-[10px] ${service.metricsText}`}>
-                      {service.metricsBadge}
-                    </span>
-                  </div>
-
-                  <p
-                    className={`text-xs leading-relaxed ${service.summaryText}`}
-                  >
-                    {service.summary}
-                  </p>
-
-                  <div className="space-y-2">
-                    {service.deliverables.map((item, dIdx) => (
-                      <div
-                        key={dIdx}
-                        className={`flex items-start gap-2 rounded p-2.5 text-xs ${service.cardBoxBg}`}
-                      >
-                        <CheckCircle2
-                          className={`mt-0.5 size-3.5 shrink-0 ${service.cardBoxIcon}`}
-                        />
-                        <span className={`font-medium ${service.cardBoxText}`}>
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {service.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={`rounded border px-2 py-0.5 font-mono text-[10px] ${service.tagBg}`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div
-                    className={`flex items-center justify-between border-t pt-3 ${service.dividerColor}`}
-                  >
-                    {service.subServices?.[0] && (
-                      <a
-                        href={service.subServices[0].href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1 text-[11px] font-semibold ${service.subLinkText}`}
-                      >
-                        <span>{service.subServices[0].name}</span>
-                        <ExternalLink className="size-3" />
-                      </a>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => onSelectService(service.title)}
-                      className={`inline-flex items-center gap-1.5 rounded px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider shadow ${service.ctaBg}`}
-                    >
-                      <span>Audit</span>
-                      <ArrowRight className={`size-3 ${service.ctaIcon}`} />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+      {/* 2 + 3. Scroll track with sticky full-viewport stack (see .xn-stack-track for the viewport rule) */}
+      <div
+        ref={trackRef}
+        style={{ height: `${TOTAL * 100}svh` }}
+        className="xn-stack-track relative"
+      >
+        <div className="sticky top-16 flex h-[calc(100svh-4rem)] w-full flex-col overflow-hidden [--stack-header:64px] sm:top-[72px] sm:h-[calc(100svh-72px)] [@media(max-height:779px)]:[--stack-header:52px]">
+          {SERVICES.map((service, index) => (
+            <ProjectStackCard
+              key={service.id}
+              service={service}
+              index={index}
+              scrollYProgress={scrollYProgress}
+              onSelectService={onSelectService}
+              onActivate={handleActivate}
+            />
           ))}
         </div>
-      </section>
-    </div>
+      </div>
+
+      {/* Small or short viewports: same cards, fully expanded, still edge-to-edge */}
+      <div className="xn-stack-static flex-col">
+        {SERVICES.map((service) => (
+          <article
+            key={service.id}
+            aria-label={service.title}
+            style={{
+              backgroundImage: `linear-gradient(180deg, ${service.toneFrom} 0%, ${service.toneTo} 100%)`,
+            }}
+            className="w-full"
+          >
+            <ProjectHeader service={service} />
+            <ProjectBody service={service} onSelectService={onSelectService} />
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
