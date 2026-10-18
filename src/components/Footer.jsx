@@ -3,13 +3,14 @@ import {
   CORE_SERVICES,
   SOCIAL_LINKS,
   PRIMARY_NAV_LINKS,
+  LEGAL_POLICY_LINKS,
 } from "@/data/xntrova-data";
 
 /**
- * Architectural Deep Navy Footer (Milestone 5 — Section 13)
+ * Architectural Deep Navy Footer
  * - Uses the transparent light brand logo (`/assets/brand/xntrova-logo-light.png`)
  *   directly on `#001720` with zero white box wrapper.
- * - Clean hairline partitions and minimal editorial typography.
+ * - Clean hairline partitions, minimal editorial typography, and the six verified legal policies.
  */
 export default function Footer() {
   return (
@@ -122,7 +123,28 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/12 pt-6 text-xs text-white/45 sm:flex-row">
+        {/* Six Legal Policy Links (Part 5) */}
+        <div className="mt-12 border-t border-white/12 pt-6">
+          <div className="flex flex-wrap items-center justify-start gap-x-6 gap-y-2.5 text-xs text-white/60">
+            <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
+              Legal &amp; Policies:
+            </span>
+            {LEGAL_POLICY_LINKS.map((policy) => (
+              <a
+                key={policy.name}
+                href={policy.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 transition-colors hover:text-white hover:underline"
+              >
+                {policy.name} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Copyright & Back to Top Row */}
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-6 text-xs text-white/45 sm:flex-row">
           <p>
             © 2026 {BRAND_INFO.name}. All rights reserved.
           </p>
