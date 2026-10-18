@@ -15,7 +15,7 @@ import {
 export default function Footer() {
   return (
     <footer className="border-t border-white/12 bg-[#001720] text-white">
-      <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 pt-12 pb-6 sm:px-8 lg:px-12 lg:pt-14 lg:pb-6">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           {/* Brand Mark & Positioning Column (Cols 1-4) */}
           <div className="lg:col-span-4">
@@ -124,7 +124,7 @@ export default function Footer() {
         </div>
 
         {/* Six Legal Policy Links (Part 5) */}
-        <div className="mt-12 border-t border-white/12 pt-6">
+        <div className="mt-8 border-t border-white/12 pt-5">
           <div className="flex flex-wrap items-center justify-start gap-x-6 gap-y-2.5 text-xs text-white/60">
             <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
               Legal &amp; Policies:
@@ -144,7 +144,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright & Back to Top Row */}
-        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-6 text-xs text-white/45 sm:flex-row">
+        <div className="mt-5 flex flex-col items-center justify-between gap-3 border-t border-white/8 pt-4 text-xs text-white/45 sm:flex-row">
           <p>
             © 2026 {BRAND_INFO.name}. All rights reserved.
           </p>

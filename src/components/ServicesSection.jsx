@@ -191,16 +191,16 @@ function DesktopStackedCard({
 
   // Map flexGrow to content opacity and slight scaling
   const contentOpacity = useTransform(flexGrow, [0, 0.25, 1], [0, 0, 1]);
-  const contentScale = useTransform(flexGrow, [0, 0.5, 1], [0.97, 0.985, 1]);
+  const contentScale = useTransform(flexGrow, [0, 0.5, 1], [0.98, 0.99, 1]);
 
   return (
     <motion.div
       style={{
         flexGrow,
         flexShrink: 0,
-        flexBasis: "56px",
+        flexBasis: "60px",
       }}
-      className={`group relative flex flex-col overflow-hidden rounded-lg border ${service.accentBorder} ${service.bgClass} shadow-lg transition-colors duration-200`}
+      className={`group relative flex flex-col overflow-hidden rounded-lg border ${service.accentBorder} ${service.bgClass} shadow-xl backdrop-blur-sm transition-colors duration-200`}
     >
       {/* Fixed-Height Card Header */}
       <div
@@ -213,7 +213,7 @@ function DesktopStackedCard({
             onCardClick(index);
           }
         }}
-        className="flex h-14 shrink-0 cursor-pointer items-center justify-between border-b border-white/10 px-6 select-none sm:h-16 sm:px-8 hover:bg-white/[0.02]"
+        className="flex h-[60px] shrink-0 cursor-pointer items-center justify-between border-b border-white/10 px-6 select-none sm:px-8 hover:bg-white/[0.03]"
         aria-label={`${service.number} ${service.title} — Click to expand`}
       >
         <div className="flex items-center gap-3 sm:gap-4">
@@ -226,48 +226,48 @@ function DesktopStackedCard({
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="hidden font-mono text-[11px] uppercase tracking-wider text-white/50 sm:inline-block">
+          <span className="hidden font-mono text-[11px] uppercase tracking-wider text-white/60 sm:inline-block">
             {service.categoryLabel}
           </span>
-          <div className="flex size-7 items-center justify-center rounded-full bg-white/5 sm:size-8">
+          <div className="flex size-7 items-center justify-center rounded-full bg-white/10 sm:size-8">
             <Icon className="size-3.5 text-[#FAAE39] sm:size-4" />
           </div>
         </div>
       </div>
 
-      {/* Expandable Service Body */}
+      {/* Expandable Service Body — Calibrated for complete visibility with zero clipping */}
       <motion.div
         style={{
           opacity: contentOpacity,
           scale: contentScale,
         }}
-        className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-6 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-4.5"
+        className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-6 py-3.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-4"
       >
         {/* Main Content Area */}
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="inline-flex items-center gap-2 rounded bg-white/5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
+            <span className="inline-flex items-center gap-2 rounded bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
               <span className="size-1.5 rounded-full bg-[#FAAE39]" />
               {service.categoryLabel}
             </span>
-            <span className="font-mono text-xs text-white/40">
+            <span className="font-mono text-xs text-white/50">
               {service.metricsBadge}
             </span>
           </div>
 
-          <p className="max-w-3xl text-sm leading-relaxed text-white/80 sm:text-base">
+          <p className="max-w-3xl text-xs leading-relaxed text-white/85 sm:text-sm">
             {service.summary}
           </p>
 
           {/* Three Key Deliverables */}
-          <div className="grid grid-cols-1 gap-2.5 pt-1 sm:grid-cols-3 sm:gap-3">
+          <div className="grid grid-cols-1 gap-2 pt-0.5 sm:grid-cols-3 sm:gap-3">
             {service.deliverables.map((item, dIdx) => (
               <div
                 key={dIdx}
-                className="flex items-start gap-2.5 rounded-md border border-white/5 bg-white/[0.03] p-3"
+                className="flex items-start gap-2 rounded-md border border-white/10 bg-white/[0.04] p-2.5"
               >
-                <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#FAAE39]" />
-                <span className="text-xs leading-snug text-white/90 sm:text-sm">
+                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-[#FAAE39]" />
+                <span className="text-xs leading-snug text-white/95">
                   {item}
                 </span>
               </div>
@@ -276,19 +276,19 @@ function DesktopStackedCard({
         </div>
 
         {/* Supporting Footer within Card: Tags & Direct CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-3">
+          <div className="flex flex-wrap items-center gap-1.5">
             {service.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-white/70"
+                className="rounded border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-white/70"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {service.subServices?.map((sub) => (
               <a
                 key={sub.name}
@@ -304,7 +304,7 @@ function DesktopStackedCard({
             <button
               type="button"
               onClick={() => onSelectService(service.title)}
-              className="inline-flex items-center gap-2 rounded bg-[#FAAE39] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#001720] shadow transition-colors hover:bg-[#ffbe5c]"
+              className="inline-flex items-center gap-2 rounded bg-[#FAAE39] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#001720] shadow transition-colors hover:bg-[#ffbe5c]"
             >
               <span>Request Audit</span>
               <ArrowRight className="size-3.5" />
@@ -421,7 +421,11 @@ function MobileServiceCard({
 }
 
 /**
- * Main Core Capabilities Section with Framer Motion Stacked Cards
+ * Main Core Capabilities Section:
+ * - Heading is in normal document flow (capabilities-intro).
+ * - Sticky stage is dedicated solely to the 6 stacked cards (capabilities-scroll-track).
+ * - Continuous background gradient: Top white/pale neutral -> middle pale blue & teal -> bottom deep navy (#001720).
+ * - Framer Motion useScroll + useTransform flexGrow model preserved exactly.
  */
 export default function ServicesSection({ onSelectService }) {
   const containerRef = useRef(null);
@@ -456,40 +460,45 @@ export default function ServicesSection({ onSelectService }) {
   };
 
   return (
-    <section
+    <div
       id="services"
-      aria-labelledby="services-heading"
-      className="relative bg-[#001720] text-white"
+      className="relative text-white"
+      style={{
+        background:
+          "linear-gradient(180deg, #F4F8FA 0%, #D8EAF2 14%, #A2C8D9 30%, #5292AD 48%, #164E63 66%, #082F40 84%, #001720 100%)",
+      }}
     >
-      {/* DESKTOP & TABLET STACKED CARDS STAGE (md+) */}
-      <div
-        ref={containerRef}
-        className="relative hidden h-[420vh] w-full md:block"
-      >
-        <div className="sticky top-0 flex h-screen w-full flex-col justify-between overflow-hidden px-4 pt-20 pb-6 sm:px-8 sm:pt-24 lg:px-12">
-          {/* Section Heading Bar */}
-          <div className="flex shrink-0 flex-col justify-between gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-end">
-            <div>
-              <div className="inline-flex items-center gap-2">
-                <span className="size-2 bg-[#FAAE39]" aria-hidden="true" />
-                <span className="xn-tabular text-xs font-semibold uppercase tracking-[0.24em] text-[#FAAE39]">
-                  Core Capabilities
-                </span>
-              </div>
-              <h2
-                id="services-heading"
-                className="mt-1 font-display text-2xl font-medium tracking-[-0.03em] text-white sm:text-3xl lg:text-4xl"
-              >
-                Six Integrated Disciplines for Commercial Scale.
-              </h2>
+      {/* 1A: CAPABILITIES INTRO — NORMAL DOCUMENT FLOW (NOT STICKY) */}
+      <section className="capabilities-intro mx-auto max-w-[1440px] px-4 pt-20 pb-10 sm:px-8 sm:pt-28 sm:pb-12 lg:px-12 lg:pt-32">
+        <div className="flex flex-col justify-between gap-4 border-b border-[#001720]/15 pb-8 lg:flex-row lg:items-end">
+          <div>
+            <div className="inline-flex items-center gap-2">
+              <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
+              <span className="xn-tabular text-xs font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
+                Core Capabilities
+              </span>
             </div>
-            <p className="max-w-sm text-xs leading-relaxed text-white/60">
-              Scroll to explore our six integrated disciplines. Each capability operates as a precision component of your commercial growth engine.
-            </p>
+            <h2
+              id="services-heading"
+              className="mt-2 font-display text-3xl font-medium tracking-[-0.03em] text-[#001720] sm:text-4xl lg:text-5xl"
+            >
+              Six Integrated Disciplines for Commercial Scale.
+            </h2>
           </div>
+          <p className="max-w-md text-xs sm:text-sm leading-relaxed text-[#233C47]">
+            Scroll to explore our six integrated disciplines. Each capability operates as a precision component of your commercial growth engine.
+          </p>
+        </div>
+      </section>
 
+      {/* 1B & 1C: CAPABILITIES SCROLL TRACK — STICKY STAGE FOR CARDS ONLY (md+) */}
+      <section
+        ref={containerRef}
+        className="capabilities-scroll-track relative hidden h-[420vh] w-full md:block"
+      >
+        <div className="capabilities-sticky-stage sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden px-4 py-6 sm:px-8 lg:px-12">
           {/* Six Vertically Stacked Service Cards */}
-          <div className="my-3 flex min-h-0 flex-1 flex-col gap-2.5 lg:gap-3">
+          <div className="flex h-[calc(100vh-64px)] max-h-[760px] min-h-[520px] w-full flex-col gap-2.5 lg:gap-3">
             {SERVICES_DATA.map((service, index) => (
               <DesktopStackedCard
                 key={service.id}
@@ -503,31 +512,16 @@ export default function ServicesSection({ onSelectService }) {
           </div>
 
           {/* Subtle Bottom Status Indicator */}
-          <div className="flex shrink-0 items-center justify-between border-t border-white/10 pt-2 text-[11px] font-mono text-white/40">
+          <div className="mt-2 flex shrink-0 items-center justify-between border-t border-white/10 pt-2 text-[11px] font-mono text-white/50">
             <span>Scroll or click card headers to inspect disciplines</span>
             <span>01 — 06 Integrated System</span>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* MOBILE ACCORDION STAGE (< md) */}
-      <div className="block px-4 py-16 sm:px-8 md:hidden">
-        <div className="border-b border-white/10 pb-6">
-          <div className="inline-flex items-center gap-2">
-            <span className="size-2 bg-[#FAAE39]" aria-hidden="true" />
-            <span className="xn-tabular text-xs font-semibold uppercase tracking-[0.24em] text-[#FAAE39]">
-              Core Capabilities
-            </span>
-          </div>
-          <h2 className="mt-2 font-display text-2xl font-medium tracking-tight text-white">
-            Six Integrated Disciplines for Commercial Scale.
-          </h2>
-          <p className="mt-2 text-xs leading-relaxed text-white/65">
-            We unite search authority, performance media, conversion engineering, and reputation into a unified engine.
-          </p>
-        </div>
-
-        <div className="mt-6 space-y-3">
+      <section className="capabilities-mobile block px-4 pt-4 pb-16 sm:px-8 md:hidden">
+        <div className="space-y-3">
           {SERVICES_DATA.map((service, idx) => (
             <MobileServiceCard
               key={service.id}
@@ -540,7 +534,7 @@ export default function ServicesSection({ onSelectService }) {
             />
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

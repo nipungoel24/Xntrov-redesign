@@ -142,12 +142,12 @@ export default function ContactSection({ preselectedService, selectedService }) 
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative bg-[#001720] py-24 text-white lg:py-36"
+      className="relative bg-[#001720] py-16 text-white sm:py-20 lg:py-28"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
-        {/* Monumental Typographic Invitation — Begins directly with "Let's Architect" */}
+        {/* Monumental Typographic Invitation — Begins directly with "Let's Architect" without divider */}
         <Reveal variant="up">
-          <div className="border-b border-white/12 pb-12 lg:pb-16">
+          <div className="pb-2 lg:pb-4">
             <h2
               id="contact-heading"
               className="font-display text-4xl font-medium leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.5rem]"
@@ -161,7 +161,7 @@ export default function ContactSection({ preselectedService, selectedService }) 
         </Reveal>
 
         {/* Main 12-Column Split: Left Un-nested Coordinates + Right Clean Architectural Form */}
-        <div className="mt-14 grid grid-cols-1 items-start gap-14 lg:mt-20 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-8 grid grid-cols-1 items-start gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-16">
           {/* Left Column: Minimal Contact Information Arrangement (Cols 1-4) */}
           <Reveal variant="up" className="lg:col-span-4">
             <p className="text-sm leading-relaxed text-white/75 sm:text-base">
