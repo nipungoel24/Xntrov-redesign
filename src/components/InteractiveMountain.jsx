@@ -27,16 +27,18 @@ import { useEffect, useRef } from "react";
 
 // Ridge shapes as [x, y] fractions of the canvas at full scale (y = 1 is the
 // bottom edge). The tallest peaks sit centre-right, under the review badge.
+// The left foothills climb early so the range meets the headline area rather
+// than leaving an empty band beneath it.
 const DISTANT = [
-  [-0.05, 0.9], [0.16, 0.82], [0.34, 0.75], [0.52, 0.66], [0.67, 0.36],
+  [-0.05, 0.74], [0.16, 0.68], [0.34, 0.64], [0.52, 0.6], [0.67, 0.36],
   [0.79, 0.46], [0.9, 0.64], [1.05, 0.82],
 ];
 const MID = [
-  [-0.05, 0.92], [0.18, 0.86], [0.36, 0.79], [0.54, 0.7], [0.7, 0.42],
+  [-0.05, 0.8], [0.18, 0.74], [0.36, 0.7], [0.54, 0.65], [0.7, 0.42],
   [0.8, 0.54], [0.9, 0.7], [0.98, 0.78], [1.05, 0.84],
 ];
 const FOREGROUND = [
-  [-0.05, 0.95], [0.18, 0.9], [0.38, 0.83], [0.56, 0.74], [0.72, 0.46],
+  [-0.05, 0.88], [0.18, 0.82], [0.38, 0.77], [0.56, 0.71], [0.72, 0.46],
   [0.82, 0.58], [0.92, 0.74], [1.05, 0.86],
 ];
 

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import ScrollTextReveal from "@/components/ScrollTextReveal";
 import InteractiveMountain from "@/components/InteractiveMountain";
+import { BRAND_INFO } from "@/data/xntrova-data";
 
 const HEADLINE_LINES = [
   { text: "SEO, Paid Ads & Websites" },
@@ -294,6 +295,30 @@ export default function Hero() {
                   </span>
                 ))}
               </h1>
+
+              {/* Primary actions directly under the headline */}
+              <div
+                data-mountain-avoid
+                className="xn-hero-fade mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 sm:mt-10"
+                style={{ "--d": 880 }}
+              >
+                <a
+                  href="#contact"
+                  className="xn-press inline-flex min-h-12 items-center gap-3 bg-[#FAAE39] px-6 text-xs font-bold uppercase tracking-[0.16em] text-[#001720] shadow-[0_12px_32px_rgba(250,174,57,0.18)] transition-colors hover:bg-white"
+                >
+                  <span>Request Free Growth Audit</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a
+                  href={BRAND_INFO.phoneHref}
+                  className="inline-flex min-h-12 items-center gap-2.5 text-sm font-medium text-white/85 transition-colors hover:text-[#FAAE39]"
+                >
+                  <span className="text-[11px] uppercase tracking-[0.2em] text-white/50">
+                    Call
+                  </span>
+                  <span className="xn-tabular">{BRAND_INFO.phoneDisplay}</span>
+                </a>
+              </div>
             </div>
 
             {/* Right: supporting paragraph directly beneath the badge */}
