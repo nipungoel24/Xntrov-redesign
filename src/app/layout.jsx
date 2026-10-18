@@ -112,9 +112,13 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${dmSans.variable}`}
     >
-      <body className="min-h-dvh flex flex-col bg-white text-[#001720] antialiased">
+      <body
+        suppressHydrationWarning
+        className="min-h-dvh flex flex-col bg-white text-[#001720] antialiased"
+      >
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#faae39] focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-[#001720] focus:shadow-lg"

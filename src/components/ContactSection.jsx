@@ -145,41 +145,35 @@ export default function ContactSection({ preselectedService, selectedService }) 
       className="relative bg-[#001720] py-16 text-white sm:py-20 lg:py-28"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
-        {/* Monumental Typographic Invitation — Begins directly with "Let's Architect" without divider */}
-        <Reveal variant="up">
-          <div className="pb-2 lg:pb-4">
+        {/* Main 12-Column Split: Vertically Centered Left Coordinates + Moderately Narrower Form */}
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-20">
+          {/* Left Column: Heading + Paragraph + Direct Coordinates (Cols 1-5, Vertically Centered) */}
+          <Reveal variant="up" className="lg:col-span-5">
             <h2
               id="contact-heading"
-              className="font-display text-4xl font-medium leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.5rem]"
+              className="font-display text-3xl font-medium leading-[1.02] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem]"
             >
               <span className="block">Let&apos;s Architect Your</span>
-              <span className="mt-1 block text-[#FAAE39] sm:pl-[8%] lg:pl-[12%]">
+              <span className="mt-1 block text-[#FAAE39]">
                 Next Growth Stage.
               </span>
             </h2>
-          </div>
-        </Reveal>
 
-        {/* Main 12-Column Split: Left Un-nested Coordinates + Right Clean Architectural Form */}
-        <div className="mt-8 grid grid-cols-1 items-start gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-16">
-          {/* Left Column: Minimal Contact Information Arrangement (Cols 1-4) */}
-          <Reveal variant="up" className="lg:col-span-4">
-            <p className="text-sm leading-relaxed text-white/75 sm:text-base">
+            <p className="mt-6 text-sm leading-relaxed text-white/75 sm:text-base">
               Share your website and commercial priorities. Our New Delhi NCR
               strategists will audit your search footprint, paid media
               efficiency, and conversion architecture.
             </p>
 
-            <dl className="mt-12 divide-y divide-white/12 border-y border-white/12">
-
-              <div className="py-6">
+            <dl className="mt-8 divide-y divide-white/12 border-y border-white/12 sm:mt-10">
+              <div className="py-5">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
                   Direct Phone &amp; WhatsApp
                 </dt>
-                <dd className="mt-2.5 flex flex-wrap items-baseline justify-between gap-4">
+                <dd className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
                   <a
                     href={BRAND_INFO.phoneHref}
-                    className="xn-tabular font-display text-xl font-medium text-white transition-colors hover:text-[#FAAE39]"
+                    className="xn-tabular font-display text-lg font-medium text-white transition-colors hover:text-[#FAAE39] sm:text-xl"
                   >
                     {BRAND_INFO.phoneDisplay}
                   </a>
@@ -195,14 +189,14 @@ export default function ContactSection({ preselectedService, selectedService }) 
                 </dd>
               </div>
 
-              <div className="py-6">
+              <div className="py-5">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
                   Strategy Desk Email
                 </dt>
                 <dd className="mt-2">
                   <a
                     href={BRAND_INFO.emailHref}
-                    className="font-display text-xl font-medium text-sky-300 transition-colors hover:text-white"
+                    className="font-display text-lg font-medium text-sky-300 transition-colors hover:text-white sm:text-xl"
                   >
                     {BRAND_INFO.email}
                   </a>
@@ -211,28 +205,18 @@ export default function ContactSection({ preselectedService, selectedService }) 
             </dl>
           </Reveal>
 
-          {/* Right Column: Clean Architectural Consultation Form Surface (Cols 5-12 — Zero Heavy Rounded Card Bloat) */}
-          <Reveal variant="up" delayMs={60} className="lg:col-span-8">
-            <div className="border border-white/15 bg-[#041D29] p-6 sm:p-10 lg:p-12">
-              <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-white/12 pb-5">
-                <div>
-                  <h3 className="font-display text-2xl font-medium tracking-[-0.025em] text-white">
-                    Request Your Digital Growth Audit
-                  </h3>
-                  <p className="mt-1 text-xs text-white/60">
-                    Direct diagnostic review by our New Delhi SEO, Paid Media
-                    &amp; Web Engineering leads
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="uppercase tracking-[0.18em] text-white/50">
-                    Scope:
-                  </span>
-                  <span className="font-semibold text-[#FAAE39]">
-                    {formData.service}
-                  </span>
-                </div>
+          {/* Right Column: Balanced Form Surface (Cols 6-12) */}
+          <Reveal variant="up" delayMs={60} className="lg:col-span-7">
+            <div className="border border-white/15 bg-[#041D29] p-6 sm:p-8 lg:p-10">
+              {/* Form Header — Clean Heading & Subtitle, Redundant Scope Badge Removed */}
+              <div className="mb-6 border-b border-white/12 pb-4 sm:mb-8 sm:pb-5">
+                <h3 className="font-display text-xl font-medium tracking-[-0.025em] text-white sm:text-2xl">
+                  Request Your Digital Growth Audit
+                </h3>
+                <p className="mt-1 text-xs text-white/60 sm:text-sm">
+                  Direct diagnostic review by our New Delhi SEO, Paid Media
+                  &amp; Web Engineering leads
+                </p>
               </div>
 
               <form onSubmit={handleSubmit} noValidate className="space-y-6">

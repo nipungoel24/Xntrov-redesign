@@ -156,9 +156,6 @@ export default function AboutWhySection() {
               Why Xntrova
             </span>
           </div>
-          <span className="xn-tabular text-[11px] font-medium uppercase tracking-[0.2em] text-[#5A707A]">
-            Verified Track Record • New Delhi NCR
-          </span>
         </div>
 
         {/* Main Tresmares-Style Asymmetric Layout: Sticky Left Narrative + Right Staggered Metric Panels */}

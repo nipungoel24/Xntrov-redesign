@@ -122,104 +122,101 @@ export default function Hero() {
 
         {/* Main Viewport Spatial Composition */}
         <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-between px-4 pt-28 pb-12 sm:px-8 sm:pt-32 sm:pb-16 lg:px-12 lg:pt-36">
-          {/* Top Content Row: Left Regional Eyebrow & Right-Aligned Google Review Badge */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          {/* Top Content Row: Left Regional Eyebrow & Right Supporting Description + Google Review Badge */}
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             {/* 3A: Regional Positioning Line Directly Above Main Headline */}
-            <p className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-sky-200/90">
+            <p className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-sky-200/90 pt-1 shrink-0">
               New Delhi NCR — B2B Digital Growth &amp; Web Engineering
             </p>
 
-            {/* 3C: Verified Google Review & Client Proof Badge — Top-Right Area, Right-Aligned */}
-            <div className="flex justify-start sm:justify-end">
-              <a
-                href="#testimonials"
-                aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
-                className="group inline-flex items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90 shadow-md"
-              >
-                {/* Google 4-Color G Mark */}
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="shrink-0"
+            {/* India Supporting Line Directly Before Google Review Badge */}
+            <div className="flex flex-col items-start lg:items-end gap-2.5 max-w-md lg:ml-auto">
+              <p className="text-xs sm:text-[13px] leading-relaxed text-white/80 text-left lg:text-right">
+                India&apos;s premier B2B digital marketing agency, delivering
+                growth-focused search, paid media, and conversion-engineered web
+                solutions across Delhi and beyond.
+              </p>
+
+              {/* 3C: Verified Google Review & Client Proof Badge */}
+              <div className="flex shrink-0">
+                <a
+                  href="#testimonials"
+                  aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
+                  className="group inline-flex items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90 shadow-md"
                 >
-                  <path
-                    fill="#4285F4"
-                    d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82Z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.08.72-2.46 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.11A12 12 0 0 0 12 24Z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.61H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.39l4-3.11Z"
-                  />
-                  <path
-                    fill="#EA4335"
-                    d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.69 1.27 6.61l4 3.11C6.22 6.86 8.87 4.75 12 4.75Z"
-                  />
-                </svg>
+                  {/* Google 4-Color G Mark */}
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="shrink-0"
+                  >
+                    <path
+                      fill="#4285F4"
+                      d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82Z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.08.72-2.46 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.11A12 12 0 0 0 12 24Z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.61H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.39l4-3.11Z"
+                    />
+                    <path
+                      fill="#EA4335"
+                      d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.69 1.27 6.61l4 3.11C6.22 6.86 8.87 4.75 12 4.75Z"
+                    />
+                  </svg>
 
-                <span className="xn-tabular text-xs font-semibold tracking-wide text-white">
-                  5.0
-                </span>
+                  <span className="xn-tabular text-xs font-semibold tracking-wide text-white">
+                    5.0
+                  </span>
 
-                {/* 5 Gold Stars */}
-                <span
-                  className="flex items-center gap-0.5 text-[#FAAE39]"
-                  aria-hidden="true"
-                >
-                  {[...Array(5)].map((_, idx) => (
-                    <svg
-                      key={idx}
-                      width="11"
-                      height="11"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                    </svg>
-                  ))}
-                </span>
+                  {/* 5 Gold Stars */}
+                  <span
+                    className="flex items-center gap-0.5 text-[#FAAE39]"
+                    aria-hidden="true"
+                  >
+                    {[...Array(5)].map((_, idx) => (
+                      <svg
+                        key={idx}
+                        width="11"
+                        height="11"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+                      </svg>
+                    ))}
+                  </span>
 
-                <span className="h-3 w-px bg-white/20" aria-hidden="true" />
+                  <span className="h-3 w-px bg-white/20" aria-hidden="true" />
 
-                <span className="xn-tabular text-[11px] font-medium tracking-[0.12em] text-white/80 group-hover:text-white">
-                  500+ Clients
-                </span>
-              </a>
+                  <span className="xn-tabular text-[11px] font-medium tracking-[0.12em] text-white/80 group-hover:text-white">
+                    500+ Clients
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Main Hero Content: Monumental Headline (Left) & Supporting Description (Right) */}
-          <div className="my-auto py-6 lg:py-10">
-            <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-12 lg:gap-14">
-              {/* Left Column: Dominant Headline */}
-              <div className="lg:col-span-8">
-                <h1
-                  id="hero-heading"
-                  className="font-display text-4xl sm:text-6xl lg:text-[3.5rem] xl:text-[4.75rem] 2xl:text-[5.5rem] font-medium leading-[0.98] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)]"
-                >
-                  <span className="block">SEO, Paid Media &amp;</span>
-                  <span className="mt-1.5 block text-white/95">
-                    Web Development
-                  </span>
-                  <span className="mt-1.5 block text-[#FAAE39]">
-                    That Drives Growth.
-                  </span>
-                </h1>
-              </div>
-
-              {/* Right Column: Supporting Description */}
-              <div className="lg:col-span-4 lg:pb-2">
-                <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-white/85">
-                  India&apos;s premier B2B digital marketing agency, delivering
-                  growth-focused search, paid media, and conversion-engineered web
-                  solutions across Delhi and beyond.
-                </p>
-              </div>
+          {/* Main Hero Content: Monumental Headline (Shifted vertically upwards a few pixels) */}
+          <div className="my-auto py-4 sm:py-6 lg:-translate-y-6">
+            <div className="max-w-4xl">
+              <h1
+                id="hero-heading"
+                className="font-display text-4xl sm:text-6xl lg:text-[3.5rem] xl:text-[4.75rem] 2xl:text-[5.5rem] font-medium leading-[0.98] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)]"
+              >
+                <span className="block">SEO, Paid Media &amp;</span>
+                <span className="mt-1.5 block text-white/95">
+                  Web Development
+                </span>
+                <span className="mt-1.5 block text-[#FAAE39]">
+                  That Drives Growth.
+                </span>
+              </h1>
             </div>
           </div>
 

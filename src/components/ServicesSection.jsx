@@ -23,7 +23,7 @@ import {
 /**
  * Compact height of collapsed service card header in pixels
  */
-const PROJECT_HEADER_HEIGHT = 56;
+const PROJECT_HEADER_HEIGHT = 50;
 
 /**
  * Six Integrated Disciplines Data Model for Xntrova
@@ -359,12 +359,12 @@ function ServiceBody({ service, flexGrow, onSelectService }) {
         opacity: contentOpacity,
         scale: contentScale,
       }}
-      className="flex min-h-0 flex-1 flex-col justify-start overflow-y-auto px-6 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-5 lg:px-12 lg:py-6"
+      className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-6 py-3.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-4 lg:px-12 lg:py-4.5"
     >
       {/* Upper Content Area */}
-      <div className="space-y-3 sm:space-y-3.5">
+      <div className="space-y-2.5 sm:space-y-3">
         <div
-          className={`flex flex-wrap items-center justify-between gap-2 border-b pb-2.5 ${service.dividerColor}`}
+          className={`flex flex-wrap items-center justify-between gap-2 border-b pb-2 ${service.dividerColor}`}
         >
           <div className="inline-flex items-center gap-2">
             <span className={`size-2 rounded-full ${service.badgeDot}`} />
@@ -380,17 +380,17 @@ function ServiceBody({ service, flexGrow, onSelectService }) {
         </div>
 
         <p
-          className={`max-w-4xl text-sm leading-relaxed sm:text-base ${service.summaryText}`}
+          className={`max-w-4xl text-sm leading-relaxed sm:text-[15px] ${service.summaryText}`}
         >
           {service.summary}
         </p>
 
         {/* Three Distinct Deliverables */}
-        <div className="grid grid-cols-1 gap-2.5 pt-0.5 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 pt-0.5 sm:grid-cols-3">
           {service.deliverables.map((item, dIdx) => (
             <div
               key={dIdx}
-              className={`flex items-start gap-2.5 rounded border p-3 ${service.cardBoxBg}`}
+              className={`flex items-start gap-2 rounded border p-2.5 sm:p-3 ${service.cardBoxBg}`}
             >
               <CheckCircle2
                 className={`mt-0.5 size-4 shrink-0 ${service.cardBoxIcon}`}
@@ -407,7 +407,7 @@ function ServiceBody({ service, flexGrow, onSelectService }) {
 
       {/* Supporting Footer within Card: Clean Tags & Direct CTA */}
       <div
-        className={`mt-4 flex flex-wrap items-center justify-between gap-3 border-t pt-3 sm:mt-5 sm:pt-4 ${service.dividerColor}`}
+        className={`mt-3 flex flex-wrap items-center justify-between gap-3 border-t pt-2.5 sm:mt-3.5 sm:pt-3 ${service.dividerColor}`}
       >
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           {service.tags.map((tag) => (
@@ -531,28 +531,23 @@ export default function ServicesSection({ onSelectService }) {
       {/* 1. DESKTOP FULL-BLEED STACKED CARDS SCROLL TRACK WITH PINNED HEADING (md+) */}
       <section
         ref={containerRef}
-        className="capabilities-scroll-track relative hidden h-[420vh] w-full md:block"
+        className="capabilities-scroll-track relative hidden h-[420vh] w-full bg-[#001720] md:block"
       >
-        <div className="capabilities-sticky-stage sticky top-16 sm:top-[72px] flex h-[calc(100svh-4rem)] sm:h-[calc(100svh-4.5rem)] w-full flex-col overflow-hidden bg-white">
-          {/* PINNED SECTION HEADER: Stays visible while exploring all 6 cards */}
-          <div className="capabilities-pinned-header flex w-full shrink-0 items-center justify-between border-b border-[#001720]/10 bg-white/95 px-6 py-3 backdrop-blur-md sm:px-8 sm:py-3.5 lg:px-12">
-            <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-4 lg:gap-6">
-              <div className="inline-flex items-center gap-2">
-                <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
-                <span className="xn-tabular font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#0075A2]">
-                  Core Capabilities
-                </span>
-              </div>
-              <h2
-                id="services-heading"
-                className="font-display text-base font-semibold tracking-tight text-[#001720] sm:text-lg lg:text-xl"
-              >
-                Six Integrated Disciplines for Commercial Scale.
-              </h2>
+        <div className="capabilities-sticky-stage sticky top-16 sm:top-[72px] flex h-[calc(100svh-4rem)] sm:h-[calc(100svh-4.5rem)] w-full flex-col overflow-hidden bg-white shadow-sm">
+          {/* PINNED SECTION HEADER: Stays visible while exploring all 6 cards with generous space above */}
+          <div className="capabilities-pinned-header flex w-full shrink-0 flex-col justify-center border-b border-[#001720]/10 bg-white/95 px-6 pt-8 pb-5 backdrop-blur-md sm:px-8 sm:pt-10 sm:pb-6 lg:px-12 lg:pt-12 lg:pb-7">
+            <div className="inline-flex items-center gap-2 mb-2 sm:mb-2.5">
+              <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
+              <span className="xn-tabular font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
+                Core Capabilities
+              </span>
             </div>
-            <div className="hidden font-mono text-xs uppercase tracking-wider text-[#5A707A] md:block">
-              01 — 06 Integrated Stack
-            </div>
+            <h2
+              id="services-heading"
+              className="font-display text-3xl font-medium leading-[1.06] tracking-[-0.035em] text-[#001720] sm:text-4xl xl:text-[2.85rem]"
+            >
+              Six Integrated Disciplines for Commercial Scale.
+            </h2>
           </div>
 
           {/* Full-width, gap-free continuous vertical stack */}
@@ -572,16 +567,16 @@ export default function ServicesSection({ onSelectService }) {
       </section>
 
       {/* 2. MOBILE ACCORDION STAGE (< md) — Full Bleed Edge-to-Edge Stack */}
-      <section className="capabilities-mobile block w-full md:hidden">
-        {/* Compact mobile heading: zero intro paragraph, zero divider line */}
-        <div className="w-full bg-[#F4F8FA] border-b border-[#001720]/10 px-6 py-5">
-          <div className="inline-flex items-center gap-2 mb-1.5">
+      <section className="capabilities-mobile block w-full pt-6 pb-4 md:hidden">
+        {/* Space above heading below the company circulating */}
+        <div className="w-full bg-[#F4F8FA] border-b border-[#001720]/10 px-6 pt-8 pb-6">
+          <div className="inline-flex items-center gap-2 mb-2">
             <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
-            <span className="xn-tabular font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#0075A2]">
+            <span className="xn-tabular font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
               Core Capabilities
             </span>
           </div>
-          <h2 className="font-display text-xl font-bold tracking-tight text-[#001720]">
+          <h2 className="font-display text-3xl font-medium leading-[1.06] tracking-[-0.035em] text-[#001720]">
             Six Integrated Disciplines for Commercial Scale.
           </h2>
         </div>

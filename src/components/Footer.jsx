@@ -123,37 +123,31 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Six Legal Policy Links (Part 5) */}
-        <div className="mt-8 border-t border-white/12 pt-5">
-          <div className="flex flex-wrap items-center justify-start gap-x-6 gap-y-2.5 text-xs text-white/60">
-            <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
-              Legal &amp; Policies:
-            </span>
+        {/* Bottom Copyright & Policy Links Row */}
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/12 pt-6 text-xs text-white/50 lg:flex-row lg:items-center">
+          <p className="shrink-0">
+            © 2026 {BRAND_INFO.name}. All rights reserved.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] sm:text-xs">
             {LEGAL_POLICY_LINKS.map((policy) => (
               <a
                 key={policy.name}
                 href={policy.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline-offset-4 transition-colors hover:text-white hover:underline"
+                className="transition-colors hover:text-[#FAAE39]"
               >
-                {policy.name} ↗
+                {policy.name}
               </a>
             ))}
+            <a
+              href="#top"
+              className="ml-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FAAE39] transition-colors hover:text-white sm:ml-2"
+            >
+              ↑ Top
+            </a>
           </div>
-        </div>
-
-        {/* Bottom Copyright & Back to Top Row */}
-        <div className="mt-5 flex flex-col items-center justify-between gap-3 border-t border-white/8 pt-4 text-xs text-white/45 sm:flex-row">
-          <p>
-            © 2026 {BRAND_INFO.name}. All rights reserved.
-          </p>
-          <a
-            href="#top"
-            className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39] transition-colors hover:text-white"
-          >
-            Back to Top ↑
-          </a>
         </div>
       </div>
     </footer>
