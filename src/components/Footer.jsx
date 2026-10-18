@@ -15,7 +15,7 @@ import {
  */
 export default function Footer() {
   return (
-    <footer className="border-t border-white/12 bg-[#001720] text-white">
+    <footer className="relative bg-[#001720] text-white shadow-[0_-2px_0_#001720]">
       <div className="mx-auto max-w-[1440px] px-4 pt-12 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-8 lg:px-12 lg:pt-14">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Brand Mark & Positioning Column (Cols 1-4) */}

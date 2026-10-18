@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import { BRAND_INFO, CORE_SERVICES } from "@/data/xntrova-data";
 import Reveal from "@/components/Reveal";
 
+// What the audit reviews (from the section's existing description).
+const AUDIT_SCOPE = [
+  "Search footprint",
+  "Paid media efficiency",
+  "Conversion architecture",
+];
+
 const INITIAL_FORM_STATE = {
   fullName: "",
   email: "",
@@ -161,16 +168,25 @@ export default function ContactSection({ preselectedService, selectedService }) 
           <Reveal variant="up" className="lg:sticky lg:top-28 lg:col-span-5">
             <p className="text-sm leading-relaxed text-white/75 sm:text-base">
               Share your website and commercial priorities. Our New Delhi NCR
-              strategists will audit your search footprint, paid media
-              efficiency, and conversion architecture.
+              strategists will review:
             </p>
+            <ol className="mt-5 space-y-3">
+              {AUDIT_SCOPE.map((item, idx) => (
+                <li key={item} className="flex items-baseline gap-4 text-sm text-white sm:text-base">
+                  <span className="xn-tabular font-mono text-xs text-[#FAAE39]">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
 
-            <dl className="mt-6 divide-y divide-white/12 border-b border-white/12 sm:mt-8">
-              <div className="py-5">
+            <dl className="mt-8 grid grid-cols-1 gap-6 border-t border-white/10 pt-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
                   Direct Phone &amp; WhatsApp
                 </dt>
-                <dd className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
+                <dd className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   <a
                     href={BRAND_INFO.phoneHref}
                     className="xn-tabular font-display text-lg font-medium text-white transition-colors hover:text-[#FAAE39] sm:text-xl"
@@ -189,7 +205,7 @@ export default function ContactSection({ preselectedService, selectedService }) 
                 </dd>
               </div>
 
-              <div className="py-5">
+              <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
                   Strategy Desk Email
                 </dt>
@@ -207,9 +223,9 @@ export default function ContactSection({ preselectedService, selectedService }) 
 
           {/* Right Column: Balanced Form Surface (Cols 6-12) */}
           <Reveal variant="up" delayMs={60} className="lg:col-span-7">
-            <div className="border border-white/15 bg-[#041D29] p-6 sm:p-8 lg:p-10">
+            <div className="border border-white/10 bg-[linear-gradient(160deg,#062736_0%,#041D29_60%)] p-6 sm:p-8 lg:p-10">
               {/* Form Header — Clean Heading & Subtitle, Redundant Scope Badge Removed */}
-              <div className="mb-6 border-b border-white/12 pb-4 sm:mb-8 sm:pb-5">
+              <div className="mb-6 sm:mb-8">
                 <h3 className="font-display text-xl font-medium tracking-[-0.025em] text-white sm:text-2xl">
                   Request Your Digital Growth Audit
                 </h3>
@@ -428,7 +444,7 @@ export default function ContactSection({ preselectedService, selectedService }) 
                   )}
                 </div>
 
-                <div className="flex flex-col items-start justify-between gap-4 border-t border-white/12 pt-6 sm:flex-row sm:items-center">
+                <div className="flex flex-col items-start justify-between gap-4 pt-2 sm:flex-row sm:items-center">
                   <button
                     type="submit"
                     disabled={submitting}
@@ -436,15 +452,22 @@ export default function ContactSection({ preselectedService, selectedService }) 
                   >
                     <span>
                       {submitting
-                        ? "Validating Inquiry..."
-                        : "Validate & Prepare Audit Brief"}
+                        ? "Checking details…"
+                        : "Request My Growth Audit"}
                     </span>
                     <span aria-hidden="true">→</span>
                   </button>
 
-                  <p className="max-w-xs text-[11px] leading-relaxed text-white/50">
-                    Validates via <code>/api/lead</code> and prepares direct
-                    email/WhatsApp dispatch when no live CRM webhook is set.
+                  <p className="max-w-xs text-xs leading-relaxed text-white/55">
+                    We use these details only to respond to your request. See
+                    our{" "}
+                    <a
+                      href="/privacy-policy/"
+                      className="text-white/80 underline underline-offset-2 hover:text-[#FAAE39]"
+                    >
+                      Privacy Policy
+                    </a>
+                    .
                   </p>
                 </div>
 
