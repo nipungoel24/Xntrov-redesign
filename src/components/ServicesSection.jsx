@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -19,10 +19,22 @@ import {
   CheckCircle2,
   ChevronDown,
 } from "lucide-react";
-import { RAW_CORE_SERVICES } from "@/data/xntrova-data";
 
 /**
- * Verified Six Integrated Disciplines Data Model for Xntrova
+ * Height of collapsed service card header in pixels
+ * Exactly matching the template reference: PROJECT_HEADER_HEIGHT = 64
+ */
+const PROJECT_HEADER_HEIGHT = 64;
+
+/**
+ * Six Integrated Disciplines Data Model for Xntrova
+ * Progressive Card Palette transitioning seamlessly from deep sea navy to Xntrova blue:
+ * - Card 01: Deepest sea navy — #001720
+ * - Card 02: Deep blue navy   — #002431
+ * - Card 03: Deep sea blue    — #003746
+ * - Card 04: Brand blue       — #004D63
+ * - Card 05: Ocean blue       — #00617B
+ * - Card 06: Xntrova blue     — #0075A2
  */
 const SERVICES_DATA = [
   {
@@ -31,9 +43,7 @@ const SERVICES_DATA = [
     title: "Search Engine Optimization",
     categoryLabel: "Organic Growth",
     icon: Search,
-    accentColor: "#0075A2",
-    accentBorder: "border-[#0075A2]/30",
-    bgClass: "bg-[#031C28]",
+    bgColor: "#001720",
     summary:
       "Long-term organic visibility through technical site architecture, high-intent keyword mapping, and authoritative link acquisition.",
     deliverables: [
@@ -54,9 +64,7 @@ const SERVICES_DATA = [
     title: "Paid Advertising (PPC)",
     categoryLabel: "Paid Acquisition",
     icon: Target,
-    accentColor: "#C82318",
-    accentBorder: "border-[#C82318]/30",
-    bgClass: "bg-[#061F2C]",
+    bgColor: "#002431",
     summary:
       "High-intent Google, Meta, and LinkedIn campaigns engineered to capture demand at the exact moment buyers are ready to act.",
     deliverables: [
@@ -76,9 +84,7 @@ const SERVICES_DATA = [
     title: "Website & App Development",
     categoryLabel: "Web Engineering",
     icon: Code2,
-    accentColor: "#0075A2",
-    accentBorder: "border-[#0075A2]/30",
-    bgClass: "bg-[#031E2A]",
+    bgColor: "#003746",
     summary:
       "Fast, responsive, SEO-ready websites and custom web applications built for seamless user experience and B2B lead conversion.",
     deliverables: [
@@ -99,9 +105,7 @@ const SERVICES_DATA = [
     title: "E-Commerce & Amazon Growth",
     categoryLabel: "Commerce",
     icon: ShoppingCart,
-    accentColor: "#FAAE39",
-    accentBorder: "border-[#FAAE39]/30",
-    bgClass: "bg-[#07212F]",
+    bgColor: "#004D63",
     summary:
       "Product feed optimization, marketplace sponsored ads, and checkout conversion tactics that turn catalog browsers into repeat buyers.",
     deliverables: [
@@ -121,9 +125,7 @@ const SERVICES_DATA = [
     title: "Social Media & Reputation (ORM)",
     categoryLabel: "Brand & Reputation",
     icon: ShieldCheck,
-    accentColor: "#C82318",
-    accentBorder: "border-[#C82318]/30",
-    bgClass: "bg-[#051E2B]",
+    bgColor: "#00617B",
     summary:
       "Creative social storytelling, community growth, and proactive online reputation management that strengthen commercial brand trust.",
     deliverables: [
@@ -143,9 +145,7 @@ const SERVICES_DATA = [
     title: "Content, Video & Lifecycle Email",
     categoryLabel: "Content & Retention",
     icon: FileText,
-    accentColor: "#0075A2",
-    accentBorder: "border-[#0075A2]/30",
-    bgClass: "bg-[#04202D]",
+    bgColor: "#0075A2",
     summary:
       "Editorial articles, infographics, video campaigns, and automated email journeys aligned with your brand voice and commercial search goals.",
     deliverables: [
@@ -165,7 +165,7 @@ const SERVICES_DATA = [
  * Scroll Progress Intervals for 6 Stacked Cards
  */
 const CARD_INTERVALS = [
-  { in: [0.0, 0.1, 0.18, 1.0], out: [1.0, 1.0, 0.0, 0.0] },
+  { in: [0.0, 0.08, 0.18, 1.0], out: [1.0, 1.0, 0.0, 0.0] },
   { in: [0.0, 0.1, 0.18, 0.28, 0.36, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
   { in: [0.0, 0.28, 0.36, 0.46, 0.54, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
   { in: [0.0, 0.46, 0.54, 0.64, 0.72, 1.0], out: [0.0, 0.0, 1.0, 1.0, 0.0, 0.0] },
@@ -174,258 +174,186 @@ const CARD_INTERVALS = [
 ];
 
 /**
- * Desktop Stacked Card Component driven by Framer Motion scroll transforms
+ * ServiceHeader (formerly ProjectHeader)
+ * Fixed 64px height, hairline top border, title, numerical identifier, and icon
  */
-function DesktopStackedCard({
+function ServiceHeader({ service, onCardClick, index }) {
+  const Icon = service.icon;
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onCardClick(index)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onCardClick(index);
+        }
+      }}
+      style={{ height: `${PROJECT_HEADER_HEIGHT}px` }}
+      className="flex w-full shrink-0 cursor-pointer items-center justify-between px-6 select-none sm:px-8 lg:px-12 hover:bg-white/[0.04] transition-colors duration-150"
+      aria-label={`${service.number} ${service.title} — Click to expand`}
+    >
+      <div className="flex items-center gap-4 sm:gap-6">
+        <span className="xn-tabular font-mono text-sm font-semibold tracking-wider text-[#FAAE39] sm:text-base">
+          {service.number}
+        </span>
+        <h3 className="font-display text-sm font-medium uppercase tracking-tight text-white sm:text-base lg:text-lg">
+          {service.title}
+        </h3>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <span className="hidden font-mono text-xs uppercase tracking-wider text-white/60 sm:inline-block">
+          {service.categoryLabel}
+        </span>
+        <div className="flex size-8 items-center justify-center rounded-full bg-white/10">
+          <Icon className="size-4 text-[#FAAE39]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * ServiceBody (formerly ProjectBody)
+ * Expandable card body calibrated to fully display deliverables, tags, links, and CTAs without clipping
+ */
+function ServiceBody({ service, flexGrow, onSelectService }) {
+  const contentOpacity = useTransform(flexGrow, [0, 0.2, 1], [0, 0, 1]);
+  const contentScale = useTransform(flexGrow, [0, 0.5, 1], [0.985, 0.995, 1]);
+
+  return (
+    <motion.div
+      style={{
+        opacity: contentOpacity,
+        scale: contentScale,
+      }}
+      className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-6 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-7 lg:px-12 lg:py-8"
+    >
+      {/* Upper Content Area */}
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+          <div className="inline-flex items-center gap-2">
+            <span className="size-2 rounded-full bg-[#FAAE39]" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
+              {service.categoryLabel}
+            </span>
+          </div>
+          <span className="font-mono text-xs text-white/50">
+            {service.metricsBadge}
+          </span>
+        </div>
+
+        <p className="max-w-4xl text-sm leading-relaxed text-white/90 sm:text-base">
+          {service.summary}
+        </p>
+
+        {/* Three Key Deliverables */}
+        <div className="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-3">
+          {service.deliverables.map((item, dIdx) => (
+            <div
+              key={dIdx}
+              className="flex items-start gap-2.5 rounded border border-white/10 bg-white/[0.04] p-3.5"
+            >
+              <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#FAAE39]" />
+              <span className="text-xs sm:text-sm leading-snug text-white/95">
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Supporting Footer within Card: Tags & Direct CTA */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {service.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-white/70"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4">
+          {service.subServices?.map((sub) => (
+            <a
+              key={sub.name}
+              href={sub.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/80 transition-colors hover:text-[#FAAE39]"
+            >
+              <span>{sub.name}</span>
+              <ExternalLink className="size-3 text-[#FAAE39]" />
+            </a>
+          ))}
+          <button
+            type="button"
+            onClick={() => onSelectService(service.title)}
+            className="inline-flex items-center gap-2 rounded bg-[#FAAE39] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#001720] shadow transition-colors hover:bg-white"
+          >
+            <span>Request Audit</span>
+            <ArrowRight className="size-3.5" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/**
+ * ServiceStackCard (formerly ProjectStackCard)
+ * Sits flush edge-to-edge against adjacent cards with zero vertical gap, zero horizontal margin, and zero outer padding.
+ * Its solid background color contributes directly to the vertical gradient of the complete stack.
+ */
+function ServiceStackCard({
   service,
   index,
   scrollYProgress,
   onSelectService,
   onCardClick,
 }) {
-  const Icon = service.icon;
   const interval = CARD_INTERVALS[index];
 
   // Map progress to flexGrow
   const flexGrow = useTransform(scrollYProgress, interval.in, interval.out);
-
-  // Map flexGrow to content opacity and slight scaling
-  const contentOpacity = useTransform(flexGrow, [0, 0.25, 1], [0, 0, 1]);
-  const contentScale = useTransform(flexGrow, [0, 0.5, 1], [0.98, 0.99, 1]);
 
   return (
     <motion.div
       style={{
         flexGrow,
         flexShrink: 0,
-        flexBasis: "60px",
+        flexBasis: `${PROJECT_HEADER_HEIGHT}px`,
+        backgroundColor: service.bgColor,
       }}
-      className={`group relative flex flex-col overflow-hidden rounded-lg border ${service.accentBorder} ${service.bgClass} shadow-xl backdrop-blur-sm transition-colors duration-200`}
+      className="group relative flex w-full flex-col overflow-hidden border-t border-white/10 first:border-t-0"
     >
-      {/* Fixed-Height Card Header */}
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => onCardClick(index)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onCardClick(index);
-          }
-        }}
-        className="flex h-[60px] shrink-0 cursor-pointer items-center justify-between border-b border-white/10 px-6 select-none sm:px-8 hover:bg-white/[0.03]"
-        aria-label={`${service.number} ${service.title} — Click to expand`}
-      >
-        <div className="flex items-center gap-3 sm:gap-4">
-          <span className="xn-tabular font-mono text-xs font-semibold tracking-wider text-[#FAAE39] sm:text-sm">
-            {service.number}
-          </span>
-          <h3 className="font-display text-sm font-medium uppercase tracking-tight text-white sm:text-base lg:text-lg">
-            {service.title}
-          </h3>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="hidden font-mono text-[11px] uppercase tracking-wider text-white/60 sm:inline-block">
-            {service.categoryLabel}
-          </span>
-          <div className="flex size-7 items-center justify-center rounded-full bg-white/10 sm:size-8">
-            <Icon className="size-3.5 text-[#FAAE39] sm:size-4" />
-          </div>
-        </div>
-      </div>
-
-      {/* Expandable Service Body — Calibrated for complete visibility with zero clipping */}
-      <motion.div
-        style={{
-          opacity: contentOpacity,
-          scale: contentScale,
-        }}
-        className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-6 py-3.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-8 sm:py-4"
-      >
-        {/* Main Content Area */}
-        <div className="space-y-2.5">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="inline-flex items-center gap-2 rounded bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
-              <span className="size-1.5 rounded-full bg-[#FAAE39]" />
-              {service.categoryLabel}
-            </span>
-            <span className="font-mono text-xs text-white/50">
-              {service.metricsBadge}
-            </span>
-          </div>
-
-          <p className="max-w-3xl text-xs leading-relaxed text-white/85 sm:text-sm">
-            {service.summary}
-          </p>
-
-          {/* Three Key Deliverables */}
-          <div className="grid grid-cols-1 gap-2 pt-0.5 sm:grid-cols-3 sm:gap-3">
-            {service.deliverables.map((item, dIdx) => (
-              <div
-                key={dIdx}
-                className="flex items-start gap-2 rounded-md border border-white/10 bg-white/[0.04] p-2.5"
-              >
-                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-[#FAAE39]" />
-                <span className="text-xs leading-snug text-white/95">
-                  {item}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Supporting Footer within Card: Tags & Direct CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-3">
-          <div className="flex flex-wrap items-center gap-1.5">
-            {service.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-white/70"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            {service.subServices?.map((sub) => (
-              <a
-                key={sub.name}
-                href={sub.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs font-semibold text-white/80 transition-colors hover:text-[#FAAE39]"
-              >
-                <span>{sub.name}</span>
-                <ExternalLink className="size-3 text-[#FAAE39]" />
-              </a>
-            ))}
-            <button
-              type="button"
-              onClick={() => onSelectService(service.title)}
-              className="inline-flex items-center gap-2 rounded bg-[#FAAE39] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#001720] shadow transition-colors hover:bg-[#ffbe5c]"
-            >
-              <span>Request Audit</span>
-              <ArrowRight className="size-3.5" />
-            </button>
-          </div>
-        </div>
-      </motion.div>
+      <ServiceHeader
+        service={service}
+        onCardClick={onCardClick}
+        index={index}
+      />
+      <ServiceBody
+        service={service}
+        flexGrow={flexGrow}
+        onSelectService={onSelectService}
+      />
     </motion.div>
   );
 }
 
 /**
- * Mobile Sequential Accordion Card (< 768px)
- */
-function MobileServiceCard({
-  service,
-  isOpen,
-  onToggle,
-  onSelectService,
-}) {
-  const Icon = service.icon;
-
-  return (
-    <div
-      className={`overflow-hidden rounded-lg border ${service.accentBorder} ${service.bgClass} shadow-md`}
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        className="flex w-full items-center justify-between p-4 text-left select-none hover:bg-white/[0.02]"
-        aria-expanded={isOpen}
-      >
-        <div className="flex items-center gap-3">
-          <span className="xn-tabular font-mono text-xs font-semibold text-[#FAAE39]">
-            {service.number}
-          </span>
-          <h3 className="font-display text-sm font-medium uppercase tracking-tight text-white">
-            {service.title}
-          </h3>
-        </div>
-        <div className="flex items-center gap-2">
-          <Icon className="size-4 text-[#FAAE39]" />
-          <ChevronDown
-            className={`size-4 text-white/60 transition-transform duration-200 ${
-              isOpen ? "rotate-180" : ""
-            }`}
-          />
-        </div>
-      </button>
-
-      {isOpen && (
-        <div className="space-y-4 border-t border-white/10 px-4 pt-3 pb-5">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
-              {service.categoryLabel}
-            </span>
-            <span className="font-mono text-[10px] text-white/50">
-              {service.metricsBadge}
-            </span>
-          </div>
-
-          <p className="text-xs leading-relaxed text-white/80">
-            {service.summary}
-          </p>
-
-          <div className="space-y-2">
-            {service.deliverables.map((item, dIdx) => (
-              <div
-                key={dIdx}
-                className="flex items-start gap-2 rounded bg-white/[0.03] p-2.5 text-xs text-white/90"
-              >
-                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-[#FAAE39]" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            {service.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-white/70"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-between border-t border-white/10 pt-3">
-            {service.subServices?.[0] && (
-              <a
-                href={service.subServices[0].href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] font-semibold text-white/80 hover:text-[#FAAE39]"
-              >
-                <span>{service.subServices[0].name}</span>
-                <ExternalLink className="size-3 text-[#FAAE39]" />
-              </a>
-            )}
-            <button
-              type="button"
-              onClick={() => onSelectService(service.title)}
-              className="inline-flex items-center gap-1.5 rounded bg-[#FAAE39] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#001720]"
-            >
-              <span>Audit</span>
-              <ArrowRight className="size-3" />
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * Main Core Capabilities Section:
- * - Heading is in normal document flow (capabilities-intro).
- * - Sticky stage is dedicated solely to the 6 stacked cards (capabilities-scroll-track).
- * - Continuous background gradient: Top white/pale neutral -> middle pale blue & teal -> bottom deep navy (#001720).
- * - Framer Motion useScroll + useTransform flexGrow model preserved exactly.
+ * ServicesSection (formerly ProjectsSection)
+ * - Section heading & intro in normal document flow above the sticky stage.
+ * - Sticky 100svh stage for the cards only.
+ * - Full-bleed edge-to-edge vertical card stack with zero gap, zero margin, zero outer padding.
+ * - Progressive solid palette: #001720 -> #002431 -> #003746 -> #004D63 -> #00617B -> #0075A2.
+ * - Exact Framer Motion useScroll + useTransform flexGrow architecture preserved.
  */
 export default function ServicesSection({ onSelectService }) {
   const containerRef = useRef(null);
@@ -460,47 +388,42 @@ export default function ServicesSection({ onSelectService }) {
   };
 
   return (
-    <div
-      id="services"
-      className="relative text-white"
-      style={{
-        background:
-          "linear-gradient(180deg, #F4F8FA 0%, #D8EAF2 14%, #A2C8D9 30%, #5292AD 48%, #164E63 66%, #082F40 84%, #001720 100%)",
-      }}
-    >
-      {/* 1A: CAPABILITIES INTRO — NORMAL DOCUMENT FLOW (NOT STICKY) */}
-      <section className="capabilities-intro mx-auto max-w-[1440px] px-4 pt-20 pb-10 sm:px-8 sm:pt-28 sm:pb-12 lg:px-12 lg:pt-32">
-        <div className="flex flex-col justify-between gap-4 border-b border-[#001720]/15 pb-8 lg:flex-row lg:items-end">
-          <div>
-            <div className="inline-flex items-center gap-2">
-              <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
-              <span className="xn-tabular text-xs font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
-                Core Capabilities
-              </span>
+    <div id="services" className="relative w-full">
+      {/* 1. SECTION HEADING & INTRO — NORMAL DOCUMENT FLOW (NOT STICKY) */}
+      <section className="capabilities-intro w-full border-t border-[#DBE4E8] bg-[#F4F8FA] py-16 sm:py-20 lg:py-24 text-[#001720]">
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
+          <div className="flex flex-col justify-between gap-4 border-b border-[#001720]/15 pb-8 lg:flex-row lg:items-end">
+            <div>
+              <div className="inline-flex items-center gap-2">
+                <span className="size-2 bg-[#0075A2]" aria-hidden="true" />
+                <span className="xn-tabular text-xs font-semibold uppercase tracking-[0.24em] text-[#0075A2]">
+                  Core Capabilities
+                </span>
+              </div>
+              <h2
+                id="services-heading"
+                className="mt-2 font-display text-3xl font-medium tracking-[-0.03em] text-[#001720] sm:text-4xl lg:text-5xl"
+              >
+                Six Integrated Disciplines for Commercial Scale.
+              </h2>
             </div>
-            <h2
-              id="services-heading"
-              className="mt-2 font-display text-3xl font-medium tracking-[-0.03em] text-[#001720] sm:text-4xl lg:text-5xl"
-            >
-              Six Integrated Disciplines for Commercial Scale.
-            </h2>
+            <p className="max-w-md text-xs sm:text-sm leading-relaxed text-[#233C47]">
+              Scroll to explore our six integrated disciplines. Each capability operates as a precision component of your commercial growth engine.
+            </p>
           </div>
-          <p className="max-w-md text-xs sm:text-sm leading-relaxed text-[#233C47]">
-            Scroll to explore our six integrated disciplines. Each capability operates as a precision component of your commercial growth engine.
-          </p>
         </div>
       </section>
 
-      {/* 1B & 1C: CAPABILITIES SCROLL TRACK — STICKY STAGE FOR CARDS ONLY (md+) */}
+      {/* 2. DESKTOP FULL-BLEED STACKED CARDS SCROLL TRACK (md+) */}
       <section
         ref={containerRef}
         className="capabilities-scroll-track relative hidden h-[420vh] w-full md:block"
       >
-        <div className="capabilities-sticky-stage sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden px-4 py-6 sm:px-8 lg:px-12">
-          {/* Six Vertically Stacked Service Cards */}
-          <div className="flex h-[calc(100vh-64px)] max-h-[760px] min-h-[520px] w-full flex-col gap-2.5 lg:gap-3">
+        <div className="capabilities-sticky-stage sticky top-16 sm:top-[72px] flex h-[calc(100svh-4rem)] sm:h-[calc(100svh-4.5rem)] w-full flex-col overflow-hidden">
+          {/* Full-width, gap-free continuous vertical stack */}
+          <div className="flex h-full w-full flex-col">
             {SERVICES_DATA.map((service, index) => (
-              <DesktopStackedCard
+              <ServiceStackCard
                 key={service.id}
                 service={service}
                 index={index}
@@ -510,28 +433,109 @@ export default function ServicesSection({ onSelectService }) {
               />
             ))}
           </div>
-
-          {/* Subtle Bottom Status Indicator */}
-          <div className="mt-2 flex shrink-0 items-center justify-between border-t border-white/10 pt-2 text-[11px] font-mono text-white/50">
-            <span>Scroll or click card headers to inspect disciplines</span>
-            <span>01 — 06 Integrated System</span>
-          </div>
         </div>
       </section>
 
-      {/* MOBILE ACCORDION STAGE (< md) */}
-      <section className="capabilities-mobile block px-4 pt-4 pb-16 sm:px-8 md:hidden">
-        <div className="space-y-3">
+      {/* 3. MOBILE ACCORDION STAGE (< md) — Full Bleed Edge-to-Edge Stack */}
+      <section className="capabilities-mobile block w-full md:hidden">
+        <div className="flex w-full flex-col">
           {SERVICES_DATA.map((service, idx) => (
-            <MobileServiceCard
+            <div
               key={service.id}
-              service={service}
-              isOpen={mobileOpenIdx === idx}
-              onToggle={() =>
-                setMobileOpenIdx((prev) => (prev === idx ? -1 : idx))
-              }
-              onSelectService={onSelectService}
-            />
+              style={{ backgroundColor: service.bgColor }}
+              className="w-full border-t border-white/10 first:border-t-0"
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setMobileOpenIdx((prev) => (prev === idx ? -1 : idx))
+                }
+                className="flex h-16 w-full items-center justify-between px-6 text-left select-none hover:bg-white/[0.04]"
+                aria-expanded={mobileOpenIdx === idx}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="xn-tabular font-mono text-xs font-semibold text-[#FAAE39]">
+                    {service.number}
+                  </span>
+                  <h3 className="font-display text-sm font-medium uppercase tracking-tight text-white">
+                    {service.title}
+                  </h3>
+                </div>
+                <div className="flex items-center gap-3">
+                  {(() => {
+                    const Icon = service.icon;
+                    return <Icon className="size-4 text-[#FAAE39]" />;
+                  })()}
+                  <ChevronDown
+                    className={`size-4 text-white/60 transition-transform duration-200 ${
+                      mobileOpenIdx === idx ? "rotate-180" : ""
+                    }`}
+                  />
+                </div>
+              </button>
+
+              {mobileOpenIdx === idx && (
+                <div className="space-y-4 border-t border-white/10 px-6 pt-4 pb-6">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAAE39]">
+                      {service.categoryLabel}
+                    </span>
+                    <span className="font-mono text-[10px] text-white/50">
+                      {service.metricsBadge}
+                    </span>
+                  </div>
+
+                  <p className="text-xs leading-relaxed text-white/90">
+                    {service.summary}
+                  </p>
+
+                  <div className="space-y-2">
+                    {service.deliverables.map((item, dIdx) => (
+                      <div
+                        key={dIdx}
+                        className="flex items-start gap-2 rounded bg-white/[0.04] p-2.5 text-xs text-white/95"
+                      >
+                        <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-[#FAAE39]" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {service.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-white/70"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-white/10 pt-3">
+                    {service.subServices?.[0] && (
+                      <a
+                        href={service.subServices[0].href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11px] font-semibold text-white/80 hover:text-[#FAAE39]"
+                      >
+                        <span>{service.subServices[0].name}</span>
+                        <ExternalLink className="size-3 text-[#FAAE39]" />
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => onSelectService(service.title)}
+                      className="inline-flex items-center gap-1.5 rounded bg-[#FAAE39] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#001720]"
+                    >
+                      <span>Audit</span>
+                      <ArrowRight className="size-3" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </section>
