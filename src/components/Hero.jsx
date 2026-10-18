@@ -59,7 +59,7 @@ export default function Hero() {
       className="relative overflow-hidden bg-[#001720] text-white"
     >
       {/* Hero Opening Atmospheric Stage */}
-      <div className="hero-stage relative min-h-dvh w-full overflow-hidden">
+      <div className="hero-stage relative min-h-dvh w-full overflow-hidden [--mountain-mass:clamp(96px,16svh,150px)] md:[--mountain-mass:clamp(140px,22svh,220px)] lg:[--mountain-mass:clamp(150px,26svh,270px)]">
         {/* Dimensional Multi-Layered Xntrova Atmospheric Gradient Canvas */}
         <div
           ref={glowLayerRef}
@@ -117,24 +117,25 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Tresmares-Inspired Interactive Mountain Terrain Silhouette & Contours */}
-        <InteractiveMountain className="z-[6]" />
+        {/* Interactive mountain lives in its own bottom band. The band is sized so the
+            opaque terrain (bottom ~42% of the canvas) never rises above the content's
+            reserved bottom padding, keeping every line of copy clear of the ridge. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[6] h-[calc(var(--mountain-mass)/0.42)]"
+        >
+          <InteractiveMountain />
+        </div>
 
         {/* Main Viewport Spatial Composition */}
-        <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-between px-4 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-12 lg:px-12 lg:pt-32">
-          {/* Top Content Row: Left Regional Eyebrow & Right Google Review Badge */}
-          <div className="flex flex-wrap items-center justify-between gap-4 w-full">
-            {/* 3A: Regional Positioning Line */}
-            <p className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-sky-200/90">
-              New Delhi NCR — B2B Digital Growth &amp; Web Engineering
-            </p>
-
-            {/* 3C: Verified Google Review & Client Proof Badge */}
-            <div className="flex shrink-0">
+        <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-center px-4 pt-24 pb-[calc(var(--mountain-mass)+1.5rem)] sm:px-8 sm:pt-28 lg:px-12 lg:pt-32">
+          <div className="grid w-full grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-12 lg:gap-y-8 xl:gap-x-14">
+            {/* Google review badge — top-right, right-aligned */}
+            <div className="flex items-start justify-end self-start lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <a
                 href="#testimonials"
                 aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
-                className="group inline-flex items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90 shadow-md"
+                className="group inline-flex max-w-full items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 shadow-md backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90"
               >
                 {/* Google 4-Color G Mark */}
                 <svg
@@ -191,47 +192,31 @@ export default function Hero() {
                 </span>
               </a>
             </div>
-          </div>
 
-          {/* Main Hero Content: Two-Column Editorial Layout (Broad Headline Left, Separated Paragraph Right) */}
-          <div className="my-auto py-6 sm:py-8 lg:py-10 w-full">
-            <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-14 w-full">
-              {/* Left Column: Dominant Headline (Cols 1 to 8) */}
-              <div className="w-full min-w-0 lg:col-span-8">
-                <h1
-                  id="hero-heading"
-                  className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4.5rem] 2xl:text-[5.25rem] font-medium leading-[1.0] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)]"
-                >
-                  <span className="block">
-                    <span className="inline-block whitespace-nowrap">SEO,</span>{" "}
-                    <span className="inline-block whitespace-nowrap">Paid Media</span>{" "}
-                    <span className="inline-block whitespace-nowrap">&amp;</span>
-                  </span>
-                  <span className="mt-1 block text-white/95">
-                    <span className="inline-block whitespace-nowrap">Web Development</span>
-                  </span>
-                  <span className="mt-1 block text-[#FAAE39]">
-                    <span className="inline-block whitespace-nowrap">That Drives</span>{" "}
-                    <span className="inline-block whitespace-nowrap">Growth.</span>
-                  </span>
-                </h1>
-              </div>
+            {/* Left: regional positioning line directly above the headline */}
+            <div className="min-w-0 lg:col-span-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-end">
+              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200/90 sm:text-xs sm:tracking-[0.24em]">
+                New Delhi NCR — B2B Digital Growth &amp; Web Engineering
+              </p>
+              <h1
+                id="hero-heading"
+                className="mt-5 font-display text-[2.5rem] font-medium leading-[1.02] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)] sm:mt-6 sm:text-6xl lg:text-[3.6rem] xl:text-[4.5rem] 2xl:text-[5.25rem]"
+              >
+                <span className="block">SEO, Paid Media &amp;</span>
+                <span className="block">Web Development</span>
+                <span className="block text-[#FAAE39]">That Drives Growth.</span>
+              </h1>
+            </div>
 
-              {/* Right Column: Supporting Description (Cols 9 to 12) — Elevated into upper sky, well clear of mountain peak */}
-              <div className="w-full min-w-0 lg:col-span-4 lg:pt-3 xl:pt-4">
-                <div className="max-w-md lg:ml-auto">
-                  <p className="text-sm sm:text-base lg:text-[15px] xl:text-base leading-relaxed text-white/90">
-                    India&apos;s premier B2B digital marketing agency, delivering
-                    growth-focused search, paid media, and conversion-engineered web
-                    solutions across Delhi and beyond.
-                  </p>
-                </div>
-              </div>
+            {/* Right: supporting paragraph beneath the badge */}
+            <div className="min-w-0 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:self-end">
+              <p className="max-w-md text-sm leading-relaxed text-white/90 sm:text-base lg:ml-auto lg:text-[15px] xl:text-base">
+                India&apos;s premier B2B digital marketing agency, delivering
+                growth-focused search, paid media, and conversion-engineered web
+                solutions across Delhi and beyond.
+              </p>
             </div>
           </div>
-
-          {/* Visual Clearance Buffer for Mountain Below */}
-          <div className="h-2 sm:h-4" aria-hidden="true" />
         </div>
       </div>
 

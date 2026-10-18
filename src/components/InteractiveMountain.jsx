@@ -40,12 +40,15 @@ export default function InteractiveMountain({ className = "" }) {
     let width = 0;
     let height = 0;
 
+    // The canvas fills its own positioned container (the hero's mountain band),
+    // so the terrain scales with that band rather than the whole hero.
+    const sizeEl = canvas.parentElement;
+
     const resize = () => {
-      const hero = canvas.closest(".hero-stage") || canvas.closest("section") || canvas.parentElement;
-      const rect = hero ? hero.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
+      const rect = sizeEl.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = Math.max(rect.width || window.innerWidth, 320);
-      height = Math.max(rect.height || window.innerHeight, 500);
+      height = Math.max(rect.height || 1, 1);
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
@@ -59,8 +62,11 @@ export default function InteractiveMountain({ className = "" }) {
 
     resize();
     window.addEventListener("resize", resize, { passive: true });
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(resize) : null;
+    resizeObserver?.observe(sizeEl);
 
-    const heroEl = canvas.closest(".hero-stage") || canvas.closest("section") || canvas.parentElement;
+    const heroEl = canvas.closest(".hero-stage") || canvas.closest("section") || sizeEl;
 
     const onPointerMove = (e) => {
       if (reducedMotion || window.innerWidth < 768) return;
@@ -91,9 +97,7 @@ export default function InteractiveMountain({ className = "" }) {
     // LAYER 1: Distant Misty Peaks (Deep Indigo-Black with Cyan Crests)
     // ========================================================
     function drawDistantPeaks(px, py, t) {
-      const isMobile = width < 768;
-      const isTablet = width >= 768 && width < 1024;
-      const mOffset = isMobile ? height * 0.14 : isTablet ? height * 0.10 : 0;
+      const mOffset = 0;
       const shiftX = px * 14;
       const shiftY = py * 8;
       const breathe = Math.sin(t * 0.001) * 3;
@@ -143,9 +147,7 @@ export default function InteractiveMountain({ className = "" }) {
     // LAYER 2: Mid-ground Craggy Ridge with Topographic Striations
     // ========================================================
     function drawMidRidge(px, py, t) {
-      const isMobile = width < 768;
-      const isTablet = width >= 768 && width < 1024;
-      const mOffset = isMobile ? height * 0.14 : isTablet ? height * 0.10 : 0;
+      const mOffset = 0;
       const shiftX = px * 24;
       const shiftY = py * 14;
       const sway = Math.cos(t * 0.0012) * 4;
@@ -210,9 +212,7 @@ export default function InteractiveMountain({ className = "" }) {
     // LAYER 3: Foreground Sculpted Mountain Mass & Facets (Dominant Spatial Feature)
     // ========================================================
     function drawForegroundMountain(px, py, t) {
-      const isMobile = width < 768;
-      const isTablet = width >= 768 && width < 1024;
-      const mOffset = isMobile ? height * 0.14 : isTablet ? height * 0.10 : 0;
+      const mOffset = 0;
       const shiftX = px * 36;
       const shiftY = py * 20;
       const pulse = Math.sin(t * 0.0016) * 3;
@@ -247,8 +247,10 @@ export default function InteractiveMountain({ className = "" }) {
       // Deepest black bedrock foundation
       const fgGrad = ctx.createLinearGradient(0, height * 0.62 + mOffset, 0, height);
       fgGrad.addColorStop(0, "#010A0F");
-      fgGrad.addColorStop(0.3, "#000407");
-      fgGrad.addColorStop(1, "#000203");
+      fgGrad.addColorStop(0.35, "#00070C");
+      // Lift the base toward the horizon bridge navy so the foot of the
+      // mountain does not read as a solid black slab.
+      fgGrad.addColorStop(1, "#04293A");
       ctx.fillStyle = fgGrad;
       ctx.fill();
 
@@ -359,6 +361,7 @@ export default function InteractiveMountain({ className = "" }) {
 
     return () => {
       window.removeEventListener("resize", resize);
+      resizeObserver?.disconnect();
       if (heroEl) {
         heroEl.removeEventListener("pointermove", onPointerMove);
         heroEl.removeEventListener("pointerleave", onPointerLeave);
