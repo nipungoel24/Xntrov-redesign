@@ -314,6 +314,66 @@ p {
 }
 
 /* ==================================================
+   HERO ENTRANCE
+   Headline lines rise out of their own clip box; supporting copy fades up
+   word by word. --d is the delay in ms.
+   ================================================== */
+@keyframes xn-hero-rise {
+  from {
+    transform: translateY(108%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes xn-hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes xn-scroll-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.xn-hero-rise {
+  animation: xn-hero-rise 1.1s var(--ease-out-strong) both;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+.xn-hero-fade {
+  animation: xn-hero-fade 0.9s var(--ease-out-strong) both;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+.xn-scroll-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, #faae39, transparent);
+  animation: xn-scroll-line 2.2s var(--ease-in-out-strong) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xn-hero-rise,
+  .xn-hero-fade,
+  .xn-scroll-line::after {
+    animation: none;
+  }
+}
+
+/* ==================================================
    CORE CAPABILITIES STACK
    The sticky stage (intro + stacked cards) is used only where the intro, six
    headers and the expanded card's full content all fit in one viewport

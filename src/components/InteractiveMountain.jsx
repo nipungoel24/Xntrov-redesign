@@ -5,18 +5,24 @@ import { useEffect, useRef } from "react";
 /**
  * InteractiveMountain
  *
- * Layered, pointer-responsive mountain drawn on a canvas that covers the hero.
+ * Atmospheric, pointer-responsive mountain drawn on a canvas covering the hero
+ * (after the misty mountain hero on tresmarescapital.com, in Xntrova's navy).
  *
- * Text-aware height: the hero marks its copy with `data-mountain-avoid`. On
- * every resize (and once web fonts settle) the component measures those boxes
- * and computes one vertical scale for the terrain — the largest scale at which
- * every ridge stays below the copy above it, with room left for pointer
- * parallax. The mountain therefore rises as far as the layout allows (toward
- * the review badge on desktop) without ever crossing the text.
+ * Look: aerial perspective (distant ridges lighter and bluer, near ridges
+ * darker), drifting mist between layers, a light-catching face under the peak,
+ * soft crest lines, and a base that dissolves into cloud instead of ending in
+ * a solid slab. On load the range rises gently into place.
  *
- * Interaction: smooth eased pointer parallax per layer, gentle resting motion,
- * ease-back on pointer leave, paused while off-screen, static under
- * prefers-reduced-motion, and no pointer response on touch-width screens.
+ * Text-aware height: copy marked `data-mountain-avoid` is measured (glyph
+ * extents horizontally, the element's own box vertically, plus any
+ * `data-mountain-slack` in em for copy that moves sideways) and the terrain is
+ * scaled to the tallest size that stays clear of it, including pointer
+ * parallax. Re-measured on resize, font load, copy reflow and when entrance
+ * animations finish.
+ *
+ * Interaction: eased per-layer pointer parallax, slow resting drift, ease-back
+ * on pointer leave, paused off-screen, static under prefers-reduced-motion,
+ * and no pointer response on touch-width screens.
  */
 
 // Ridge shapes as [x, y] fractions of the canvas at full scale (y = 1 is the
@@ -34,9 +40,23 @@ const FOREGROUND = [
   [0.82, 0.58], [0.92, 0.74], [1.05, 0.86],
 ];
 
+// Soft mist banks: centre (fx, fy at full scale), radii (fraction of width),
+// opacity, drift amplitude (fraction of width) and phase.
+const MIST_BACK = [
+  { fx: 0.18, fy: 0.84, rx: 0.34, ry: 0.07, a: 0.16, drift: 0.04, phase: 0 },
+  { fx: 0.58, fy: 0.72, rx: 0.3, ry: 0.06, a: 0.12, drift: 0.05, phase: 2.1 },
+  { fx: 0.9, fy: 0.76, rx: 0.28, ry: 0.07, a: 0.14, drift: 0.035, phase: 4.2 },
+];
+const MIST_FRONT = [
+  { fx: 0.08, fy: 0.93, rx: 0.36, ry: 0.06, a: 0.14, drift: 0.05, phase: 1.3 },
+  { fx: 0.46, fy: 0.9, rx: 0.32, ry: 0.05, a: 0.1, drift: 0.04, phase: 3.4 },
+  { fx: 0.86, fy: 0.92, rx: 0.34, ry: 0.06, a: 0.12, drift: 0.045, phase: 5.2 },
+];
+
 // Maximum per-layer pointer travel (px) — mirrored in the clearance margins.
 const MAX_SHIFT_X = 36;
 const MAX_SHIFT_Y = 20;
+const INTRO_MS = 1800;
 
 function samplePolyline(points, width) {
   const samples = [];
@@ -78,7 +98,9 @@ export default function InteractiveMountain({ className = "" }) {
 
     let width = 0;
     let height = 0;
+    let fitScale = 1;
     let scale = 1;
+    let introStart = null;
 
     // Largest terrain scale that keeps every ridge below the measured copy.
     const computeScale = () => {
@@ -88,33 +110,36 @@ export default function InteractiveMountain({ className = "" }) {
       const marginX = MAX_SHIFT_X + 16;
       const obstacles = [...heroEl.querySelectorAll("[data-mountain-avoid]")]
         .map((el) => {
-          let rect = el.getBoundingClientRect();
-          // Copy: union of the text glyph boxes only (block-level child spans
-          // would otherwise report the full column width). Badges: full box.
+          const box = el.getBoundingClientRect();
+          let left = box.left;
+          let right = box.right;
+          // Copy: horizontal extent of the glyphs only (block-level child
+          // spans would otherwise report the full column width). The element
+          // box gives the bottom, so entrance transforms don't skew it.
           if (el.dataset.mountainAvoid !== "box") {
             const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
             const range = document.createRange();
-            let left = Infinity;
-            let right = -Infinity;
-            let bottom = -Infinity;
+            left = Infinity;
+            right = -Infinity;
             for (let node = walker.nextNode(); node; node = walker.nextNode()) {
               range.selectNodeContents(node);
               for (const r of range.getClientRects()) {
                 if (r.width === 0) continue;
                 left = Math.min(left, r.left);
                 right = Math.max(right, r.right);
-                bottom = Math.max(bottom, r.bottom);
               }
             }
-            if (right > left) rect = { left, right, bottom };
+            if (!(right > left)) return null;
           }
+          const slackEm = parseFloat(el.dataset.mountainSlack || "0");
+          const slack = slackEm * parseFloat(getComputedStyle(el).fontSize);
           return {
-            left: rect.left - origin.left - marginX,
-            right: rect.right - origin.left + marginX,
-            bottom: rect.bottom - origin.top + gap + MAX_SHIFT_Y,
+            left: left - origin.left - marginX,
+            right: right - origin.left + marginX + slack,
+            bottom: box.bottom - origin.top + gap + MAX_SHIFT_Y,
           };
         })
-        .filter((r) => r.right > r.left);
+        .filter(Boolean);
 
       let next = 1;
       for (const shape of [DISTANT, MID, FOREGROUND]) {
@@ -128,11 +153,12 @@ export default function InteractiveMountain({ className = "" }) {
           }
         }
       }
-      scale = Math.max(0.12, Math.min(1, next));
+      fitScale = Math.max(0.12, Math.min(1, next));
+      scale = fitScale;
     };
 
-    // Fraction → pixel mapping with the text-aware vertical scale applied.
-    const X = (fx, shiftX) => fx * width + shiftX;
+    // Fraction → pixel mapping with the current vertical scale applied.
+    const X = (fx, shiftX = 0) => fx * width + shiftX;
     const Y = (fy, shiftY = 0) => height - scale * height * (1 - fy) + shiftY;
 
     const tracePolyline = (points, shiftX, offsetFor) => {
@@ -142,7 +168,39 @@ export default function InteractiveMountain({ className = "" }) {
       }
     };
 
-    // LAYER 1: distant misty peaks (soft curves, cyan crest)
+    function drawMist(banks, t, shiftX, alpha) {
+      for (const m of banks) {
+        const cx = X(m.fx, shiftX) + Math.sin(t * 0.00008 + m.phase) * m.drift * width;
+        const cy = Y(m.fy);
+        const rx = m.rx * width;
+        const ry = Math.max(m.ry * height * scale, 24);
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.scale(1, ry / rx);
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+        g.addColorStop(0, `rgba(150, 210, 228, ${(m.a * alpha).toFixed(3)})`);
+        g.addColorStop(0.55, `rgba(110, 180, 205, ${(m.a * alpha * 0.45).toFixed(3)})`);
+        g.addColorStop(1, "rgba(90, 160, 190, 0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(-rx, -rx, rx * 2, rx * 2);
+        ctx.restore();
+      }
+    }
+
+    // Soft light behind the summit, as if the range is backlit by the sky.
+    function drawSkyGlow(shiftX) {
+      const cx = X(0.69, shiftX * 0.3);
+      const cy = Y(0.4);
+      const r = Math.max(width, height) * 0.38;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, "rgba(64, 196, 230, 0.16)");
+      g.addColorStop(0.45, "rgba(0, 117, 162, 0.07)");
+      g.addColorStop(1, "rgba(0, 117, 162, 0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, width, height);
+    }
+
+    // LAYER 1: distant range — lightest, bluest, softest (aerial perspective)
     function drawDistantPeaks(px, py, t) {
       const shiftX = px * 14;
       const shiftY = py * 8;
@@ -166,19 +224,19 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.closePath();
 
       const grad = ctx.createLinearGradient(0, Y(0.36), 0, height);
-      grad.addColorStop(0, "rgba(2, 22, 32, 0.86)");
-      grad.addColorStop(0.5, "rgba(0, 16, 25, 0.95)");
-      grad.addColorStop(1, "rgba(3, 30, 43, 0.98)");
+      grad.addColorStop(0, "rgba(22, 96, 124, 0.62)");
+      grad.addColorStop(0.45, "rgba(10, 62, 84, 0.78)");
+      grad.addColorStop(1, "rgba(6, 40, 56, 0.9)");
       ctx.fillStyle = grad;
       ctx.fill();
 
-      ctx.strokeStyle = "rgba(0, 140, 186, 0.55)";
-      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = "rgba(150, 220, 240, 0.28)";
+      ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
     }
 
-    // LAYER 2: mid-ground craggy ridge with topographic striations
+    // LAYER 2: mid-ground ridge with faint topographic striations
     function drawMidRidge(px, py, t) {
       const shiftX = px * 24;
       const shiftY = py * 14;
@@ -194,9 +252,9 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.closePath();
 
       const midGrad = ctx.createLinearGradient(0, Y(0.42), 0, height);
-      midGrad.addColorStop(0, "#01141E");
-      midGrad.addColorStop(0.4, "#000B12");
-      midGrad.addColorStop(1, "#03202D");
+      midGrad.addColorStop(0, "#0A3A50");
+      midGrad.addColorStop(0.5, "#05263A");
+      midGrad.addColorStop(1, "#041F2E");
       ctx.fillStyle = midGrad;
       ctx.fill();
 
@@ -205,8 +263,8 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.clip();
       for (let rib = 0; rib < 5; rib++) {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(14, 148, 184, ${Math.max(0.06, 0.24 - rib * 0.035).toFixed(3)})`;
-        ctx.lineWidth = 1.1;
+        ctx.strokeStyle = `rgba(120, 200, 225, ${Math.max(0.04, 0.12 - rib * 0.018).toFixed(3)})`;
+        ctx.lineWidth = 1;
         const startY = Y(0.52 + rib * 0.045, shiftY * 0.5);
         ctx.moveTo(X(0.36 + rib * 0.05, shiftX), startY);
         ctx.quadraticCurveTo(
@@ -222,13 +280,13 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.beginPath();
       ctx.moveTo(X(MID[0][0], shiftX), Y(MID[0][1], offsetFor(0)));
       tracePolyline(MID, shiftX, offsetFor);
-      ctx.strokeStyle = "rgba(34, 211, 238, 0.60)";
-      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = "rgba(34, 211, 238, 0.32)";
+      ctx.lineWidth = 1.2;
       ctx.stroke();
       ctx.restore();
     }
 
-    // LAYER 3: foreground sculpted mass, facet, amber glint and cyan rim
+    // LAYER 3: foreground mass with a lit face, amber spine and soft crest
     function drawForegroundMountain(px, py, t) {
       const shiftX = px * MAX_SHIFT_X;
       const shiftY = py * MAX_SHIFT_Y;
@@ -244,10 +302,8 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.closePath();
 
       const fgGrad = ctx.createLinearGradient(0, Y(0.46), 0, height);
-      fgGrad.addColorStop(0, "#010A0F");
-      fgGrad.addColorStop(0.4, "#00080D");
-      // The base lifts toward the horizon navy so the foot of the mountain
-      // blends into the section below instead of reading as a black slab.
+      fgGrad.addColorStop(0, "#03151F");
+      fgGrad.addColorStop(0.45, "#021019");
       fgGrad.addColorStop(1, "#052B3D");
       ctx.fillStyle = fgGrad;
       ctx.fill();
@@ -255,32 +311,46 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.save();
       ctx.clip();
 
-      // Faceted cleavage plane under the peak
       const peakX = X(0.72, shiftX);
       const peakY = Y(0.46, offsetFor(4));
-      const facetLeft = [X(0.56, shiftX) - px * 10, Y(0.8)];
-      const facetRight = [X(0.84, shiftX) + px * 12, Y(0.92)];
+      const spineEnd = [X(0.56, shiftX) - px * 10, Y(0.8)];
+      const faceEnd = [X(0.84, shiftX) + px * 12, Y(0.92)];
+
+      // Light-catching face under the peak (light from the upper right)
       ctx.beginPath();
       ctx.moveTo(peakX, peakY);
-      ctx.lineTo(facetLeft[0], facetLeft[1]);
-      ctx.lineTo(facetRight[0], facetRight[1]);
+      ctx.lineTo(spineEnd[0], spineEnd[1]);
+      ctx.lineTo(faceEnd[0], faceEnd[1]);
+      ctx.lineTo(X(0.82, shiftX), Y(0.58, offsetFor(5)));
       ctx.closePath();
-      const facetGrad = ctx.createLinearGradient(peakX, peakY, peakX, facetRight[1]);
-      facetGrad.addColorStop(0, "rgba(0, 117, 162, 0.45)");
-      facetGrad.addColorStop(0.35, "rgba(0, 23, 32, 0.85)");
-      facetGrad.addColorStop(1, "rgba(0, 3, 5, 0.6)");
-      ctx.fillStyle = facetGrad;
+      const lit = ctx.createLinearGradient(peakX, peakY, faceEnd[0], faceEnd[1]);
+      lit.addColorStop(0, "rgba(120, 205, 232, 0.34)");
+      lit.addColorStop(0.35, "rgba(40, 130, 165, 0.16)");
+      lit.addColorStop(1, "rgba(3, 21, 31, 0)");
+      ctx.fillStyle = lit;
       ctx.fill();
 
-      // Warm amber glint along the main spine (echoes the headline amber)
+      // Snow-touched summit highlight
       ctx.beginPath();
       ctx.moveTo(peakX, peakY);
-      ctx.lineTo(facetLeft[0], facetLeft[1]);
-      ctx.strokeStyle = "rgba(250, 174, 57, 0.65)";
-      ctx.lineWidth = 2.2;
+      ctx.lineTo(peakX - (peakX - spineEnd[0]) * 0.16, peakY + (spineEnd[1] - peakY) * 0.16);
+      ctx.lineTo(peakX + (X(0.82, shiftX) - peakX) * 0.22, peakY + (Y(0.58) - peakY) * 0.3);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(210, 240, 250, 0.16)";
+      ctx.fill();
+
+      // Warm amber spine (echoes the headline amber)
+      ctx.beginPath();
+      ctx.moveTo(peakX, peakY);
+      ctx.lineTo(spineEnd[0], spineEnd[1]);
+      const spine = ctx.createLinearGradient(peakX, peakY, spineEnd[0], spineEnd[1]);
+      spine.addColorStop(0, "rgba(250, 174, 57, 0.75)");
+      spine.addColorStop(1, "rgba(250, 174, 57, 0)");
+      ctx.strokeStyle = spine;
+      ctx.lineWidth = 1.8;
       ctx.stroke();
 
-      // Luminous topographic contours across the face
+      // Faint topographic contours across the face
       for (let i = 0; i < 5; i++) {
         const yPos = Y(0.58 + i * 0.05, shiftY * 0.5);
         ctx.beginPath();
@@ -291,29 +361,62 @@ export default function InteractiveMountain({ className = "" }) {
           X(0.9, shiftX),
           yPos + 24
         );
-        ctx.strokeStyle = `rgba(255, 255, 255, ${(0.14 - i * 0.022).toFixed(3)})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${(0.07 - i * 0.011).toFixed(3)})`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
       ctx.restore();
 
-      // Cyan rim highlight on the leading crest
+      // Soft crest line: bright near the summit, fading toward the flanks
       ctx.beginPath();
       ctx.moveTo(X(FOREGROUND[0][0], shiftX), Y(FOREGROUND[0][1], offsetFor(0)));
       tracePolyline(FOREGROUND, shiftX, offsetFor);
-      ctx.strokeStyle = "rgba(34, 211, 238, 0.82)";
-      ctx.lineWidth = 2.2;
+      const crest = ctx.createLinearGradient(0, 0, width, 0);
+      crest.addColorStop(0, "rgba(34, 211, 238, 0.12)");
+      crest.addColorStop(0.62, "rgba(34, 211, 238, 0.55)");
+      crest.addColorStop(0.72, "rgba(160, 235, 248, 0.75)");
+      crest.addColorStop(0.86, "rgba(34, 211, 238, 0.4)");
+      crest.addColorStop(1, "rgba(34, 211, 238, 0.12)");
+      ctx.strokeStyle = crest;
+      ctx.lineWidth = 1.6;
       ctx.stroke();
       ctx.restore();
     }
 
-    function drawFrame(px, py, t) {
-      ctx.clearRect(0, 0, width, height);
-      drawDistantPeaks(px, py, t);
-      drawMidRidge(px, py, t);
-      drawForegroundMountain(px, py, t);
+    // Base cloud: the foot of the range dissolves into mist and the horizon.
+    function drawBaseCloud() {
+      const top = height - Math.max(height * 0.2, 90);
+      const g = ctx.createLinearGradient(0, top, 0, height);
+      g.addColorStop(0, "rgba(8, 52, 72, 0)");
+      g.addColorStop(0.55, "rgba(14, 70, 92, 0.38)");
+      g.addColorStop(1, "rgba(6, 44, 62, 0.92)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, top, width, height - top);
     }
 
+    function drawFrame(px, py, t) {
+      // Entrance: the range rises into place and the mist fades in.
+      let intro = 1;
+      if (!reducedMotion) {
+        if (introStart === null) introStart = t;
+        const p = Math.min(1, (t - introStart) / INTRO_MS);
+        intro = 1 - Math.pow(1 - p, 3);
+      }
+      scale = fitScale * (0.72 + 0.28 * intro);
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalAlpha = 0.4 + 0.6 * intro;
+      drawSkyGlow(px * MAX_SHIFT_X);
+      drawDistantPeaks(px, py, t);
+      drawMist(MIST_BACK, t, px * 18, intro);
+      drawMidRidge(px, py, t);
+      drawForegroundMountain(px, py, t);
+      drawMist(MIST_FRONT, t, px * 40, intro);
+      drawBaseCloud();
+      ctx.globalAlpha = 1;
+    }
+
+    let lastT = 0;
     const resize = () => {
       const rect = sizeEl.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -328,7 +431,16 @@ export default function InteractiveMountain({ className = "" }) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
       computeScale();
-      drawFrame(stateRef.current.pointerX, stateRef.current.pointerY, 0);
+      drawFrame(stateRef.current.pointerX, stateRef.current.pointerY, lastT);
+    };
+
+    let pendingMeasure = null;
+    const scheduleResize = () => {
+      if (pendingMeasure !== null) return;
+      pendingMeasure = requestAnimationFrame(() => {
+        pendingMeasure = null;
+        resize();
+      });
     };
 
     const onPointerMove = (e) => {
@@ -348,7 +460,7 @@ export default function InteractiveMountain({ className = "" }) {
     resize();
     window.addEventListener("resize", resize, { passive: true });
     const resizeObserver =
-      typeof ResizeObserver !== "undefined" ? new ResizeObserver(resize) : null;
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(scheduleResize) : null;
     resizeObserver?.observe(sizeEl);
     // Re-measure whenever the copy itself reflows (font swap, wrapping changes)
     // even if the hero's own size stays the same.
@@ -356,13 +468,16 @@ export default function InteractiveMountain({ className = "" }) {
       .querySelectorAll("[data-mountain-avoid]")
       .forEach((el) => resizeObserver?.observe(el));
     // Copy reflows when the web fonts finish loading; re-measure then.
-    document.fonts?.ready.then(resize).catch(() => {});
+    document.fonts?.ready.then(scheduleResize).catch(() => {});
+    // Entrance animations move copy; re-measure once they settle.
+    heroEl.addEventListener("animationend", scheduleResize);
 
     heroEl.addEventListener("pointermove", onPointerMove, { passive: true });
     heroEl.addEventListener("pointerleave", onPointerLeave, { passive: true });
 
     const loop = (timestamp) => {
       animFrameRef.current = requestAnimationFrame(loop);
+      lastT = timestamp;
 
       // Skip redrawing while the hero is scrolled out of view
       const rect = heroEl.getBoundingClientRect();
@@ -382,8 +497,10 @@ export default function InteractiveMountain({ className = "" }) {
     return () => {
       window.removeEventListener("resize", resize);
       resizeObserver?.disconnect();
+      heroEl.removeEventListener("animationend", scheduleResize);
       heroEl.removeEventListener("pointermove", onPointerMove);
       heroEl.removeEventListener("pointerleave", onPointerLeave);
+      if (pendingMeasure !== null) cancelAnimationFrame(pendingMeasure);
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);
       }

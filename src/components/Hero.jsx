@@ -4,6 +4,20 @@ import { useEffect, useRef } from "react";
 import ScrollTextReveal from "@/components/ScrollTextReveal";
 import InteractiveMountain from "@/components/InteractiveMountain";
 
+const HEADLINE_LINES = [
+  { text: "SEO, Paid Ads & Websites" },
+  { text: "Engineered to Win" },
+  { text: "Qualified B2B Leads.", accent: true },
+];
+
+const PARAGRAPH_WORDS =
+  "India's premier B2B digital marketing agency, delivering growth-focused search, paid media, and conversion-engineered web solutions across Delhi and beyond.".split(
+    " "
+  );
+
+// Pointer range for the headline stair-step, in em around the CSS base step.
+const STEP_SWING_EM = 0.12;
+
 /**
  * Editorial Hero & Atmospheric Opening Sequence (Priority 2 & Priority 3)
  * - Priority 2: Rich, visibly dimensional Xntrova atmospheric gradient environment combining
@@ -16,6 +30,63 @@ import InteractiveMountain from "@/components/InteractiveMountain";
  */
 export default function Hero() {
   const glowLayerRef = useRef(null);
+  const headlineRef = useRef(null);
+
+  // Headline stair-step eases with the pointer on desktop (base step stays in CSS).
+  useEffect(() => {
+    const headline = headlineRef.current;
+    const stage = headline?.closest(".hero-stage");
+    if (!headline || !stage) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    let target = 0;
+    let current = 0;
+    let rafId = null;
+
+    const tick = () => {
+      current += (target - current) * 0.08;
+      if (Math.abs(target - current) < 0.0005) current = target;
+      headline.style.setProperty(
+        "--hero-step",
+        `calc(0.35em + ${(current * STEP_SWING_EM).toFixed(4)}em)`
+      );
+      rafId = current === target ? null : requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+    };
+
+    const onMove = (e) => {
+      if (!desktop.matches) return;
+      const rect = stage.getBoundingClientRect();
+      target = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
+      start();
+    };
+
+    const onLeave = () => {
+      target = 0;
+      start();
+    };
+
+    const onBreakpoint = () => {
+      if (!desktop.matches) {
+        target = current = 0;
+        headline.style.removeProperty("--hero-step");
+      }
+    };
+
+    stage.addEventListener("pointermove", onMove, { passive: true });
+    stage.addEventListener("pointerleave", onLeave, { passive: true });
+    desktop.addEventListener("change", onBreakpoint);
+    return () => {
+      stage.removeEventListener("pointermove", onMove);
+      stage.removeEventListener("pointerleave", onLeave);
+      desktop.removeEventListener("change", onBreakpoint);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -131,8 +202,9 @@ export default function Hero() {
               <a
                 data-mountain-avoid="box"
                 href="#testimonials"
+                style={{ "--d": 760 }}
                 aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
-                className="group inline-flex max-w-full items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 shadow-md backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90"
+                className="xn-hero-fade group inline-flex max-w-full items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 shadow-md backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90"
               >
                 {/* Google 4-Color G Mark */}
                 <svg
@@ -194,30 +266,76 @@ export default function Hero() {
             <div className="min-w-0 lg:col-span-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
               <p
                 data-mountain-avoid
-                className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200/90 sm:text-xs sm:tracking-[0.24em]"
+                className="xn-hero-fade font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200/90 sm:text-xs sm:tracking-[0.24em]"
               >
                 New Delhi NCR — B2B Digital Growth &amp; Web Engineering
               </p>
+              {/* Stair-stepped display lines (after the Tresmares hero): each line
+                  steps right by --hero-step, which eases with the pointer. */}
               <h1
+                ref={headlineRef}
                 id="hero-heading"
                 data-mountain-avoid
-                className="mt-5 font-display text-[2.15rem] font-medium leading-[1.04] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)] sm:mt-6 sm:text-[3.3rem] lg:text-[3rem] xl:text-[3.9rem] 2xl:text-[4.6rem]"
+                data-mountain-slack="0.5"
+                className="mt-5 font-display text-[2.15rem] font-medium leading-[1.04] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)] [--hero-step:0em] sm:mt-6 sm:text-[3.3rem] sm:[--hero-step:0.3em] lg:text-[3rem] lg:[--hero-step:0.35em] xl:text-[3.9rem] 2xl:text-[4.6rem]"
               >
-                <span className="block">SEO, Paid Ads &amp; Websites</span>
-                <span className="block">Engineered to Win</span>
-                <span className="block text-[#FAAE39]">Qualified B2B Leads.</span>
+                {HEADLINE_LINES.map((line, i) => (
+                  <span
+                    key={line.text}
+                    className="block overflow-hidden pb-[0.08em] -mb-[0.08em]"
+                    style={{ transform: `translateX(calc(var(--hero-step) * ${i}))` }}
+                  >
+                    <span
+                      className={`xn-hero-rise block ${line.accent ? "text-[#FAAE39]" : ""}`}
+                      style={{ "--d": 120 + i * 110 }}
+                    >
+                      {line.text}
+                    </span>
+                  </span>
+                ))}
               </h1>
             </div>
 
             {/* Right: supporting paragraph directly beneath the badge */}
             <div className="min-w-0 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:self-start">
-              <p data-mountain-avoid className="max-w-md text-sm leading-relaxed text-white/90 sm:text-base lg:ml-auto lg:text-[15px] xl:text-base">
-                India&apos;s premier B2B digital marketing agency, delivering
-                growth-focused search, paid media, and conversion-engineered web
-                solutions across Delhi and beyond.
-              </p>
+              <div className="max-w-md lg:ml-auto">
+                <p
+                  data-mountain-avoid
+                  className="text-sm leading-relaxed text-white/90 sm:text-base lg:text-[15px] xl:text-base"
+                >
+                  {PARAGRAPH_WORDS.map((word, i) => (
+                    <span key={`${word}-${i}`}>
+                      <span
+                        className="xn-hero-fade inline-block"
+                        style={{ "--d": 520 + i * 22 }}
+                      >
+                        {word}
+                      </span>{" "}
+                    </span>
+                  ))}
+                </p>
+                <a
+                  data-mountain-avoid
+                  href="#services"
+                  className="xn-hero-fade mt-5 inline-flex items-center gap-2 border-b border-[#FAAE39]/70 pb-1 text-[13px] font-semibold tracking-wide text-white transition-colors hover:border-white hover:text-[#FAAE39]"
+                  style={{ "--d": 1000 }}
+                >
+                  <span>Explore capabilities</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </div>
+
+          {/* Quiet scroll cue, bottom-left (as on the reference hero) */}
+          <a
+            href="#services"
+            className="xn-hero-fade absolute bottom-6 left-4 hidden items-center gap-3 text-[11px] font-medium uppercase tracking-[0.24em] text-white/55 transition-colors hover:text-white sm:left-8 md:inline-flex lg:left-12"
+            style={{ "--d": 1300 }}
+          >
+            <span className="xn-scroll-line relative block h-8 w-px overflow-hidden bg-white/20" aria-hidden="true" />
+            <span>Scroll</span>
+          </a>
         </div>
       </div>
 
