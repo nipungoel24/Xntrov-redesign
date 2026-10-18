@@ -22,7 +22,7 @@ export default function ReviewsSection() {
     <section
       id="testimonials"
       aria-labelledby="reviews-heading"
-      className="bg-white py-16 sm:py-20 lg:py-24 border-b border-[#D5E0E6]"
+      className="bg-white py-16 sm:py-20 lg:py-24"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
         {/* Header */}

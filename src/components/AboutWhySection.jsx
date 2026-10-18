@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { TECHNOLOGY_ECOSYSTEM } from "@/data/xntrova-data";
 
 /**
  * Verified Xntrova Metrics & Strategic Pillars for the Tresmares-inspired
@@ -59,36 +58,30 @@ const VERIFIED_METRIC_PANELS = [
  *   oversized numerical typography accented in restrained warm crimson (#C82318) and
  *   Xntrova brand blue (#0075A2), generous negative space, and reversible scroll-driven progression.
  */
-const STACK_TEXT_TOOLS = [
-  "Google Analytics 4",
-  "Google Search Console",
-  "Google Ads & Tag Manager",
-  "Semrush",
-  "Meta Business Suite",
-  "HubSpot & Salesforce",
-  "AWS & Drupal",
+const VERIFIED_TOOLS_LIST = [
+  { name: "Ahrefs", logo: "/assets/badges/ahrefs.svg", shortCode: "AH" },
+  { name: "Moz", logo: "/assets/badges/moz.png", shortCode: "MZ" },
+  { name: "Rank Math", logo: "/assets/badges/rank-math.svg", shortCode: "RM" },
+  { name: "Canva", logo: "/assets/badges/canva.png", shortCode: "CV" },
+  { name: "Google Analytics 4", logo: null, shortCode: "GA4" },
+  { name: "Google Search Console", logo: null, shortCode: "GSC" },
+  { name: "Google Ads & P-Max", logo: null, shortCode: "ADS" },
+  { name: "Google Tag Manager", logo: null, shortCode: "GTM" },
+  { name: "Meta Business & CAPI", logo: null, shortCode: "META" },
+  { name: "Semrush", logo: null, shortCode: "SEM" },
+  { name: "HubSpot CRM", logo: null, shortCode: "HUB" },
+  { name: "Salesforce", logo: null, shortCode: "SF" },
+  { name: "Next.js & React", logo: null, shortCode: "NXT" },
+  { name: "Shopify & WooCommerce", logo: null, shortCode: "SHOP" },
+  { name: "Amazon Marketing", logo: null, shortCode: "AMZ" },
+  { name: "AWS Cloud & Drupal", logo: null, shortCode: "AWS" },
 ];
 
 export default function AboutWhySection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollRatio, setScrollRatio] = useState(0);
-  const [activeStackIdx, setActiveStackIdx] = useState(0);
   const sectionRef = useRef(null);
   const panelRefs = useRef([]);
-
-  // Automatically rotate stack names every 2.8s without layout shifts
-  useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setActiveStackIdx((prev) => (prev + 1) % STACK_TEXT_TOOLS.length);
-    }, 2800);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -310,39 +303,81 @@ export default function AboutWhySection() {
           </div>
         </div>
 
-        {/* Quiet Verified Martech & Engineering Ecosystem Strip at Base */}
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-6 pt-8 lg:mt-24">
-          <div className="flex items-center gap-2.5">
-            <span
-              className="h-1.5 w-1.5 rounded-full bg-[#0075A2]"
-              aria-hidden="true"
-            />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5A707A]">
-              Verified Search, Analytics &amp; Cloud Stack
-            </span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
-            {TECHNOLOGY_ECOSYSTEM.filter((t) => t.logo).map((tool) => (
-              <img
-                key={tool.name}
-                src={tool.logo}
-                alt={`${tool.name} logo`}
-                width={72}
-                height={20}
-                className="h-4 w-auto object-contain opacity-75 grayscale transition-opacity hover:opacity-100 hover:grayscale-0"
-              />
-            ))}
-
-            {/* Automatically Rotating Stack Names */}
-            <div className="relative h-6 min-w-[240px] flex items-center">
+        {/* Continuous Horizontal Tools Marquee (Requirement 5) */}
+        <div className="mt-16 border-t border-[#DBE4E8] pt-8 lg:mt-24">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+            {/* Left Static Category Eyebrow */}
+            <div className="flex shrink-0 items-center gap-2.5 border-b border-[#DBE4E8] pb-4 lg:border-b-0 lg:border-r lg:pr-8 lg:pb-0">
               <span
-                key={activeStackIdx}
-                className="inline-flex items-center text-xs font-semibold tracking-wide text-[#0075A2] transition-opacity duration-300"
-              >
-                <span className="mr-2 h-1.5 w-1.5 rounded-full bg-[#0075A2]" aria-hidden="true" />
-                <span>{STACK_TEXT_TOOLS[activeStackIdx]}</span>
+                className="h-2 w-2 rounded-full bg-[#0075A2]"
+                aria-hidden="true"
+              />
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#001720]">
+                Engineering &amp; Martech Stack
               </span>
+            </div>
+
+            {/* Continuous Marquee Track */}
+            <div className="xn-marquee-viewport min-w-0 flex-1">
+              <div className="xn-marquee-track">
+                {/* Group 1: Accessible Primary Sequence */}
+                <ul
+                  aria-label="Verified search, analytics, commerce, and engineering tools"
+                  className="xn-marquee-group gap-6 pr-6"
+                >
+                  {VERIFIED_TOOLS_LIST.map((tool) => (
+                    <li key={tool.name} className="shrink-0">
+                      <div className="flex items-center gap-2.5 rounded border border-[#DBE4E8] bg-white px-3.5 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors duration-150 hover:border-[#0075A2]">
+                        {tool.logo ? (
+                          <img
+                            src={tool.logo}
+                            alt=""
+                            width={64}
+                            height={18}
+                            className="h-4 w-auto object-contain opacity-85"
+                          />
+                        ) : (
+                          <span className="flex size-4 items-center justify-center rounded-sm bg-[#0075A2]/10 font-mono text-[9px] font-bold text-[#0075A2]">
+                            {tool.shortCode || "●"}
+                          </span>
+                        )}
+                        <span className="font-mono text-xs font-medium text-[#001720]">
+                          {tool.name}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Group 2: Seamless Duplicate Loop (Hidden from Assistive Technology) */}
+                <ul
+                  aria-hidden="true"
+                  className="xn-marquee-group xn-marquee-group-duplicate gap-6 pr-6"
+                >
+                  {VERIFIED_TOOLS_LIST.map((tool, idx) => (
+                    <li key={`dup-${idx}`} className="shrink-0">
+                      <div className="flex items-center gap-2.5 rounded border border-[#DBE4E8] bg-white px-3.5 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+                        {tool.logo ? (
+                          <img
+                            src={tool.logo}
+                            alt=""
+                            width={64}
+                            height={18}
+                            className="h-4 w-auto object-contain opacity-85"
+                          />
+                        ) : (
+                          <span className="flex size-4 items-center justify-center rounded-sm bg-[#0075A2]/10 font-mono text-[9px] font-bold text-[#0075A2]">
+                            {tool.shortCode || "●"}
+                          </span>
+                        )}
+                        <span className="font-mono text-xs font-medium text-[#001720]">
+                          {tool.name}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
