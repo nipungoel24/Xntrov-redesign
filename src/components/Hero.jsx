@@ -59,7 +59,7 @@ export default function Hero() {
       className="relative overflow-hidden bg-[#001720] text-white"
     >
       {/* Hero Opening Atmospheric Stage */}
-      <div className="hero-stage relative min-h-dvh w-full overflow-hidden [--mountain-mass:clamp(96px,16svh,150px)] md:[--mountain-mass:clamp(140px,22svh,220px)] lg:[--mountain-mass:clamp(150px,26svh,270px)]">
+      <div className="hero-stage relative min-h-dvh w-full overflow-hidden">
         {/* Dimensional Multi-Layered Xntrova Atmospheric Gradient Canvas */}
         <div
           ref={glowLayerRef}
@@ -117,22 +117,19 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Interactive mountain lives in its own bottom band. The band is sized so the
-            opaque terrain (bottom ~42% of the canvas) never rises above the content's
-            reserved bottom padding, keeping every line of copy clear of the ridge. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[6] h-[calc(var(--mountain-mass)/0.42)]"
-        >
-          <InteractiveMountain />
-        </div>
+        {/* Interactive mountain covers the hero. It measures every element marked
+            data-mountain-avoid and scales its ridge to rise as high as it can while
+            staying below that copy, so the peak climbs toward the review badge. */}
+        <InteractiveMountain className="z-[6]" />
 
-        {/* Main Viewport Spatial Composition */}
-        <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col justify-center px-4 pt-24 pb-[calc(var(--mountain-mass)+1.5rem)] sm:px-8 sm:pt-28 lg:px-12 lg:pt-32">
-          <div className="grid w-full grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-12 lg:gap-y-8 xl:gap-x-14">
+        {/* Main Viewport Spatial Composition — copy sits in the upper half; the
+            reserved bottom padding guarantees room for the mountain to rise into. */}
+        <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col px-4 pt-[clamp(6.5rem,17svh,11rem)] pb-[clamp(11rem,30svh,22rem)] sm:px-8 lg:px-12">
+          <div className="grid w-full grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-12 lg:gap-y-6 xl:gap-x-14">
             {/* Google review badge — top-right, right-aligned */}
             <div className="flex items-start justify-end self-start lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <a
+                data-mountain-avoid="box"
                 href="#testimonials"
                 aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
                 className="group inline-flex max-w-full items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 shadow-md backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90"
@@ -194,23 +191,27 @@ export default function Hero() {
             </div>
 
             {/* Left: regional positioning line directly above the headline */}
-            <div className="min-w-0 lg:col-span-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-end">
-              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200/90 sm:text-xs sm:tracking-[0.24em]">
+            <div className="min-w-0 lg:col-span-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
+              <p
+                data-mountain-avoid
+                className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200/90 sm:text-xs sm:tracking-[0.24em]"
+              >
                 New Delhi NCR — B2B Digital Growth &amp; Web Engineering
               </p>
               <h1
                 id="hero-heading"
-                className="mt-5 font-display text-[2.5rem] font-medium leading-[1.02] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)] sm:mt-6 sm:text-6xl lg:text-[3.6rem] xl:text-[4.5rem] 2xl:text-[5.25rem]"
+                data-mountain-avoid
+                className="mt-5 font-display text-[2.15rem] font-medium leading-[1.04] tracking-[-0.035em] text-white drop-shadow-[0_12px_36px_rgba(0,15,24,0.45)] sm:mt-6 sm:text-[3.3rem] lg:text-[3rem] xl:text-[3.9rem] 2xl:text-[4.6rem]"
               >
-                <span className="block">SEO, Paid Media &amp;</span>
-                <span className="block">Web Development</span>
-                <span className="block text-[#FAAE39]">That Drives Growth.</span>
+                <span className="block">SEO, Paid Ads &amp; Websites</span>
+                <span className="block">Engineered to Win</span>
+                <span className="block text-[#FAAE39]">Qualified B2B Leads.</span>
               </h1>
             </div>
 
-            {/* Right: supporting paragraph beneath the badge */}
-            <div className="min-w-0 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:self-end">
-              <p className="max-w-md text-sm leading-relaxed text-white/90 sm:text-base lg:ml-auto lg:text-[15px] xl:text-base">
+            {/* Right: supporting paragraph directly beneath the badge */}
+            <div className="min-w-0 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:self-start">
+              <p data-mountain-avoid className="max-w-md text-sm leading-relaxed text-white/90 sm:text-base lg:ml-auto lg:text-[15px] xl:text-base">
                 India&apos;s premier B2B digital marketing agency, delivering
                 growth-focused search, paid media, and conversion-engineered web
                 solutions across Delhi and beyond.
