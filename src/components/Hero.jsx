@@ -195,7 +195,7 @@ export default function Hero() {
 
           {/* Main Hero Content: Two-Column Editorial Layout (Broad Headline Left, Separated Paragraph Right) */}
           <div className="my-auto py-6 sm:py-8 lg:py-10 w-full">
-            <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-14 w-full">
+            <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-14 w-full">
               {/* Left Column: Dominant Headline (Cols 1 to 8) */}
               <div className="w-full min-w-0 lg:col-span-8">
                 <h1
@@ -217,13 +217,15 @@ export default function Hero() {
                 </h1>
               </div>
 
-              {/* Right Column: Supporting Description (Cols 9 to 12) */}
-              <div className="w-full min-w-0 lg:col-span-4 lg:pb-3">
-                <p className="max-w-md text-sm sm:text-base lg:text-[15px] xl:text-base leading-relaxed text-white/85">
-                  India&apos;s premier B2B digital marketing agency, delivering
-                  growth-focused search, paid media, and conversion-engineered web
-                  solutions across Delhi and beyond.
-                </p>
+              {/* Right Column: Supporting Description (Cols 9 to 12) — Elevated into upper sky, well clear of mountain peak */}
+              <div className="w-full min-w-0 lg:col-span-4 lg:pt-3 xl:pt-4">
+                <div className="max-w-md lg:ml-auto">
+                  <p className="text-sm sm:text-base lg:text-[15px] xl:text-base leading-relaxed text-white/90">
+                    India&apos;s premier B2B digital marketing agency, delivering
+                    growth-focused search, paid media, and conversion-engineered web
+                    solutions across Delhi and beyond.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
