@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import ScrollTextReveal from "@/components/ScrollTextReveal";
 import InteractiveMountain from "@/components/InteractiveMountain";
-import { BRAND_INFO } from "@/data/xntrova-data";
+import { ArrowUpRight } from "lucide-react";
 
 const HEADLINE_LINES = [
   { text: "SEO, Paid Ads & Websites" },
@@ -198,73 +198,8 @@ export default function Hero() {
             reserved bottom padding guarantees room for the mountain to rise into. */}
         <div className="relative z-10 mx-auto flex min-h-dvh max-w-[1440px] flex-col px-4 pt-[clamp(6.5rem,17svh,11rem)] pb-[clamp(11rem,30svh,22rem)] sm:px-8 lg:px-12">
           <div className="grid w-full grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-12 lg:gap-y-6 xl:gap-x-14">
-            {/* Google review badge — top-right, right-aligned */}
-            <div className="flex items-start justify-end self-start lg:col-span-4 lg:col-start-9 lg:row-start-1">
-              <a
-                data-mountain-avoid="box"
-                href="#testimonials"
-                style={{ "--d": 760 }}
-                aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
-                className="xn-hero-fade group inline-flex max-w-full items-center gap-3 rounded-full border border-white/16 bg-[#001720]/75 px-3.5 py-1.5 shadow-md backdrop-blur-md transition-colors hover:border-[#FAAE39]/60 hover:bg-[#001720]/90"
-              >
-                {/* Google 4-Color G Mark */}
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="shrink-0"
-                >
-                  <path
-                    fill="#4285F4"
-                    d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82Z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.08.72-2.46 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.11A12 12 0 0 0 12 24Z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.61H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.39l4-3.11Z"
-                  />
-                  <path
-                    fill="#EA4335"
-                    d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.69 1.27 6.61l4 3.11C6.22 6.86 8.87 4.75 12 4.75Z"
-                  />
-                </svg>
-
-                <span className="xn-tabular text-xs font-semibold tracking-wide text-white">
-                  5.0
-                </span>
-
-                {/* 5 Gold Stars */}
-                <span
-                  className="flex items-center gap-0.5 text-[#FAAE39]"
-                  aria-hidden="true"
-                >
-                  {[...Array(5)].map((_, idx) => (
-                    <svg
-                      key={idx}
-                      width="11"
-                      height="11"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                    </svg>
-                  ))}
-                </span>
-
-                <span className="h-3 w-px bg-white/20" aria-hidden="true" />
-
-                <span className="xn-tabular text-[11px] font-medium tracking-[0.12em] text-white/80 group-hover:text-white">
-                  500+ Clients
-                </span>
-              </a>
-            </div>
-
             {/* Left: regional positioning line directly above the headline */}
-            <div className="min-w-0 lg:col-span-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
+            <div className="min-w-0 lg:col-span-8">
               <p
                 data-mountain-avoid
                 className="xn-hero-fade font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-200/90 sm:text-xs sm:tracking-[0.24em]"
@@ -296,33 +231,74 @@ export default function Hero() {
                 ))}
               </h1>
 
-              {/* Primary actions directly under the headline */}
+              {/* Primary action: pill CTA with arrow disc */}
               <div
                 data-mountain-avoid
-                className="xn-hero-fade mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 sm:mt-10"
+                className="xn-hero-fade mt-9 sm:mt-11"
                 style={{ "--d": 880 }}
               >
                 <a
                   href="#contact"
-                  className="xn-press inline-flex min-h-12 items-center gap-3 bg-[#FAAE39] px-6 text-xs font-bold uppercase tracking-[0.16em] text-[#001720] shadow-[0_12px_32px_rgba(250,174,57,0.18)] transition-colors hover:bg-white"
+                  className="group inline-flex min-h-[3.75rem] items-center gap-6 rounded-full bg-white py-2 pr-2 pl-8 font-display text-base font-semibold tracking-[-0.01em] text-[#001720] shadow-[-18px_4px_42px_-6px_rgba(250,174,57,0.75),18px_4px_42px_-6px_rgba(34,211,238,0.7),0_0_0_1px_rgba(255,255,255,0.6)] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[-20px_6px_52px_-4px_rgba(250,174,57,0.85),20px_6px_52px_-4px_rgba(34,211,238,0.8),0_0_0_1px_rgba(255,255,255,0.8)] sm:text-[17px]"
                 >
                   <span>Request Free Growth Audit</span>
-                  <span aria-hidden="true">→</span>
-                </a>
-                <a
-                  href={BRAND_INFO.phoneHref}
-                  className="inline-flex min-h-12 items-center gap-2.5 text-sm font-medium text-white/85 transition-colors hover:text-[#FAAE39]"
-                >
-                  <span className="text-[11px] uppercase tracking-[0.2em] text-white/50">
-                    Call
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#001720] text-white transition-transform duration-300 group-hover:rotate-45">
+                    <ArrowUpRight className="size-5" aria-hidden="true" />
                   </span>
-                  <span className="xn-tabular">{BRAND_INFO.phoneDisplay}</span>
                 </a>
               </div>
+
+              {/* Google rating, directly under the CTA */}
+              <a
+                data-mountain-avoid
+                href="#testimonials"
+                aria-label="5.0 Star Google Rating across 500+ Happy Clients — Read client reviews"
+                className="xn-hero-fade group mt-7 inline-flex flex-col gap-2"
+                style={{ "--d": 1000 }}
+              >
+                <span className="flex items-center gap-2.5" aria-hidden="true">
+                <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      className="shrink-0"
+                    >
+                      <path
+                        fill="#4285F4"
+                        d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82Z"
+                      />
+                      <path
+                        fill="#34A853"
+                        d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.08.72-2.46 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.11A12 12 0 0 0 12 24Z"
+                      />
+                      <path
+                        fill="#FBBC05"
+                        d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.61H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.39l4-3.11Z"
+                      />
+                      <path
+                        fill="#EA4335"
+                        d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.69 1.27 6.61l4 3.11C6.22 6.86 8.87 4.75 12 4.75Z"
+                      />
+                    </svg>
+                  <span className="flex items-center gap-1 text-[#FAAE39]">
+                    {[...Array(5)].map((_, idx) => (
+                      <svg key={idx} width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+                      </svg>
+                    ))}
+                  </span>
+                </span>
+                <span className="text-sm text-white/70 transition-colors group-hover:text-white/90">
+                  <strong className="xn-tabular font-semibold text-white">5.0</strong> Google
+                  rating · <strong className="xn-tabular font-semibold text-white">500+</strong>{" "}
+                  clients
+                </span>
+              </a>
             </div>
 
-            {/* Right: supporting paragraph directly beneath the badge */}
-            <div className="min-w-0 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:self-start">
+            {/* Right: supporting paragraph aligned with the headline */}
+            <div className="min-w-0 lg:col-span-4 lg:self-start lg:pt-12">
               <div className="max-w-md lg:ml-auto">
                 <p
                   data-mountain-avoid
