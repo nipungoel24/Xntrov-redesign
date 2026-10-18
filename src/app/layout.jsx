@@ -114,7 +114,12 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${spaceGrotesk.variable} ${dmSans.variable}`}
     >
+      {/* Browser extensions (e.g. Grammarly: data-gr-ext-installed,
+          data-new-gr-c-s-check-loaded) add attributes to <body> before
+          hydration. This only ignores <body>'s own attributes; mismatches
+          in its children are still reported. */}
       <body
+        suppressHydrationWarning
         className="min-h-dvh flex flex-col bg-white text-[#001720] antialiased"
       >
         <a
