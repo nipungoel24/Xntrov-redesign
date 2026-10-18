@@ -145,19 +145,9 @@ export default function ContactSection({ preselectedService, selectedService }) 
       className="relative bg-[#001720] py-24 text-white lg:py-36"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
-        {/* Top Peripheral Coordinate Row */}
-        <div className="flex items-center justify-between border-b border-white/12 pb-4">
-          <span className="xn-tabular text-[11px] font-semibold uppercase tracking-[0.24em] text-[#FAAE39]">
-            07 / Initiate Consultation
-          </span>
-          <span className="xn-tabular text-[11px] uppercase tracking-[0.2em] text-white/50">
-            Sector 8, Dwarka • New Delhi — 110077
-          </span>
-        </div>
-
-        {/* Monumental Typographic Invitation */}
+        {/* Monumental Typographic Invitation — Begins directly with "Let's Architect" */}
         <Reveal variant="up">
-          <div className="mt-12 border-b border-white/12 pb-12 lg:mt-16 lg:pb-16">
+          <div className="border-b border-white/12 pb-12 lg:pb-16">
             <h2
               id="contact-heading"
               className="font-display text-4xl font-medium leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.5rem]"
@@ -181,14 +171,6 @@ export default function ContactSection({ preselectedService, selectedService }) 
             </p>
 
             <dl className="mt-12 divide-y divide-white/12 border-y border-white/12">
-              <div className="py-6">
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
-                  New Delhi Headquarters
-                </dt>
-                <dd className="mt-2 text-sm leading-relaxed text-white/90">
-                  {BRAND_INFO.address}
-                </dd>
-              </div>
 
               <div className="py-6">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
