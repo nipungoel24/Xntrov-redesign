@@ -315,9 +315,10 @@ p {
 
 /* ==================================================
    CORE CAPABILITIES STACK
-   The sticky stacked-card track is used only where the expanded card's full
-   content fits beside five collapsed headers (thresholds measured per width).
-   Other viewports get the same cards fully expanded in normal flow.
+   The sticky stage (intro + stacked cards) is used only where the intro, six
+   headers and the expanded card's full content all fit in one viewport
+   (thresholds measured per width). Other viewports get the same intro and
+   cards fully expanded in normal flow.
    ================================================== */
 .xn-stack-track {
   display: none;
@@ -327,9 +328,9 @@ p {
   display: flex;
 }
 
-@media (min-width: 1280px) and (min-height: 640px),
-  (min-width: 1024px) and (min-height: 720px),
-  (min-width: 768px) and (min-height: 940px) {
+@media (min-width: 1280px) and (min-height: 740px),
+  (min-width: 1024px) and (min-height: 790px),
+  (min-width: 768px) and (min-height: 1000px) {
   .xn-stack-track {
     display: block;
   }
