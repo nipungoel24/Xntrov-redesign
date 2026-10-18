@@ -178,7 +178,7 @@ function ProjectGeometricStage({ item, index, isCurrent }) {
                 className="font-mono text-[10px] font-bold uppercase tracking-[0.18em]"
                 style={{ color: lIdx === 1 ? geo.secondaryColor : geo.primaryColor }}
               >
-                {layer.code} // MANDATE
+                {layer.code}{" // MANDATE"}
               </span>
               <span
                 className="h-1.5 w-6"
