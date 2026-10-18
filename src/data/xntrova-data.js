@@ -579,11 +579,11 @@ export const FAQ_ITEMS = VERIFIED_FAQS;
 export const SOCIAL_LINKS = XNTROVA_BRAND.socials;
 
 export const LEGAL_POLICY_LINKS = [
-  { name: "Privacy Policy", href: "https://www.xntrova.com/privacy-policy/" },
-  { name: "Terms & Conditions", href: "https://www.xntrova.com/terms-and-conditions/" },
-  { name: "Cookie Policy", href: "https://www.xntrova.com/cookie-policy/" },
-  { name: "Disclaimer", href: "https://www.xntrova.com/disclaimer/" },
-  { name: "Refund & Cancellation Policy", href: "https://www.xntrova.com/refund-cancellation-policy/" },
-  { name: "Copyright Policy", href: "https://www.xntrova.com/copyright-policy/" },
+  { name: "Privacy Policy", href: "/privacy-policy/" },
+  { name: "Terms & Conditions", href: "/terms-and-conditions/" },
+  { name: "Cookie Policy", href: "/cookie-policy/" },
+  { name: "Disclaimer", href: "/disclaimer/" },
+  { name: "Refund & Cancellation Policy", href: "/refund-cancellation-policy/" },
+  { name: "Copyright Policy", href: "/copyright-policy/" },
 ];
 

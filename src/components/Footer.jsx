@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   BRAND_INFO,
   CORE_SERVICES,
@@ -15,13 +16,13 @@ import {
 export default function Footer() {
   return (
     <footer className="border-t border-white/12 bg-[#001720] text-white">
-      <div className="mx-auto max-w-[1440px] px-4 pt-12 pb-6 sm:px-8 lg:px-12 lg:pt-14 lg:pb-6">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div className="mx-auto max-w-[1440px] px-4 pt-12 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-8 lg:px-12 lg:pt-14">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Brand Mark & Positioning Column (Cols 1-4) */}
           <div className="lg:col-span-4">
-            <a
-              href="#top"
-              aria-label="Xntrova Technologies — Back to top"
+            <Link
+              href="/"
+              aria-label="Xntrova Technologies — Home"
               className="inline-flex items-center transition-opacity hover:opacity-85"
             >
               <img
@@ -31,7 +32,7 @@ export default function Footer() {
                 height={35}
                 className="h-8 w-auto object-contain"
               />
-            </a>
+            </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
               {BRAND_INFO.shortBio}
@@ -62,7 +63,7 @@ export default function Footer() {
               {PRIMARY_NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={`/${link.href}`}
                     className="font-medium text-white/75 transition-colors hover:text-white"
                   >
                     {link.label}
@@ -124,22 +125,23 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright & Policy Links Row */}
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/12 pt-6 text-xs text-white/50 lg:flex-row lg:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-white/12 pt-5 text-xs text-white/60 lg:flex-row lg:items-center">
           <p className="shrink-0">
             © 2026 {BRAND_INFO.name}. All rights reserved.
           </p>
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] sm:text-xs">
+          <nav
+            aria-label="Footer legal links"
+            className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs"
+          >
             {LEGAL_POLICY_LINKS.map((policy) => (
-              <a
+              <Link
                 key={policy.name}
                 href={policy.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-[#FAAE39]"
+                className="inline-flex min-h-8 items-center transition-colors hover:text-[#FAAE39]"
               >
                 {policy.name}
-              </a>
+              </Link>
             ))}
             <a
               href="#top"
@@ -147,7 +149,7 @@ export default function Footer() {
             >
               ↑ Top
             </a>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

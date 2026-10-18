@@ -83,7 +83,7 @@ export default function ContactSection({ preselectedService, selectedService }) 
 
     setSubmitting(true);
     try {
-      const response = await fetch("/api/lead", {
+      const response = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -142,30 +142,30 @@ export default function ContactSection({ preselectedService, selectedService }) 
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative bg-[#001720] py-16 text-white sm:py-20 lg:py-28"
+      className="relative bg-[linear-gradient(180deg,#001720_0%,#03202D_55%,#001720_100%)] pt-14 pb-16 text-white sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
-        {/* Main 12-Column Split: Vertically Centered Left Coordinates + Moderately Narrower Form */}
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-20">
-          {/* Left Column: Heading + Paragraph + Direct Coordinates (Cols 1-5, Vertically Centered) */}
-          <Reveal variant="up" className="lg:col-span-5">
-            <h2
-              id="contact-heading"
-              className="font-display text-3xl font-medium leading-[1.02] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem]"
-            >
-              <span className="block">Let&apos;s Architect Your</span>
-              <span className="mt-1 block text-[#FAAE39]">
-                Next Growth Stage.
-              </span>
-            </h2>
+        {/* Section opens directly with the headline — no index, label, or divider */}
+        <Reveal variant="up">
+          <h2
+            id="contact-heading"
+            className="font-display text-[2rem] font-medium leading-[1.04] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
+          >
+            <span className="block">Let&apos;s Architect Your</span>
+            <span className="block text-[#FAAE39]">Next Growth Stage.</span>
+          </h2>
+        </Reveal>
 
-            <p className="mt-6 text-sm leading-relaxed text-white/75 sm:text-base">
+        {/* Supporting copy, direct coordinates and the audit form in one block */}
+        <div className="mt-8 grid grid-cols-1 items-start gap-10 sm:mt-10 lg:grid-cols-12 lg:gap-14 xl:gap-20">
+          <Reveal variant="up" className="lg:col-span-5">
+            <p className="text-sm leading-relaxed text-white/75 sm:text-base">
               Share your website and commercial priorities. Our New Delhi NCR
               strategists will audit your search footprint, paid media
               efficiency, and conversion architecture.
             </p>
 
-            <dl className="mt-8 divide-y divide-white/12 border-y border-white/12 sm:mt-10">
+            <dl className="mt-6 divide-y divide-white/12 border-b border-white/12 sm:mt-8">
               <div className="py-5">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FAAE39]">
                   Direct Phone &amp; WhatsApp

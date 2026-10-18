@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import {
   BRAND_INFO,
   CORE_SERVICES,
@@ -20,6 +21,9 @@ export default function Navbar({ onSelectService }) {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef(null);
+  const isHome = usePathname() === "/";
+  // Section anchors live on the homepage; prefix them when rendered on other routes.
+  const toSection = (hash) => (isHome ? hash : `/${hash}`);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,6 +60,8 @@ export default function Navbar({ onSelectService }) {
     setMobileMenuOpen(false);
     if (onSelectService) {
       onSelectService(serviceTitle);
+    } else {
+      window.location.href = "/#contact";
     }
   };
 
@@ -71,7 +77,7 @@ export default function Navbar({ onSelectService }) {
         {/* Cohesive Transparent Brand Logo — Zero White Box, Zero Redundant Label */}
         <div className="flex items-center">
           <a
-            href="#top"
+            href={isHome ? "#top" : "/"}
             className="inline-flex shrink-0 items-center py-2 focus:outline-none"
             aria-label="Xntrova Technologies Home"
           >
@@ -132,7 +138,7 @@ export default function Navbar({ onSelectService }) {
                       Six Disciplines
                     </span>
                     <a
-                      href="#services"
+                      href={toSection("#services")}
                       onClick={() => setServicesDropdownOpen(false)}
                       className="text-xs font-medium text-[#FAAE39] hover:text-white"
                     >
@@ -147,7 +153,7 @@ export default function Navbar({ onSelectService }) {
                         className="flex items-center justify-between gap-4 py-2.5 first:pt-0 last:pb-0"
                       >
                         <a
-                          href="#services"
+                          href={toSection("#services")}
                           onClick={() => setServicesDropdownOpen(false)}
                           className="group flex items-baseline gap-3.5 text-left"
                         >
@@ -177,7 +183,7 @@ export default function Navbar({ onSelectService }) {
           {PRIMARY_NAV_LINKS.slice(1).map((item) => (
             <a
               key={item.href}
-              href={item.href}
+              href={toSection(item.href)}
               className="text-[13px] font-medium tracking-wide text-white/80 transition-colors hover:text-white"
             >
               {item.label}
@@ -195,7 +201,7 @@ export default function Navbar({ onSelectService }) {
           </a>
 
           <a
-            href="#contact"
+            href={toSection("#contact")}
             className="xn-press flex items-center gap-3 border-l border-white/12 bg-white/[0.06] px-8 text-[13px] font-medium tracking-wide text-white transition-colors hover:bg-[#FAAE39] hover:text-[#001720]"
           >
             <span>Request Audit</span>
@@ -206,7 +212,7 @@ export default function Navbar({ onSelectService }) {
         {/* Mobile Actions */}
         <div className="flex items-stretch lg:hidden">
           <a
-            href="#contact"
+            href={toSection("#contact")}
             className="xn-press flex items-center border-l border-white/12 px-4 text-xs font-medium text-[#FAAE39]"
           >
             Request Audit
@@ -265,7 +271,7 @@ export default function Navbar({ onSelectService }) {
               {PRIMARY_NAV_LINKS.map((item) => (
                 <a
                   key={item.href}
-                  href={item.href}
+                  href={toSection(item.href)}
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between py-3.5 text-lg font-medium text-white hover:text-[#FAAE39]"
                 >
@@ -301,7 +307,7 @@ export default function Navbar({ onSelectService }) {
                 {BRAND_INFO.phoneDisplay}
               </a>
               <a
-                href="#contact"
+                href={toSection("#contact")}
                 onClick={() => setMobileMenuOpen(false)}
                 className="xn-editorial-link font-semibold text-[#FAAE39]"
               >
